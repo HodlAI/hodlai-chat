@@ -1411,7 +1411,8 @@ export const Chat: React.FC = () => {
 
                                 {/* Message Actions Toolbar (Hidden while typing) */}
                                 {!isTyping && (
-                                <div className={`flex items-center gap-1 mt-0.5 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity pointer-events-auto ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                                <div className={`flex items-center gap-1 mt-0.5 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity pointer-events-auto p-4 -m-4 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                                    <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
                                     <button 
                                         onClick={() => handleCopyMessage(msg.content, msg.id)} 
                                         className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-[#333] transition-colors cursor-pointer"
@@ -1444,6 +1445,7 @@ export const Chat: React.FC = () => {
                                             </button>
                                         </div>
                                     )}
+                                  </div>
                                 </div>
                                 )}
                             </div>
