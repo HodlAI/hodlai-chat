@@ -637,10 +637,15 @@ export const Chat: React.FC = () => {
             setCustomKey(verifyData.data.token.key);
             localStorage.setItem('bsc_ai_hub_custom_key', verifyData.data.token.key);
             
-            // Store Stats if available (Hypothetical structure based on requirement)
-            if (verifyData.data.stats || verifyData.data.token) {
-                setWalletStats(verifyData.data.stats || verifyData.data.token);
-            }
+            // Extract precise data from the new response structure
+            const tokenData = verifyData.data.token;
+            setWalletStats({
+                balance: tokenData.balanceFormatted, // String: "15134521.04..."
+                dailyQuota: tokenData.dailyQuota, // Number: 1227539927
+                remainQuota: tokenData.remainQuota, // Number: 1227525404
+                quotaMessage: tokenData.quotaInfo?.message, // "恢复中 80%"
+                pointsPerDollar: tokenData.quotaInfo?.holdingInfo?.pointsPerDollar || 500000
+            });
             
             checkConfiguration();
             fetchModels();
@@ -649,7 +654,8 @@ export const Chat: React.FC = () => {
         }
     } catch (e: any) {
         console.error('Auth error', e);
-        alert(e.message || 'Authentication failed');
+        // Silent fail or minimal toast better than alert for auto-trigger
+        // alert(e.message || 'Authentication failed');
     }
   };
   
@@ -813,23 +819,49 @@ export const Chat: React.FC = () => {
                                  {/* Stats Grid */}
                                  {walletStats && (
                                     <div className="grid grid-cols-2 gap-2 mt-3 mb-3">
+                                        {/* Daily Quota / Limit */}
                                         <div className="bg-white dark:bg-black/20 p-2 rounded-lg border border-gray-100 dark:border-white/5 shadow-sm">
-                                            <div className="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">{t.todaysQuota}</div>
-                                            <div className="font-mono text-sm font-bold text-violet-600 dark:text-violet-400">
-                                                {walletStats.limit ? `$${walletStats.limit}` : '---'}
+                                            <div className="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">{t.todaysQuota || "Today's Quota"}</div>
+                                            <div className="font-mono text-xs font-bold text-violet-600 dark:text-violet-400 truncate" title={`${walletStats.dailyQuota} Credits`}>
+                                                ${(walletStats.dailyQuota / (walletStats.pointsPerDollar || 500000)).toFixed(2)} 
+                                                <span className="text-[10px] opacity-70 font-normal ml-1">
+                                                    ({(walletStats.dailyQuota / 1000000).toFixed(1)}M)
+                                                </span>
                                             </div>
                                         </div>
+                                        
+                                        {/* HODL Balance */}
                                         <div className="bg-white dark:bg-black/20 p-2 rounded-lg border border-gray-100 dark:border-white/5 shadow-sm hover:border-violet-500/20 transition-all cursor-help group relative">
                                             <div className="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">{t.hodlBalance}</div>
-                                            <div className="font-mono text-sm font-bold text-gray-900 dark:text-white">
-                                                {walletStats.balance ? parseFloat(walletStats.balance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '---'}
+                                            <div className="font-mono text-xs font-bold text-gray-900 dark:text-white truncate">
+                                                {walletStats.balance ? parseFloat(walletStats.balance).toLocaleString(undefined, { maximumFractionDigits: 2 }) : '---'}
                                             </div>
-                                            {/* Tooltip for full precision if needed */}
+                                            {/* Tooltip for full precision */}
                                             {walletStats.balance && (
-                                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-10 transition-opacity">
+                                                <div className="absolute bottom-full right-0 mb-2 px-2 py-1 bg-black text-white text-[10px] rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-10 transition-opacity shadow-lg">
                                                     {walletStats.balance} HODL
                                                 </div>
                                             )}
+                                        </div>
+
+                                        {/* Remaining Quota */}
+                                        <div className="bg-white dark:bg-black/20 p-2 rounded-lg border border-gray-100 dark:border-white/5 shadow-sm col-span-2 flex items-center justify-between">
+                                             <div className="flex flex-col">
+                                                <div className="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">{t.remainQuota || "Remaining"}</div>
+                                                <div className="font-mono text-xs font-bold text-gray-700 dark:text-gray-300">
+                                                    {((walletStats.remainQuota / walletStats.dailyQuota) * 100).toFixed(1)}%
+                                                </div>
+                                             </div>
+                                             <div className="text-right">
+                                                 <div className="font-mono text-xs font-bold text-gray-900 dark:text-white">
+                                                    ${(walletStats.remainQuota / (walletStats.pointsPerDollar || 500000)).toFixed(2)}
+                                                 </div>
+                                                 {walletStats.quotaMessage && (
+                                                     <div className="text-[10px] text-amber-500 font-medium">
+                                                         {walletStats.quotaMessage}
+                                                     </div>
+                                                 )}
+                                             </div>
                                         </div>
                                     </div>
                                  )}
