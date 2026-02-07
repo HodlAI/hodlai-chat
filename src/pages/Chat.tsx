@@ -1414,7 +1414,7 @@ export const Chat: React.FC = () => {
                                 <div className={`flex items-center gap-2 opacity-100 pointer-events-auto ${
                                     msg.role === 'user' 
                                     ? 'flex-row-reverse mt-1' // User: explicit margin to avoid overlapping bubble
-                                    : 'flex-row -mt-1'        // Assistant: pull up closer to text
+                                    : 'flex-row mt-0'         // Assistant: flush (0px) to text, no negative overlap
                                 }`}>
                                     <div className="flex items-center gap-1.5 p-0.5 rounded-lg" onClick={(e) => e.stopPropagation()}>
                                     <button 
