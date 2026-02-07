@@ -252,9 +252,13 @@ export const Chat: React.FC = () => {
   // Scroll to bottom
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
+        // Force scroll on mount, chat history change (e.g. refresh), or typing
+        const scroll = () => scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
+        scroll();
+        // Double ensure for async content rendering
+        setTimeout(scroll, 100);
     }
-  }, [chatHistory, isTyping, attachments]);
+  }, [chatHistory, isTyping, attachments, currentSessionId]); // Added currentSessionId to trigger on session switch/load
 
   // Scroll Button Visibility Logic
   useEffect(() => {
@@ -1144,7 +1148,7 @@ export const Chat: React.FC = () => {
                                             {session.title || 'New Chat'}
                                         </div>
                                         {/* Actions: Show on hover or active */}
-                                        <div className={`absolute right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity ${currentSessionId === session.id ? 'opacity-100' : ''}`}>
+                                        <div className={`absolute right-2 flex items-center gap-1 opacity-100 transition-opacity`}>
                                             <button 
                                                 onClick={(e) => startEditing(session, e)}
                                                 className="p-1.5 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 hover:bg-gray-200 dark:hover:bg-[#333] rounded-md transition-all transform hover:scale-110 active:scale-95 cursor-pointer"
