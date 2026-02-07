@@ -5,7 +5,11 @@ import {
   createStorage
 } from 'wagmi'
 import { bsc } from 'wagmi/chains'
+import { walletConnect } from 'wagmi/connectors'
+import { injected } from 'wagmi/connectors'
 import { getDefaultConfig } from 'connectkit'
+
+const projectId = "b460d24f7aaa1a403ad76a3f16cb8bea";
 
 export const config = createConfig(
   getDefaultConfig({
@@ -17,9 +21,14 @@ export const config = createConfig(
         `https://bsc-dataseed.binance.org/`,
       ),
     },
+    // Explicit connectors for stability
+    connectors: [
+      injected(),
+      walletConnect({ projectId, showQrModal: false }), // showQrModal: false is KEY for ConnectKit (it handles UI)
+    ],
 
     // Required API Keys
-    walletConnectProjectId: "b460d24f7aaa1a403ad76a3f16cb8bea",
+    walletConnectProjectId: projectId,
 
     // Required App Info
     appName: "HodlAI Chat",
