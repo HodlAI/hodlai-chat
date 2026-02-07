@@ -567,7 +567,7 @@ export const Chat: React.FC = () => {
     if (!address) return;
     try {
         // 1. Get Message
-        const msgRes = await fetch('https://gw.hodlai.fun/api/auth/message', {
+        const msgRes = await fetch('https://hodlai.fun/api/auth/message', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ address })
@@ -579,7 +579,7 @@ export const Chat: React.FC = () => {
         const signature = await signMessageAsync({ message: msgData.data.message });
         
         // 3. Verify
-        const verifyRes = await fetch('https://gw.hodlai.fun/api/auth/verify', {
+        const verifyRes = await fetch('https://hodlai.fun/api/auth/verify', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ address, message: msgData.data.message, signature })
