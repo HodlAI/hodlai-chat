@@ -114,6 +114,15 @@ export const useStore = create<Store>((set, get) => ({
   // Explicitly sync chatHistory with the first loaded session to ensure immediate render
   chatHistory: (() => {
       const saved = loadSessions();
+      const lastId = localStorage.getItem('bsc_ai_hub_last_session_id');
+      
+      // If we have a specific last session, render that
+      if (lastId) {
+          const target = saved.find(s => s.id === lastId);
+          if (target) return target.messages;
+      }
+      
+      // Fallback to most recent
       if (saved.length > 0) return saved[0].messages;
       return [];
   })(), 
@@ -149,14 +158,18 @@ export const useStore = create<Store>((set, get) => ({
   })(),
   currentSessionId: (() => {
       const saved = loadSessions();
-      // If sessions exist, return the most recent one (index 0)
+      const lastId = localStorage.getItem('bsc_ai_hub_last_session_id');
+      
+      // Try to restore specifically selected session
+      if (lastId && saved.find(s => s.id === lastId)) {
+          return lastId;
+      }
+      
+      // Fallback to most recent (index 0)
       if (saved.length > 0) return saved[0].id;
-      // If no sessions, we just created one in the sessions initialization above, 
-      // but we need to match the ID. 
-      // Since zustand initializes properties in order, we can't easily access the just-created session ID here synchronously without a duplicate check.
-      // However, we can simply re-read from localStorage because saveSessions() was called above if empty.
+      
       const fresh = loadSessions();
-      if (fresh.length > 0) return fresh[0].id; // Should be the new one
+      if (fresh.length > 0) return fresh[0].id;
       return null;
   })(),
 
@@ -171,21 +184,26 @@ export const useStore = create<Store>((set, get) => ({
       const newSessions = [newSession, ...get().sessions];
       set({ sessions: newSessions, currentSessionId: newSession.id });
       saveSessions(newSessions);
+      localStorage.setItem('bsc_ai_hub_last_session_id', newSession.id);
   },
 
   switchSession: (id: string) => {
       set({ currentSessionId: id });
+      localStorage.setItem('bsc_ai_hub_last_session_id', id);
   },
 
   deleteSession: (id: string) => {
       const newSessions = get().sessions.filter(s => s.id !== id);
+      const nextId = get().currentSessionId === id 
+          ? (newSessions[0]?.id || null) 
+          : get().currentSessionId;
+          
       set({ 
           sessions: newSessions,
-          currentSessionId: get().currentSessionId === id 
-              ? (newSessions[0]?.id || null) 
-              : get().currentSessionId
+          currentSessionId: nextId
       });
       saveSessions(newSessions);
+      if (nextId) localStorage.setItem('bsc_ai_hub_last_session_id', nextId);
       if (newSessions.length === 0) get().createSession();
   },
 
