@@ -792,115 +792,109 @@ export const Chat: React.FC = () => {
 
                 <div className="h-px bg-gray-100 dark:bg-[#333]" />
 
-                {/* API Key Section */}
-                <div>
-
-    // Wallet Connect Section - Modern Minimalist
-    <div className="mb-4 overflow-hidden rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-black/20 transition-all hover:border-violet-500/30 relative">
-        <div className="p-3">
-             {/* Header Row */}
-            <div className="flex items-center justify-between gap-3 mb-3">
-                <div className="flex items-center gap-2.5 overflow-hidden">
-                    <div className={`flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0 transition-colors ${isConnected ? 'bg-green-500/10 text-green-600 dark:text-green-400' : 'bg-gray-100 dark:bg-white/5 text-gray-500'}`}>
-                        {isConnected ? <Check className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
-                    </div>
-                    <div className="flex flex-col min-w-0">
-                        <span className="text-sm font-semibold text-gray-900 dark:text-white truncate">
-                            {isConnected ? t.walletConnected || 'Wallet Connected' : t.web3Login || 'Web3 Login'}
-                        </span>
-                        <ConnectKitButton.Custom>
-                            {({ isConnected, show, truncatedAddress, ensName }) => {
-                                 if (!isConnected) return null;
-                                 return (
-                                     <button onClick={show} className="text-xs text-gray-500 dark:text-gray-400 truncate hover:text-violet-500 cursor-pointer text-left">
-                                         {ensName ?? truncatedAddress}
-                                     </button>
-                                 )
-                            }}
-                        </ConnectKitButton.Custom>
-                    </div>
-                </div>
-
-                {/* Disconnect Button (Top Right) */}
-                 {isConnected && (
-                    <button 
-                        onClick={handleDisconnect}
-                        className="p-1.5 text-xs font-medium text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all cursor-pointer absolute top-2 right-2"
-                        title={t.disconnect || "Disconnect"}
-                    >
-                        <X className="w-4 h-4" />
-                    </button>
-                )}
-                
-                {/* Connect Button (If not connected) */}
-                {!isConnected && (
-                     <div className="flex-shrink-0">
-                        <ConnectKitButton.Custom>
-                            {({ isConnected, show }) => {
-                                return (
-                                <button 
-                                    onClick={() => show?.()} 
-                                    className="px-3 py-1.5 text-xs font-bold rounded-lg transition-all border shadow-sm bg-black dark:bg-white text-white dark:text-black border-transparent hover:opacity-90 cursor-pointer"
-                                >
-                                    {t.connectWallet || "Connect Wallet"}
-                                </button>
-                                );
-                            }}
-                        </ConnectKitButton.Custom>
-                    </div>
-                )}
-            </div>
-
-            {isConnected && (
-                <div className="pt-2 border-t border-gray-100 dark:border-white/5">
-                        {/* Stats Grid - Single Row */}
-                        {walletStats ? (
-                        <div className="flex items-center justify-between gap-2 text-xs">
-                            {/* Daily Quota */}
-                            <div className="flex flex-col items-center flex-1 p-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 cursor-help transition-colors group relative">
-                                <span className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">{t.todaysQuota}</span>
-                                <span className="font-mono font-bold text-violet-600 dark:text-violet-400">
-                                    ${(walletStats.dailyQuota / (walletStats.pointsPerDollar || 500000)).toFixed(0)}
-                                </span>
-                            </div>
-                            
-                            <div className="w-px h-6 bg-gray-100 dark:bg-white/10"></div>
-
-                            {/* Remaining */}
-                            <div className="flex flex-col items-center flex-1 p-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 cursor-help transition-colors group relative">
-                                <span className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">{t.remainQuota}</span>
-                                <span className="font-mono font-bold text-gray-900 dark:text-white">
-                                    ${(walletStats.remainQuota / (walletStats.pointsPerDollar || 500000)).toFixed(2)}
-                                </span>
-                            </div>
-
-                             <div className="w-px h-6 bg-gray-100 dark:bg-white/10"></div>
-
-                            {/* Balance */}
-                            <div className="flex flex-col items-center flex-1 p-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 cursor-help transition-colors group relative">
-                                <span className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">{t.balance}</span>
-                                <span className="font-mono font-bold text-gray-900 dark:text-white">
-                                    {(parseFloat(walletStats.balance) / 1000).toFixed(0)}k
-                                </span>
-                                {/* Tooltip */}
-                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-[10px] rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-10 transition-opacity shadow-lg backdrop-blur-sm bg-black/90">
-                                    {walletStats.balance} HODL
+                {/* API Key Section - Wallet Connect */}
+                <div className="mb-4 overflow-hidden rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-black/20 transition-all hover:border-violet-500/30 relative">
+                    <div className="p-3">
+                        {/* Header Row */}
+                        <div className="flex items-center justify-between gap-3 mb-3">
+                            <div className="flex items-center gap-2.5 overflow-hidden">
+                                <div className={`flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0 transition-colors ${isConnected ? 'bg-green-500/10 text-green-600 dark:text-green-400' : 'bg-gray-100 dark:bg-white/5 text-gray-500'}`}>
+                                    {isConnected ? <Check className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
+                                </div>
+                                <div className="flex flex-col min-w-0">
+                                    <span className="text-sm font-semibold text-gray-900 dark:text-white truncate">
+                                        {isConnected ? t.walletConnected || 'Wallet Connected' : t.web3Login || 'Web3 Login'}
+                                    </span>
+                                    {/* Only show address/ENS if connected */}
+                                    {isConnected && (
+                                        <ConnectKitButton.Custom>
+                                            {({ show, truncatedAddress, ensName }) => (
+                                                <button onClick={show} className="text-xs text-gray-500 dark:text-gray-400 truncate hover:text-violet-500 cursor-pointer text-left">
+                                                    {ensName ?? truncatedAddress}
+                                                </button>
+                                            )}
+                                        </ConnectKitButton.Custom>
+                                    )}
                                 </div>
                             </div>
+
+                            {/* Disconnect Button (Top Right Absolute) */}
+                            {isConnected && (
+                                <button 
+                                    onClick={handleDisconnect}
+                                    className="p-1.5 text-xs font-medium text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all cursor-pointer absolute top-2 right-2"
+                                    title={t.disconnect || "Disconnect"}
+                                >
+                                    <X className="w-4 h-4" />
+                                </button>
+                            )}
+                            
+                            {/* Connect Button (If not connected) */}
+                            {!isConnected && (
+                                <div className="flex-shrink-0">
+                                    <ConnectKitButton.Custom>
+                                        {({ show }) => (
+                                            <button 
+                                                onClick={() => show?.()} 
+                                                className="px-3 py-1.5 text-xs font-bold rounded-lg transition-all border shadow-sm bg-black dark:bg-white text-white dark:text-black border-transparent hover:opacity-90 cursor-pointer"
+                                            >
+                                                {t.connectWallet || "Connect Wallet"}
+                                            </button>
+                                        )}
+                                    </ConnectKitButton.Custom>
+                                </div>
+                            )}
                         </div>
-                        ) : (
-                            <button 
-                                onClick={handleWalletAuth}
-                                className="w-full py-2 text-xs font-bold bg-violet-600/10 text-violet-600 dark:text-violet-400 rounded-lg hover:bg-violet-600/20 transition-all cursor-pointer flex items-center justify-center gap-2"
-                            >
-                                <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
-                                {t.signToLogin || "Sign to Check Access"}
-                            </button>
+
+                        {isConnected && (
+                            <div className="pt-2 border-t border-gray-100 dark:border-white/5">
+                                {/* Stats Grid - Single Row */}
+                                {walletStats ? (
+                                <div className="flex items-center justify-between gap-2 text-xs">
+                                    {/* Daily Quota */}
+                                    <div className="flex flex-col items-center flex-1 p-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 cursor-help transition-colors group relative">
+                                        <span className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">{t.todaysQuota}</span>
+                                        <span className="font-mono font-bold text-violet-600 dark:text-violet-400">
+                                            ${(walletStats.dailyQuota / (walletStats.pointsPerDollar || 500000)).toFixed(0)}
+                                        </span>
+                                    </div>
+                                    
+                                    <div className="w-px h-6 bg-gray-100 dark:bg-white/10"></div>
+
+                                    {/* Remaining */}
+                                    <div className="flex flex-col items-center flex-1 p-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 cursor-help transition-colors group relative">
+                                        <span className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">{t.remainQuota}</span>
+                                        <span className="font-mono font-bold text-gray-900 dark:text-white">
+                                            ${(walletStats.remainQuota / (walletStats.pointsPerDollar || 500000)).toFixed(2)}
+                                        </span>
+                                    </div>
+
+                                    <div className="w-px h-6 bg-gray-100 dark:bg-white/10"></div>
+
+                                    {/* Balance */}
+                                    <div className="flex flex-col items-center flex-1 p-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 cursor-help transition-colors group relative">
+                                        <span className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">{t.balance}</span>
+                                        <span className="font-mono font-bold text-gray-900 dark:text-white">
+                                            {(parseFloat(walletStats.balance) / 1000).toFixed(0)}k
+                                        </span>
+                                        {/* Tooltip */}
+                                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-[10px] rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-10 transition-opacity shadow-lg backdrop-blur-sm bg-black/90">
+                                            {walletStats.balance} HODL
+                                        </div>
+                                    </div>
+                                </div>
+                                ) : (
+                                    <button 
+                                        onClick={handleWalletAuth}
+                                        className="w-full py-2 text-xs font-bold bg-violet-600/10 text-violet-600 dark:text-violet-400 rounded-lg hover:bg-violet-600/20 transition-all cursor-pointer flex items-center justify-center gap-2"
+                                    >
+                                        <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
+                                        {t.signToLogin || "Sign to Check Access"}
+                                    </button>
+                                )}
+                            </div>
                         )}
-                </div>
-            )}
-        </div>
-    </div>
+                    </div>
                 </div>
 
                 <div className="flex items-center gap-3 my-4">
