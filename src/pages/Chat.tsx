@@ -602,6 +602,17 @@ export const Chat: React.FC = () => {
      } catch (e) { console.error(e); }
   };
 
+  // Auto-trigger auth when wallet connects if not already authenticated
+  useEffect(() => {
+    if (isConnected && address && !customKey && !walletStats) {
+       // Wait a brief moment for connection to stabilize then prompt
+       const timer = setTimeout(() => {
+           handleWalletAuth();
+       }, 500);
+       return () => clearTimeout(timer);
+    }
+  }, [isConnected, address]);
+
   const handleWalletAuth = async () => {
     if (!address) return;
     try {
@@ -709,59 +720,49 @@ export const Chat: React.FC = () => {
                 
                 {/* Visual Settings */}
                 <div>
-                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        {tConfig.appearance}
-                     </label>
-                     <div className="flex gap-2 mb-4">
-                        <button 
-                            onClick={() => setTheme('light')}
-                            className={`flex flex-col items-center justify-center p-3 rounded-xl border flex-1 transition-all cursor-pointer shadow-sm ${
-                                theme === 'light' ? 'border-violet-500 bg-violet-50/50 text-violet-600 dark:bg-violet-900/10 dark:text-violet-400 ring-1 ring-violet-500/20' : 'border-gray-200 dark:border-white/10 text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5'
-                            }`}
-                        >
-                             <div className="w-4 h-4 rounded-full bg-white dark:bg-[#212121] border border-gray-300 dark:border-[#555] mb-2 shadow-sm" />
-                             <span className="text-xs font-semibold tracking-wide">{tConfig.light}</span>
-                        </button>
-                        <button 
-                            onClick={() => setTheme('dark')}
-                            className={`flex flex-col items-center justify-center p-3 rounded-xl border flex-1 transition-all cursor-pointer shadow-sm ${
-                                theme === 'dark' ? 'border-violet-500 bg-violet-50/50 text-violet-600 dark:bg-violet-900/10 dark:text-violet-400 ring-1 ring-violet-500/20' : 'border-gray-200 dark:border-white/10 text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5'
-                            }`}
-                        >
-                             <div className="w-4 h-4 rounded-full bg-[#343541] border border-gray-500 mb-2 shadow-sm" />
-                             <span className="text-xs font-semibold tracking-wide">{tConfig.dark}</span>
-                        </button>
-                         <button 
-                            onClick={() => setTheme('system')}
-                            className={`flex flex-col items-center justify-center p-3 rounded-xl border flex-1 transition-all cursor-pointer shadow-sm ${
-                                theme === 'system' ? 'border-violet-500 bg-violet-50/50 text-violet-600 dark:bg-violet-900/10 dark:text-violet-400 ring-1 ring-violet-500/20' : 'border-gray-200 dark:border-white/10 text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5'
-                            }`}
-                        >
-                             <div className="w-4 h-4 rounded-full bg-gradient-to-r from-white to-[#343541] dark:from-[#212121] dark:to-black border border-gray-400 dark:border-[#555] mb-2 shadow-sm" />
-                             <span className="text-xs font-semibold tracking-wide">{tConfig.system}</span>
-                        </button>
+                     <div className="flex items-center justify-between mb-4">
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{tConfig.appearance}</label>
+                        <div className="flex bg-gray-100 dark:bg-white/5 p-1 rounded-lg">
+                            {(['light', 'dark', 'system'] as const).map((mode) => (
+                                <button
+                                    key={mode}
+                                    onClick={() => setTheme(mode)}
+                                    className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                                        theme === mode 
+                                        ? 'bg-white dark:bg-[#212121] text-violet-600 dark:text-violet-400 shadow-sm' 
+                                        : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                                    }`}
+                                >
+                                    {tConfig[mode]}
+                                </button>
+                            ))}
+                        </div>
                      </div>
                      
-                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        {tConfig.languageLabel}
-                     </label>
-                     <div className="flex gap-2">
-                        <button 
-                            onClick={() => setLanguage('en')}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium border transition-all flex-1 cursor-pointer ${
-                                language === 'en' ? 'bg-violet-600 text-white border-violet-600 shadow-md shadow-violet-500/20' : 'bg-white dark:bg-white/5 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/10'
-                            }`}
-                        >
-                            English
-                        </button>
-                        <button 
-                            onClick={() => setLanguage('zh')}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium border transition-all flex-1 cursor-pointer ${
-                                language === 'zh' ? 'bg-violet-600 text-white border-violet-600 shadow-md shadow-violet-500/20' : 'bg-white dark:bg-white/5 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/10'
-                            }`}
-                        >
-                            中文
-                        </button>
+                     <div className="flex items-center justify-between mb-2">
+                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{tConfig.languageLabel}</label>
+                        <div className="flex bg-gray-100 dark:bg-white/5 p-1 rounded-lg">
+                            <button 
+                                onClick={() => setLanguage('en')}
+                                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                                    language === 'en' 
+                                    ? 'bg-white dark:bg-[#212121] text-violet-600 dark:text-violet-400 shadow-sm' 
+                                    : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                                }`}
+                            >
+                                English
+                            </button>
+                            <button 
+                                onClick={() => setLanguage('zh')}
+                                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                                    language === 'zh' 
+                                    ? 'bg-white dark:bg-[#212121] text-violet-600 dark:text-violet-400 shadow-sm' 
+                                    : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                                }`}
+                            >
+                                中文
+                            </button>
+                        </div>
                      </div>
                 </div>
 
@@ -791,7 +792,11 @@ export const Chat: React.FC = () => {
                                     {({ isConnected, show, truncatedAddress, ensName }) => {
                                         return (
                                         <button 
-                                            onClick={show} 
+                                            onClick={() => {
+                                                // Trigger connect; if connected, handle auth automatically via effect or check
+                                                if (isConnected) handleWalletAuth();
+                                                else show?.();
+                                            }} 
                                             className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all border shadow-sm ${
                                                 isConnected 
                                                 ? 'bg-gray-50 dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-200 hover:bg-gray-100' 
@@ -817,11 +822,17 @@ export const Chat: React.FC = () => {
                                                 {walletStats.limit ? `$${walletStats.limit}` : '---'}
                                             </div>
                                         </div>
-                                        <div className="bg-white dark:bg-black/20 p-2 rounded-lg border border-gray-100 dark:border-white/5 shadow-sm">
+                                        <div className="bg-white dark:bg-black/20 p-2 rounded-lg border border-gray-100 dark:border-white/5 shadow-sm hover:border-violet-500/20 transition-all cursor-help group relative">
                                             <div className="text-[10px] uppercase tracking-wider text-gray-400 mb-0.5">{t.hodlBalance}</div>
                                             <div className="font-mono text-sm font-bold text-gray-900 dark:text-white">
-                                                {walletStats.balance ? parseFloat(walletStats.balance).toLocaleString() : '---'}
+                                                {walletStats.balance ? parseFloat(walletStats.balance).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '---'}
                                             </div>
+                                            {/* Tooltip for full precision if needed */}
+                                            {walletStats.balance && (
+                                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-10 transition-opacity">
+                                                    {walletStats.balance} HODL
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                  )}
