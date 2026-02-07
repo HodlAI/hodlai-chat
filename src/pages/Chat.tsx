@@ -1605,9 +1605,13 @@ export const Chat: React.FC = () => {
                         </div>
                         
                         <button 
-                            onClick={handleSend} 
+                            onClick={(e) => { e.stopPropagation(); handleSend(); }}
                             disabled={(!input.trim() && attachments.length === 0) || isTyping} 
-                            className={`p-2 rounded-lg transition-all duration-200 flex items-center justify-center cursor-pointer shadow-sm ${(input.trim() || attachments.length > 0) ? 'bg-violet-600 text-white hover:bg-violet-500 shadow-violet-500/30 hover:scale-105 active:scale-95' : 'bg-gray-100 dark:bg-white/5 text-gray-300 dark:text-gray-600 cursor-not-allowed'}`}
+                            className={`p-2 rounded-lg transition-all duration-200 flex items-center justify-center cursor-pointer shadow-sm relative z-40 ${
+                                (input.trim() || attachments.length > 0) 
+                                ? 'bg-violet-600 text-white hover:bg-violet-500 shadow-violet-500/30 hover:scale-105 active:scale-95' 
+                                : 'bg-gray-100 dark:bg-white/5 text-gray-300 dark:text-gray-600 cursor-not-allowed'
+                            }`}
                         >
                             <ArrowUp className="w-5 h-5" />
                         </button>
