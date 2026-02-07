@@ -1324,19 +1324,19 @@ export const Chat: React.FC = () => {
             ) : (
                 <div className="flex flex-col w-full max-w-5xl mx-auto py-6 px-0 md:px-4 gap-4 md:gap-6">
                     {chatHistory.map((msg, index) => (
-                        <div key={msg.id} className={`group w-full block px-3 md:px-0 clearfix`}>
+                        <div key={msg.id} className={`group w-full flex px-3 md:px-0 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                             {msg.role === 'assistant' && (
-                                <div className="float-left mr-3 md:mr-4 w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-violet-600 to-indigo-600 mt-0.5 select-none text-white overflow-hidden shadow-lg shadow-violet-500/20">
+                                <div className="flex-shrink-0 mr-3 md:mr-4 w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-violet-600 to-indigo-600 mt-0.5 select-none text-white overflow-hidden shadow-lg shadow-violet-500/20">
                                      <div className="w-full h-full flex items-center justify-center">
                                        <Component className="w-5 h-5" />
                                      </div>
                                 </div>
                             )}
-                            <div className={`${msg.role === 'user' ? 'flex flex-col items-end w-full' : 'block'}`}>
-                                <div className={`inline-block max-w-none ${
+                            <div className={`${msg.role === 'user' ? 'flex flex-col items-end max-w-[85%] lg:max-w-[80%]' : 'flex flex-col min-w-0 flex-1'}`}>
+                                <div className={`inline-block ${
                                     msg.role === 'user' 
-                                    ? 'bg-[#f4f4f4] dark:bg-[#202020] px-5 py-3 rounded-2xl text-gray-900 dark:text-gray-100 whitespace-pre-wrap break-words border border-transparent dark:border-white/5 shadow-sm max-w-[85%] lg:max-w-[80%]' 
-                                    : 'px-0 py-0 text-gray-900 dark:text-gray-100 leading-7 min-w-[200px] markdown-content -mt-1 w-full'
+                                    ? 'bg-[#f4f4f4] dark:bg-[#202020] px-5 py-3 rounded-2xl text-gray-900 dark:text-gray-100 whitespace-pre-wrap break-words border border-transparent dark:border-white/5 shadow-sm w-full' 
+                                    : 'px-0 py-0 text-gray-900 dark:text-gray-100 leading-7 markdown-content -mt-1 w-full'
                                 }`}>
                                    {msg.role === 'user' ? (
                                       <div className="whitespace-pre-wrap">{msg.content}</div>
