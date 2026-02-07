@@ -9,7 +9,7 @@ import { walletConnect } from 'wagmi/connectors'
 import { injected } from 'wagmi/connectors'
 import { getDefaultConfig } from 'connectkit'
 
-const projectId = "b460d24f7aaa1a403ad76a3f16cb8bea";
+const projectId = "b460d24f7aaa1a403ad76a3f16cb8bea"; // Official WalletConnect Project ID
 
 export const config = createConfig(
   getDefaultConfig({
