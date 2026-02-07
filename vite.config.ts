@@ -18,7 +18,14 @@ export default defineConfig(() => {
       resolve: {
         alias: {
           '@': path.resolve(__dirname, '.'),
+          process: "process/browser",
+          stream: "stream-browserify",
+          zlib: "browserify-zlib",
+          util: "util",
         }
-      }
-    };
+      },
+      define: {
+        'process.env': {},
+        global: 'globalThis',
+      },
 });
