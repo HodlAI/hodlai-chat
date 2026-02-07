@@ -1555,7 +1555,7 @@ export const Chat: React.FC = () => {
                              {/* Smart Model Selector */}
                              <div className="relative">
                                 <button 
-                                    onClick={() => setIsBottomModelSelectorOpen(!isBottomModelSelectorOpen)}
+                                    onClick={(e) => { e.stopPropagation(); setIsBottomModelSelectorOpen(!isBottomModelSelectorOpen); setIsConfigOpen(false); }}
                                     className={`p-2 rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                                         isBottomModelSelectorOpen
                                         ? 'bg-violet-50 text-violet-600 dark:bg-violet-900/20 dark:text-violet-400' 
