@@ -697,15 +697,30 @@ export const Chat: React.FC = () => {
       setWalletStats(null);
       setCustomKey('');
       localStorage.removeItem('bsc_ai_hub_custom_key');
-      // Do NOT clear the per-address cached key, so re-connect is fast?
-      // User Logic: "Disconnects -> Reconnect -> Auto Require Signature".
-      // This means we MUST clear the cached key on disconnect.
-      if (address) {
-          localStorage.removeItem(`bsc_ai_hub_key_${address}`);
-      }
+      // Do NOT clear the per-address cached key, so re-connect is fast
+      // This prevents "Always ask for signature" on reconnect if the previous token is still valid.
+      // if (address) {
+      //    localStorage.removeItem(`bsc_ai_hub_key_${address}`);
+      // }
       
       checkConfiguration();
       setHasRequestedAuth(false);
+  };
+
+  // Helper for HODL Balance (18 decimals)
+  const formatHodlBalance = (raw: string | number) => {
+      if (!raw) return '0';
+      // Assume raw is in Wei (1e18) if it's a huge string, or check backend spec.
+      // User said "Divide by 18 decimals".
+      // We use BigInt logic for safety or simple math if precision allows (JS Number safe up to 9e15).
+      // 1e18 is outside Number safe integer for exact math, but for "Display K/M" approximation, 
+      // dividing a string-parsed-as-float by 1e18 works fine for UI.
+      const val = parseFloat(String(raw));
+      const adjusted = val / 1e18; 
+      
+      if (adjusted >= 1000000) return (adjusted / 1000000).toFixed(1) + 'M';
+      if (adjusted >= 1000) return (adjusted / 1000).toFixed(1) + 'K';
+      return adjusted.toFixed(0); // < 1K show exact integer
   };
 
   return (
@@ -892,11 +907,11 @@ export const Chat: React.FC = () => {
                                     <div className="flex flex-col items-center flex-1 p-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-white/5 cursor-help transition-colors group relative">
                                         <span className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">{t.balance}</span>
                                         <span className="font-mono font-bold text-gray-900 dark:text-white">
-                                            {(parseFloat(walletStats.balance) / 1000).toFixed(0)}k
+                                            {formatHodlBalance(walletStats.balance)}
                                         </span>
                                         {/* Tooltip */}
                                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black text-white text-[10px] rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-10 transition-opacity shadow-lg backdrop-blur-sm bg-black/90">
-                                            {walletStats.balance} HODL
+                                            {(parseFloat(String(walletStats.balance)) / 1e18).toLocaleString()} HODL
                                         </div>
                                     </div>
                                 </div>
