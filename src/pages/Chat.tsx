@@ -787,7 +787,7 @@ export const Chat: React.FC = () => {
                                 <button
                                     key={mode}
                                     onClick={() => setTheme(mode)}
-                                    className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                                    className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all cursor-pointer ${
                                         theme === mode 
                                         ? 'bg-white dark:bg-[#212121] text-violet-600 dark:text-violet-400 shadow-sm' 
                                         : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
@@ -804,7 +804,7 @@ export const Chat: React.FC = () => {
                         <div className="flex bg-gray-100 dark:bg-white/5 p-1 rounded-lg">
                             <button 
                                 onClick={() => setLanguage('en')}
-                                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all cursor-pointer ${
                                     language === 'en' 
                                     ? 'bg-white dark:bg-[#212121] text-violet-600 dark:text-violet-400 shadow-sm' 
                                     : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
@@ -814,7 +814,7 @@ export const Chat: React.FC = () => {
                             </button>
                             <button 
                                 onClick={() => setLanguage('zh')}
-                                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all cursor-pointer ${
                                     language === 'zh' 
                                     ? 'bg-white dark:bg-[#212121] text-violet-600 dark:text-violet-400 shadow-sm' 
                                     : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
