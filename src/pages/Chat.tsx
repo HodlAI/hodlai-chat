@@ -1398,7 +1398,8 @@ export const Chat: React.FC = () => {
                                     </div>
                                 )}
 
-                                {/* Message Actions Toolbar */}
+                                {/* Message Actions Toolbar (Hidden while typing) */}
+                                {!isTyping && (
                                 <div className={`flex items-center gap-1 mt-1 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity pointer-events-auto ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                                     <button 
                                         onClick={() => handleCopyMessage(msg.content, msg.id)} 
@@ -1423,6 +1424,10 @@ export const Chat: React.FC = () => {
                                             >
                                                 <RefreshCw className="w-3.5 h-3.5" />
                                             </button>
+                                        </div>
+                                    )}
+                                </div>
+                                )}
                                             <button 
                                                 onClick={() => openRetryMenu(msg.id, index)}
                                                 className="p-1.5 text-gray-400 hover:text-violet-500 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors cursor-pointer w-5 flex items-center justify-center border-l border-gray-200 dark:border-white/5"
