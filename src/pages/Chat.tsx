@@ -252,11 +252,17 @@ export const Chat: React.FC = () => {
   // Scroll to bottom
   useEffect(() => {
     if (scrollRef.current) {
-        // Force scroll on mount, chat history change (e.g. refresh), or typing
-        const scroll = () => scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
-        scroll();
-        // Double ensure for async content rendering
-        setTimeout(scroll, 100);
+        // Check if user is actively scrolling up (if scroll position is not near bottom)
+        const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+        const isUserScrollingUp = scrollHeight - scrollTop - clientHeight > 100;
+        
+        // Only auto-scroll if user is NOT scrolling up, or if it's a new session load (isTyping false)
+        if (!isUserScrollingUp || !isTyping) {
+            const scroll = () => scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
+            scroll();
+            // Double ensure for async content rendering
+            setTimeout(scroll, 100);
+        }
     }
   }, [chatHistory, isTyping, attachments, currentSessionId]); // Added currentSessionId to trigger on session switch/load
 
