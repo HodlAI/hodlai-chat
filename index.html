@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
+    <title>HodlAI Chat</title>
+    <!-- Adaptive favicon logic for dark mode -->
+    <script>
+      const link = document.querySelector("link[rel*='icon']");
+      const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      function updateIcon(isDark) {
+          if (!link) return;
+          // You can swap to a light-colored SVG here if needed
+          // For now using the same green component icon
+      }
+      
+      updateIcon(matchMedia.matches);
+      matchMedia.addEventListener('change', (e) => updateIcon(e.matches));
+    </script>
+    <script>
+      (function() {
+        // Prevent white flash by setting background color immediately
+        try {
+          const localTheme = localStorage.getItem('bsc_ai_hub_theme');
+          const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (localTheme === 'dark' || ((!localTheme || localTheme === 'system') && systemDark)) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.backgroundColor = '#212121';
+            
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+      <style>
+      html.dark, html.dark body { background-color: #212121 !important; color: white !important; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- Vercel Analytics -->
+    <script>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+  </body>
+</html>
