@@ -1411,12 +1411,12 @@ export const Chat: React.FC = () => {
 
                                 {/* Message Actions Toolbar (Always Visible) */}
                                 {!isTyping && (
-                                <div className={`flex items-center gap-2 opacity-100 pointer-events-auto ${
+                                <div className={`flex items-center gap-2 opacity-100 pointer-events-auto relative z-10 ${
                                     msg.role === 'user' 
                                     ? 'flex-row-reverse mt-1' // User: explicit margin to avoid overlapping bubble
-                                    : 'flex-row mt-0'         // Assistant: flush (0px) to text, no negative overlap
+                                    : 'flex-row mt-0'         // Assistant: flush (0px) to text
                                 }`}>
-                                    <div className="flex items-center gap-1.5 p-0.5 rounded-lg" onClick={(e) => e.stopPropagation()}>
+                                    <div className="flex items-center gap-1.5 p-0.5 rounded-lg bg-transparent" onClick={(e) => e.stopPropagation()}>
                                     <button 
                                         onClick={() => handleCopyMessage(msg.content, msg.id)} 
                                         className="p-1.5 text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#424242] rounded-md transition-all cursor-pointer min-w-[28px] min-h-[28px] flex items-center justify-center relative group/btn"
