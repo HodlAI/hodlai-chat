@@ -17,7 +17,7 @@ const queryClient = new QueryClient()
 createRoot(document.getElementById('root')!).render(
   <WagmiProvider config={config}>
     <QueryClientProvider client={queryClient}>
-      <ConnectKitProvider>
+      <ConnectKitProvider options={{ language: 'zh-CN', initialChainId: 56 }}>
         <App />
       </ConnectKitProvider>
     </QueryClientProvider>
