@@ -111,7 +111,12 @@ const loadInitialTheme = (): 'light' | 'dark' | 'system' => {
 export const useStore = create<Store>((set, get) => ({
   language: loadInitialLang(),
   theme: loadInitialTheme(),
-  chatHistory: [], // Deprecated in favor of sessions
+  // Explicitly sync chatHistory with the first loaded session to ensure immediate render
+  chatHistory: (() => {
+      const saved = loadSessions();
+      if (saved.length > 0) return saved[0].messages;
+      return [];
+  })(), 
   isLoading: false,
   isConfigured: isApiConfigured(),
   
