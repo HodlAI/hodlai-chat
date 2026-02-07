@@ -632,18 +632,13 @@ export const Chat: React.FC = () => {
     }
 
     // If connected but no key, and haven't requested yet -> Request Auth
-    // REMOVED AUTO-TRIGGER per user feedback ("Too aggressive").
-    // User must click "Sign to Verify" button manually.
-    /* 
-    if (isConnected && address && !customKey && !walletStats && !hasRequestedAuth) {
-       setHasRequestedAuth(true);
-       handleWalletAuth();
-    }
-    */
+    // Auto-trigger removed. 
+    // User must click "Sign to Verify (Manual)" button manually.
   }, [isConnected, address, customKey, walletStats, hasRequestedAuth]); // Added hasRequestedAuth dependency properly
 
   const handleWalletAuth = async () => {
     if (!address) return;
+    console.log('[DEBUG] Manual verification triggered by user.');
     try {
         // 1. Get Message
         const msgRes = await fetch('https://hodlai.fun/api/auth/message', {
@@ -925,7 +920,7 @@ export const Chat: React.FC = () => {
                                         className="w-full py-2 text-xs font-bold bg-violet-600/10 text-violet-600 dark:text-violet-400 rounded-lg hover:bg-violet-600/20 transition-all cursor-pointer flex items-center justify-center gap-2"
                                     >
                                         <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
-                                        {t.signToLogin || "Sign to Check Access"}
+                                        {t.signToLogin || "Sign to Verify (Manual)"}
                                     </button>
                                 )}
                             </div>
