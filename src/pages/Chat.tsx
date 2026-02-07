@@ -261,14 +261,18 @@ export const Chat: React.FC = () => {
                 scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
             }
         } else {
-            // On Load / Refresh / switch session / Message Sent:
-            // Force instant scroll to bottom. Use scrollTop assignment for instant jump.
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-            
-            // Double check after render (rendering images/markdown can expand height)
+            // Force instant scroll to bottom on load/session switch
+            // Use requestAnimationFrame for smoother rendering timing
+            requestAnimationFrame(() => {
+                if(scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+            });
+            // Backup with timeout for image loads
             setTimeout(() => {
                 if(scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
             }, 100);
+            setTimeout(() => {
+                if(scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+            }, 500);
         }
     }
   }, [chatHistory, isTyping, attachments, currentSessionId]);
