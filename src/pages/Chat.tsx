@@ -698,12 +698,14 @@ export const Chat: React.FC = () => {
   const handleDisconnect = () => {
       disconnect();
       setWalletStats(null);
-      setCustomKey('');
-      localStorage.removeItem('bsc_ai_hub_custom_key');
-      // Clear address-specific key per user request to ensure full logout
-      if (address) {
-         localStorage.removeItem(`bsc_ai_hub_key_${address}`);
-      }
+      // Per user request: Do NOT clear API key on wallet disconnect.
+      // setCustomKey('');
+      // localStorage.removeItem('bsc_ai_hub_custom_key');
+      
+      // Clear address-specific key only? No, keep it for better UX if they reconnect.
+      // if (address) {
+      //    localStorage.removeItem(`bsc_ai_hub_key_${address}`);
+      // }
       
       checkConfiguration();
       setHasRequestedAuth(false);
