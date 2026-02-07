@@ -147,6 +147,9 @@ const CodeBlock = ({inline, className, children, ...props}: any) => {
   )
 }
 
+import { useAccount, useSignMessage } from 'wagmi';
+import { ConnectKitButton } from 'connectkit';
+
 export const Chat: React.FC = () => {
   const { 
       // chatHistory, // Removed: unstable on refresh
@@ -557,6 +560,47 @@ export const Chat: React.FC = () => {
      }
   }, [isConfigOpen]);
 
+  const { isConnected, address } = useAccount();
+  const { signMessageAsync } = useSignMessage();
+
+  const handleWalletAuth = async () => {
+    if (!address) return;
+    try {
+        // 1. Get Message
+        const msgRes = await fetch('https://gw.hodlai.fun/api/auth/message', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ address })
+        });
+        const msgData = await msgRes.json();
+        if (!msgData.success) throw new Error(msgData.error);
+        
+        // 2. Sign
+        const signature = await signMessageAsync({ message: msgData.data.message });
+        
+        // 3. Verify
+        const verifyRes = await fetch('https://gw.hodlai.fun/api/auth/verify', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ address, message: msgData.data.message, signature })
+        });
+        const verifyData = await verifyRes.json();
+        
+        if (verifyData.success && verifyData.data.token.key) {
+            setCustomKey(verifyData.data.token.key);
+            localStorage.setItem('bsc_ai_hub_custom_key', verifyData.data.token.key);
+            checkConfiguration();
+            fetchModels();
+            // alert(t.authSuccess || "Successfully authenticated!");
+        } else {
+            throw new Error(verifyData.error || 'Verification failed');
+        }
+    } catch (e: any) {
+        console.error('Auth error', e);
+        alert(e.message || 'Authentication failed');
+    }
+  };
+
   return (
     <div 
         className="flex h-[calc(100vh)] w-full overflow-hidden bg-white dark:bg-[#050505] relative"
@@ -673,6 +717,26 @@ export const Chat: React.FC = () => {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     {t.apiKey || "API Key"} <span className="text-red-500">*</span>
                     </label>
+                    
+                    {/* Wallet Connect Section inside API Key */}
+                    <div className="mb-3 p-3 bg-violet-50 dark:bg-violet-900/10 rounded-xl border border-violet-100 dark:border-violet-500/20">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-xs font-semibold text-violet-700 dark:text-violet-300">Fast Login via Wallet</span>
+                            <div className="scale-90 origin-right">
+                                <ConnectKitButton />
+                            </div>
+                        </div>
+                        {isConnected && (
+                            <button 
+                                onClick={handleWalletAuth}
+                                className="w-full py-1.5 text-xs font-medium bg-violet-600 text-white rounded-lg hover:bg-violet-500 transition-colors flex items-center justify-center gap-1.5"
+                            >
+                                <Sparkles className="w-3 h-3" />
+                                ⚡ Auto-Fill Key
+                            </button>
+                        )}
+                    </div>
+
                     <div className="flex gap-2">
                         <input
                         type="password"
