@@ -19,7 +19,7 @@ export const config = createConfig(
     },
 
     // Required API Keys
-    walletConnectProjectId: "354b3211566444855363456345332", // Placeholder, replace with env if needed
+    walletConnectProjectId: "b460d24f7aaa1a403ad76a3f16cb8bea",
 
     // Required App Info
     appName: "HodlAI Chat",
