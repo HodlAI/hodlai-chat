@@ -114,42 +114,71 @@ export const chatApi = {
         //   content: 'You are an AI assistant with real-time web search capabilities. Web search is currently ENABLED. Use it to find latest info.'
         // });
 
-        // Option 2: Parameter injection (Better for models that support tools/plugins natively via parameters)
-        // Many aggregators use 'tools' or specific boolean flags. 
-        // We will try to inject a common parameter for web search if supported by the provider, 
-        // or just rely on the model instructions if it's a "search-enabled" model variant.
-        // For general OpenWebUI/OneAPI compatibility, appending the prompt is safest unless we know the provider spec.
-        
-        // Actually, let's Append it to the LAST user message to ensure it's seen as an instruction for THIS turn.
-        // This is more robust than system prompt which might be ignored by some fine-tunes.
-        const lastMsgIndex = finalMessages.length - 1;
-        if (finalMessages[lastMsgIndex].role === 'user') {
-            const originalContent = finalMessages[lastMsgIndex].content;
-            if (typeof originalContent === 'string') {
-                finalMessages[lastMsgIndex].content = `${originalContent}\n\n[System Instruction: Perform a real-time web search for this query to provide up-to-date information.]`;
-            } else if (Array.isArray(originalContent)) {
-                 // Multimodal
-                 finalMessages[lastMsgIndex].content.push({
-                     type: "text",
-                     text: "\n\n[System Instruction: Perform a real-time web search to answer this.]"
-                 });
+        // Option 3: Inject search tool definition for Function Calling compatible models
+        const tools = [
+            {
+                type: "function",
+                function: {
+                    name: "web_search",
+                    description: "Search the internet for real-time information",
+                    parameters: {
+                        type: "object",
+                        properties: {
+                            query: {
+                                type: "string",
+                                description: "The search query to find information about"
+                            }
+                        },
+                        required: ["query"]
+                    }
+                }
             }
-        }
+        ];
+        
+        // Option 4: Inject plugins/extensions parameter for aggregators (OneAPI/NewAPI/GoAmz)
+        // This is often supported alongside standard OpenAI body
     }
     
+    // Prepare Request Body
+    const requestBody: any = {
+        model,
+        messages: finalMessages,
+        stream: true,
+    };
+
+    if (webSearch) {
+        // [Standard] OpenAI Tools
+        requestBody.tools = [
+            {
+                type: "function",
+                function: {
+                    name: "web_search",
+                    description: "Search the internet for real-time information",
+                    parameters: {
+                        type: "object",
+                        properties: {
+                            query: { type: "string", description: "Search terms" }
+                        },
+                        required: ["query"]
+                    }
+                }
+            }
+        ];
+        
+        // [Aggregator] Common plugin flags
+        // Many OneAPI/NewAPI deployments check for 'plugins' or specific bools
+        requestBody.plugins = ["search"]; 
+        requestBody.google_search = true; // Dify / FastGPT style
+        requestBody.web_search = true;    // Some custom gateways
+    }
+
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`,
       },
-      body: JSON.stringify({
-        model,
-        messages: finalMessages,
-        stream: true, // Enable Streaming
-        // Experimental: specific vendor flags for search
-        // web_search: webSearch // Some aggregators support this top-level
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     if (!response.ok) {
