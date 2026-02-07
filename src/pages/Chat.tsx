@@ -632,10 +632,14 @@ export const Chat: React.FC = () => {
     }
 
     // If connected but no key, and haven't requested yet -> Request Auth
+    // REMOVED AUTO-TRIGGER per user feedback ("Too aggressive").
+    // User must click "Sign to Verify" button manually.
+    /* 
     if (isConnected && address && !customKey && !walletStats && !hasRequestedAuth) {
        setHasRequestedAuth(true);
        handleWalletAuth();
     }
+    */
   }, [isConnected, address, customKey, walletStats, hasRequestedAuth]); // Added hasRequestedAuth dependency properly
 
   const handleWalletAuth = async () => {
