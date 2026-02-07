@@ -1423,7 +1423,6 @@ export const Chat: React.FC = () => {
                                         title="Copy"
                                     >
                                         <span className="absolute -inset-2" />
-                                        <span className="absolute top-full left-0 right-0 h-4" /> {/* Extend click area downwards */}
                                         {copiedId === msg.id ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                                     </button>
                                     <button 
@@ -1432,7 +1431,6 @@ export const Chat: React.FC = () => {
                                         title="Delete"
                                     >
                                         <span className="absolute -inset-2" />
-                                        <span className="absolute top-full left-0 right-0 h-4" /> {/* Extend click area downwards */}
                                         <Trash className="w-3.5 h-3.5" />
                                     </button>
                                     {msg.role === 'assistant' && (
@@ -1444,7 +1442,6 @@ export const Chat: React.FC = () => {
                                                 title="Regenerate"
                                             >
                                                 <span className="absolute -inset-2" />
-                                                <span className="absolute top-full left-0 right-0 h-4" /> {/* Extend click area downwards */}
                                                 <RefreshCw className="w-3.5 h-3.5" />
                                             </button>
                                             <button 
@@ -1453,7 +1450,6 @@ export const Chat: React.FC = () => {
                                                 title="Switch Model"
                                             >
                                                 <span className="absolute -inset-2" />
-                                                <span className="absolute top-full left-0 right-0 h-4" /> {/* Extend click area downwards */}
                                                 <ChevronDown className="w-3.5 h-3.5" />
                                             </button>
                                         </>
