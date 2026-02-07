@@ -944,7 +944,15 @@ export const Chat: React.FC = () => {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         {t.apiKey || "API Key"} 
                         <span className="text-xs font-normal text-gray-400 ml-2 opacity-70">
-                            {t.optionalIfConnected}
+                            {language === 'zh' ? (
+                                <>
+                                    连接钱包或前往 <a href="https://hodlai.fun/" target="_blank" rel="noreferrer" className="text-violet-500 hover:text-violet-600 hover:underline transition-colors">hodlai.fun</a> 获取
+                                </>
+                            ) : (
+                                <>
+                                    Connect wallet or get from <a href="https://hodlai.fun/" target="_blank" rel="noreferrer" className="text-violet-500 hover:text-violet-600 hover:underline transition-colors">hodlai.fun</a>
+                                </>
+                            )}
                         </span>
                     </label>
                     <div className="flex gap-2">
