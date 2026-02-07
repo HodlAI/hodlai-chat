@@ -540,8 +540,8 @@ export const Chat: React.FC = () => {
   const filteredModels = allModels.filter(m => m.id.toLowerCase().includes(searchTerm.toLowerCase()));
 
   const saveConfig = () => {
-    if (customBase && customBase.trim().length > 0) localStorage.setItem('bsc_ai_hub_custom_base', customBase);
-    else localStorage.removeItem('bsc_ai_hub_custom_base');
+    // Force clear custom base URL as per requirement "Delete custom API address"
+    localStorage.removeItem('bsc_ai_hub_custom_base');
     if (customKey) localStorage.setItem('bsc_ai_hub_custom_key', customKey);
     else localStorage.removeItem('bsc_ai_hub_custom_key');
     
@@ -966,22 +966,6 @@ export const Chat: React.FC = () => {
 
                 {/* Model Selection Section */}
                 
-                {/* Base URL Section */}
-                <div className="mt-4 pt-4 border-t border-gray-100 dark:border-[#333]">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        {tConfig.customBaseUrl || "Custom Base URL"}
-                    </label>
-                    <div className="flex gap-2">
-                        <input
-                        type="text"
-                        value={customBase}
-                        onChange={(e) => setCustomBase(e.target.value)}
-                        placeholder="https://api.hodlai.fun/v1"
-                        className="flex-1 bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-[#333] text-gray-900 dark:text-white text-sm rounded-xl focus:ring-2 focus:ring-[#10a37f]/20 focus:border-[#10a37f] block p-3 shadow-inner transition-all hover:border-gray-300 dark:hover:border-gray-600 outline-none"
-                        />
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1">{tConfig.customBaseUrlDesc || "Default: https://api.hodlai.fun/v1"}</p>
-                </div>
 {isConfigured && (
                     <div className="pt-4 border-t border-gray-100 dark:border-[#333]">
                         <div className="flex items-center justify-between mb-4">
