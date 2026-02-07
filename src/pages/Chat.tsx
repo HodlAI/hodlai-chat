@@ -1276,7 +1276,13 @@ export const Chat: React.FC = () => {
                         {randomSuggestions.map((hint) => (
                             <button 
                                 key={hint} 
-                                onClick={() => setInput(hint)} 
+                                onClick={() => {
+                                    if (!isApiConfigured()) {
+                                        setIsConfigOpen(true);
+                                        return;
+                                    }
+                                    setInput(hint);
+                                }} 
                                 className="p-4 rounded-xl border border-gray-100 dark:border-white/5 bg-white dark:bg-white/5 hover:bg-gray-50 dark:hover:bg-white/10 text-left text-sm text-gray-600 dark:text-gray-300 transition-all hover:scale-[1.02] shadow-sm hover:shadow-md cursor-pointer hover:border-violet-500/20"
                             >
                                 {hint}
