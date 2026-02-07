@@ -1411,8 +1411,8 @@ export const Chat: React.FC = () => {
 
                                 {/* Message Actions Toolbar (Always Visible) */}
                                 {!isTyping && (
-                                <div className={`flex items-center gap-1 -mt-1 opacity-100 pointer-events-auto ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                                    <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+                                <div className={`flex items-center gap-1 mt-1 opacity-100 pointer-events-auto ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                                    <div className="flex items-center gap-1 p-2 -m-2" onClick={(e) => e.stopPropagation()}>
                                     <button 
                                         onClick={() => handleCopyMessage(msg.content, msg.id)} 
                                         className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-[#333] transition-colors cursor-pointer"
