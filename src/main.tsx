@@ -3,6 +3,12 @@ import 'highlight.js/styles/github-dark.css';
 // KaTeX styles
 import 'katex/dist/katex.min.css';
 
+// Polyfill for WalletConnect
+import { Buffer } from 'buffer';
+if (!window.Buffer) {
+  window.Buffer = Buffer;
+}
+
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
