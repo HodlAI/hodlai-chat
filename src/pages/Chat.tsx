@@ -1528,20 +1528,20 @@ export const Chat: React.FC = () => {
                         }}
                     />
                     <div className="flex items-center justify-between mt-1 px-1 pb-1">
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1 z-30 isolate">
                              <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileSelect} multiple accept="image/*, .pdf, .txt, .md" />
                              
                              <button 
-                                onClick={() => fileInputRef.current?.click()} 
-                                className="p-2 text-gray-400 hover:text-violet-500 dark:text-gray-500 dark:hover:text-violet-400 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 transition-all cursor-pointer" 
+                                onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }} 
+                                className="p-2 text-gray-400 hover:text-violet-500 dark:text-gray-500 dark:hover:text-violet-400 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 transition-all cursor-pointer relative z-40" 
                                 title={t.attachFile || "Attach File"}
                              >
                                  <Paperclip className="w-5 h-5" />
                              </button>
                              
                              <button 
-                                onClick={() => setWebSearch(!webSearch)} 
-                                className={`p-2 rounded-lg transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                                onClick={(e) => { e.stopPropagation(); setWebSearch(!webSearch); }} 
+                                className={`p-2 rounded-lg transition-all flex items-center justify-center gap-2 cursor-pointer relative z-40 ${
                                     webSearch 
                                     ? 'bg-cyan-50 text-cyan-600 dark:bg-cyan-900/20 dark:text-cyan-400 font-medium px-3' 
                                     : 'text-gray-400 hover:text-cyan-500 dark:text-gray-500 dark:hover:text-cyan-400 hover:bg-gray-100 dark:hover:bg-white/5'
@@ -1553,7 +1553,7 @@ export const Chat: React.FC = () => {
                              </button>
 
                              {/* Smart Model Selector */}
-                             <div className="relative">
+                             <div className="relative z-40">
                                 <button 
                                     onClick={(e) => { e.stopPropagation(); setIsBottomModelSelectorOpen(!isBottomModelSelectorOpen); setIsConfigOpen(false); }}
                                     className={`p-2 rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
@@ -1569,7 +1569,7 @@ export const Chat: React.FC = () => {
                                 {isBottomModelSelectorOpen && (
                                     <>
                                         <div className="fixed inset-0 z-[100]" onClick={() => setIsBottomModelSelectorOpen(false)} />
-                                        <div className="absolute bottom-full mb-3 left-0 w-64 bg-white/90 dark:bg-[#1a1a1a]/90 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-200 dark:border-white/10 overflow-hidden z-[101] max-h-[300px] flex flex-col animate-slide-up">
+                                        <div className="absolute bottom-full mb-3 left-0 w-64 bg-white/90 dark:bg-[#1a1a1a]/90 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-200 dark:border-white/10 overflow-hidden z-[101] max-h-[300px] flex flex-col animate-slide-up" onClick={(e) => e.stopPropagation()}>
                                             <div className="p-2 overflow-y-auto custom-scrollbar">
                                                 <div className="px-3 py-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider">{t.selectModel || "Select Model"}</div>
                                                 {activeModelIds.map(id => (
