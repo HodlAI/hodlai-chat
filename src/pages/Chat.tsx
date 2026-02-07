@@ -252,19 +252,26 @@ export const Chat: React.FC = () => {
   // Scroll to bottom
   useEffect(() => {
     if (scrollRef.current) {
-        // Check if user is actively scrolling up (if scroll position is not near bottom)
         const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
         const isUserScrollingUp = scrollHeight - scrollTop - clientHeight > 100;
         
-        // Only auto-scroll if user is NOT scrolling up, or if it's a new session load (isTyping false)
-        if (!isUserScrollingUp || !isTyping) {
-            const scroll = () => scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
-            scroll();
-            // Double ensure for async content rendering
-            setTimeout(scroll, 100);
+        if (isTyping) {
+            // While typing: only auto-scroll if user hasn't manually scrolled up
+            if (!isUserScrollingUp) {
+                scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
+            }
+        } else {
+            // On Load / Refresh / switch session / Message Sent:
+            // Force instant scroll to bottom. Use scrollTop assignment for instant jump.
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+            
+            // Double check after render (rendering images/markdown can expand height)
+            setTimeout(() => {
+                if(scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+            }, 100);
         }
     }
-  }, [chatHistory, isTyping, attachments, currentSessionId]); // Added currentSessionId to trigger on session switch/load
+  }, [chatHistory, isTyping, attachments, currentSessionId]);
 
   // Scroll Button Visibility Logic
   useEffect(() => {
