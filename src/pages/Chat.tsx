@@ -1411,43 +1411,40 @@ export const Chat: React.FC = () => {
 
                                 {/* Message Actions Toolbar (Always Visible) */}
                                 {!isTyping && (
-                                <div className={`flex items-center gap-1 mt-1 opacity-100 pointer-events-auto ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                                    <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+                                <div className={`flex items-center gap-2 mt-2 opacity-100 pointer-events-auto ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                                    <div className="flex items-center gap-2 p-1 bg-white dark:bg-[#252525] rounded-xl shadow-sm border border-gray-100 dark:border-[#333]" onClick={(e) => e.stopPropagation()}>
                                     <button 
                                         onClick={() => handleCopyMessage(msg.content, msg.id)} 
-                                        className="relative p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-[#333] transition-colors cursor-pointer"
+                                        className="p-2 text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#424242] rounded-lg transition-all cursor-pointer min-w-[32px] min-h-[32px] flex items-center justify-center"
                                         title="Copy"
                                     >
-                                        <span className="absolute -inset-2" />
-                                        {copiedId === msg.id ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                                        {copiedId === msg.id ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                                     </button>
                                     <button 
                                         onClick={() => removeMessage(msg.id)} 
-                                        className="relative p-1.5 text-gray-400 hover:text-red-500 rounded-md hover:bg-gray-100 dark:hover:bg-[#333] transition-colors cursor-pointer"
+                                        className="p-2 text-gray-400 hover:text-red-500 hover:bg-gray-100 dark:hover:bg-[#424242] rounded-lg transition-all cursor-pointer min-w-[32px] min-h-[32px] flex items-center justify-center"
                                         title="Delete"
                                     >
-                                        <span className="absolute -inset-2" />
-                                        <Trash className="w-3.5 h-3.5" />
+                                        <Trash className="w-4 h-4" />
                                     </button>
                                     {msg.role === 'assistant' && (
-                                        <div className="flex items-center gap-0.5 bg-gray-50 dark:bg-white/5 rounded-lg overflow-hidden border border-gray-200 dark:border-white/5 shadow-sm">
+                                        <>
+                                            <div className="w-px h-4 bg-gray-200 dark:bg-[#424242] mx-1" />
                                             <button 
                                                 onClick={() => handleRetry(index)} 
-                                                className="relative p-1.5 text-gray-400 hover:text-violet-500 transition-colors cursor-pointer"
-                                                title="Regenerate (Default)"
+                                                className="p-2 text-gray-400 hover:text-violet-500 hover:bg-gray-100 dark:hover:bg-[#424242] rounded-lg transition-all cursor-pointer min-w-[32px] min-h-[32px] flex items-center justify-center"
+                                                title="Regenerate"
                                             >
-                                                <span className="absolute -inset-2" />
-                                                <RefreshCw className="w-3.5 h-3.5" />
+                                                <RefreshCw className="w-4 h-4" />
                                             </button>
                                             <button 
                                                 onClick={() => openRetryMenu(msg.id, index)}
-                                                className="relative p-1.5 text-gray-400 hover:text-violet-500 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors cursor-pointer w-5 flex items-center justify-center border-l border-gray-200 dark:border-white/5"
-                                                title="Choose Model..."
+                                                className="p-2 text-gray-400 hover:text-violet-500 hover:bg-gray-100 dark:hover:bg-[#424242] rounded-lg transition-all cursor-pointer min-w-[32px] min-h-[32px] flex items-center justify-center"
+                                                title="Switch Model"
                                             >
-                                                <span className="absolute -inset-2" />
-                                                <ChevronDown className="w-3 h-3" />
+                                                <ChevronDown className="w-4 h-4" />
                                             </button>
-                                        </div>
+                                        </>
                                     )}
                                   </div>
                                 </div>
