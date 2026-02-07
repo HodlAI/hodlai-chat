@@ -1424,10 +1424,6 @@ export const Chat: React.FC = () => {
                                             >
                                                 <RefreshCw className="w-3.5 h-3.5" />
                                             </button>
-                                        </div>
-                                    )}
-                                </div>
-                                )}
                                             <button 
                                                 onClick={() => openRetryMenu(msg.id, index)}
                                                 className="p-1.5 text-gray-400 hover:text-violet-500 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors cursor-pointer w-5 flex items-center justify-center border-l border-gray-200 dark:border-white/5"
@@ -1438,6 +1434,7 @@ export const Chat: React.FC = () => {
                                         </div>
                                     )}
                                 </div>
+                                )}
                             </div>
                         </div>
                     ))}
