@@ -674,7 +674,7 @@ export const Chat: React.FC = () => {
             // Extract precise data from the new response structure
             const tokenData = verifyData.data.token;
             setWalletStats({
-                balance: tokenData.balanceFormatted, 
+                balance: tokenData.balance, // Use raw Wei value for formatter (which divides by 1e18) 
                 dailyQuota: tokenData.dailyQuota, 
                 remainQuota: tokenData.remainQuota, 
                 quotaMessage: tokenData.quotaInfo?.message,
@@ -700,11 +700,10 @@ export const Chat: React.FC = () => {
       setWalletStats(null);
       setCustomKey('');
       localStorage.removeItem('bsc_ai_hub_custom_key');
-      // Do NOT clear the per-address cached key, so re-connect is fast
-      // This prevents "Always ask for signature" on reconnect if the previous token is still valid.
-      // if (address) {
-      //    localStorage.removeItem(`bsc_ai_hub_key_${address}`);
-      // }
+      // Clear address-specific key per user request to ensure full logout
+      if (address) {
+         localStorage.removeItem(`bsc_ai_hub_key_${address}`);
+      }
       
       checkConfiguration();
       setHasRequestedAuth(false);
