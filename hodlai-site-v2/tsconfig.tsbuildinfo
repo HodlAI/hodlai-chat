@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/i18n.ts","./src/main.tsx","./src/components/Features.tsx","./src/components/Hero.tsx","./src/components/Models.tsx","./src/components/Pricing.tsx","./src/components/api/AuthPanel.tsx","./src/components/layout/Navbar.tsx","./src/config/wagmi.ts","./src/hooks/useAuth.ts"],"version":"5.9.3"}

@@ -1,0 +1,3694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>HodlAI - 持有代币免费用 AI API | GPT-5.2、Claude 4.5、Gemini 3 Pro 等 200+ 模型</title>
+  <meta name="description" content="全球首个 Web3 与 AI 结合的平台。持有 $HODLAI 代币即可免费调用 GPT-5.2、Claude 4.5、Gemini 3 Pro、DeepSeek R1 等 200+ 顶级 AI 模型 API。每 3000 代币 = 每日 $1 额度，3% 交易税 100% 透明公开。">
+  <meta name="keywords" content="HodlAI, HODLAI, AI API, GPT-5.2, Claude 4.5, Gemini 3 Pro, DeepSeek, Web3 AI, 免费 AI API, 加密货币 AI, BSC 代币, OpenAI 替代, AI 模型, 区块链 AI, Grok, Kimi, 人工智能 API">
+  <meta name="author" content="HodlAI">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
+  <link rel="canonical" href="index.html">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hodlai.fun/">
+  <meta property="og:title" content="HodlAI - 持有代币免费用 AI API | 200+ 顶级 AI 模型">
+  <meta property="og:description" content="全球首个 Web3 与 AI 结合的平台。持有 $HODLAI 代币即可免费调用 GPT-5.2、Claude 4.5、Gemini 3 Pro 等 200+ 顶级 AI 模型 API。">
+  <meta property="og:image" content="https://hodlai.fun/hodlai.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="HodlAI - Web3 AI API Platform">
+  <meta property="og:site_name" content="HodlAI">
+  <meta property="og:locale" content="zh_CN">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://hodlai.fun/">
+  <meta name="twitter:title" content="HodlAI - 持有代币免费用 AI API | 200+ 顶级 AI 模型">
+  <meta name="twitter:description" content="全球首个 Web3 与 AI 结合的平台。持有 $HODLAI 代币即可免费调用 GPT-5.2、Claude 4.5、Gemini 3 Pro 等 200+ 顶级 AI 模型 API。">
+  <meta name="twitter:image" content="https://hodlai.fun/hodlai.jpg">
+  <meta name="twitter:image:alt" content="HodlAI - Web3 AI API Platform">
+  <meta name="twitter:site" content="@HodlAI">
+  <meta name="twitter:creator" content="@HodlAI">
+  
+  <!-- 额外的 SEO 标签 -->
+  <meta name="theme-color" content="#6366f1">
+  <meta name="msapplication-TileColor" content="#6366f1">
+  <meta name="msapplication-TileImage" content="/hodlai.jpg">
+  
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="logo.jpg">
+  
+  <!-- 预加载预览图 -->
+  <link rel="preload" as="image" href="hodlai.jpg">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.9.0/ethers.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            },
+            web3: {
+              500: '#8b5cf6',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    * {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    .gradient-brand {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #2563eb, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .glass {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+    }
+    
+    .hero-pattern {
+      background-image: radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.15) 1px, transparent 0);
+      background-size: 40px 40px;
+    }
+    
+    .stat-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+    }
+    
+    .logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+    
+    @media (min-width: 640px) {
+      .logo-img {
+        width: 48px;
+        height: 48px;
+      }
+    }
+    
+    .touch-feedback:active {
+      transform: scale(0.98);
+    }
+    
+    .safe-bottom {
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    
+    .animate-pulse-border {
+      animation: pulse-border 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse-border {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    /* 钱包模态框样式 */
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    
+    .modal-animate {
+      animation: modalIn 0.2s ease-out;
+    }
+    
+    .wallet-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .wallet-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .wallet-item:hover:not(.wallet-item-disabled) {
+      transform: translateX(4px);
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
+    
+    .wallet-item:active:not(.wallet-item-disabled) {
+      transform: scale(0.98);
+    }
+    
+    .wallet-item-disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+    
+    .wallet-item-connecting {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
+    
+    .wallet-item-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    
+    .wallet-item-icon img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+    
+    .wallet-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .wallet-item-info h4 {
+      font-weight: 600;
+      color: #1e293b;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .wallet-item-info p {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+    
+    .wallet-installed-badge {
+      padding: 2px 6px;
+      background: #dcfce7;
+      color: #16a34a;
+      font-size: 10px;
+      border-radius: 9999px;
+      font-weight: 500;
+    }
+    
+    .wallet-item-action {
+      flex-shrink: 0;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #e2e8f0;
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="fixed inset-0 z-[200] bg-white/80 backdrop-blur-sm hidden flex items-center justify-center">
+    <div class="text-center">
+      <div class="w-12 h-12 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+      <p id="loadingText" class="text-slate-600">加载中...</p>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-[150] px-4 py-3 bg-slate-800 text-white rounded-xl shadow-lg flex items-center gap-2 translate-y-full opacity-0 transition-all duration-300">
+    <span id="toastIcon">✓</span>
+    <span id="toastMessage">操作成功</span>
+  </div>
+
+  <!-- 钱包选择模态框 -->
+  <div id="walletModal" class="fixed inset-0 z-[100] hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeWalletModal()"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-md max-h-[80vh] overflow-hidden modal-animate" onclick="event.stopPropagation()">
+        <div class="p-4 sm:p-6 border-b border-slate-200">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-lg sm:text-xl font-bold text-slate-800" id="walletModalTitle">连接钱包</h3>
+              <p class="text-xs sm:text-sm text-slate-500 mt-0.5" id="walletModalSubtitle">选择你的钱包</p>
+            </div>
+            <button onclick="closeWalletModal()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 transition-colors">
+              <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="p-4 sm:p-6 overflow-y-auto max-h-[50vh]" id="walletList"></div>
+        <div class="p-4 sm:p-6 border-t border-slate-200 bg-slate-50">
+          <p class="text-xs text-slate-500 text-center flex items-center justify-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+            </svg>
+            <span id="walletModalSecurityTip">签名验证安全，不会转移资产</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 导航栏 -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-slate-200/50">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 sm:gap-3">
+          <img src="logo.jpg" alt="HodlAI Logo" class="logo-img shadow-lg shadow-brand-500/30 rounded-xl">
+          <div>
+            <h1 class="font-bold text-slate-800 text-base sm:text-lg">HodlAI</h1>
+            <p class="text-[10px] sm:text-xs text-slate-500 hidden sm:block">Use AI Free</p>
+          </div>
+        </div>
+        <div class="hidden lg:flex items-center gap-8">
+          <a href="index.html#api-panel" class="text-sm text-slate-600 hover:text-brand-600 transition-colors" data-i18n="nav_api">API Key</a>
+          <a href="index.html#features" class="text-sm text-slate-600 hover:text-brand-600 transition-colors" data-i18n="nav_features">项目优势</a>
+          <a href="index.html#transparency" class="text-sm text-emerald-600 hover:text-emerald-700 transition-colors flex items-center gap-1">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span data-i18n="nav_transparency">透明公示</span>
+          </a>
+          <a href="index.html#models" class="text-sm text-slate-600 hover:text-brand-600 transition-colors" data-i18n="nav_models">AI 模型</a>
+          <a href="index.html#pricing" class="text-sm text-slate-600 hover:text-brand-600 transition-colors" data-i18n="nav_pricing">额度说明</a>
+          <a href="index.html#docs" class="text-sm text-slate-600 hover:text-brand-600 transition-colors" data-i18n="nav_docs">API 文档</a>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button onclick="toggleLanguage()" id="langSwitchBtn" class="touch-feedback px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors">
+            中
+          </button>
+          <div class="hidden sm:flex items-center gap-2">
+            <a href="https://x.com/hodlai_bsc" target="_blank" class="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors" title="Twitter">
+              <svg class="w-4 h-4 text-slate-700" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://t.me/hodlai_fun" target="_blank" class="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors" title="Telegram">
+              <svg class="w-4 h-4 text-slate-700" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            </a>
+          </div>
+          <button onclick="handleWalletClick()" id="connectBtn" class="wallet-btn touch-feedback px-3 sm:px-5 py-2 sm:py-2.5 gradient-brand text-white rounded-xl hover:opacity-90 transition-all font-medium flex items-center gap-1.5 sm:gap-2 shadow-lg shadow-brand-500/25 text-sm sm:text-base">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span id="connectBtnText" data-i18n="nav_connect">连接钱包</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 移动端底部导航 -->
+  <nav class="fixed bottom-0 left-0 right-0 z-50 glass border-t border-slate-200/50 lg:hidden safe-bottom">
+    <div class="flex justify-around items-center py-2">
+      <a href="index.html#api-panel" class="flex flex-col items-center gap-0.5 px-3 py-1.5 text-slate-600 min-w-[48px]"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg><span class="text-[10px]">API</span></a>
+      <a href="index.html#transparency" class="flex flex-col items-center gap-0.5 px-3 py-1.5 text-emerald-600 min-w-[48px]"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg><span class="text-[10px]">Verify</span></a>
+      <a href="index.html#models" class="flex flex-col items-center gap-0.5 px-3 py-1.5 text-slate-600 min-w-[48px]"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg><span class="text-[10px]">AI</span></a>
+      <a href="https://t.me/hodlai_fun" target="_blank" class="flex flex-col items-center gap-0.5 px-3 py-1.5 text-slate-600 min-w-[48px]"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg><span class="text-[10px]">TG</span></a>
+      <a href="index.html#faq" class="flex flex-col items-center gap-0.5 px-3 py-1.5 text-slate-600 min-w-[48px]"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="text-[10px]">FAQ</span></a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="pt-20 sm:pt-24 pb-8 sm:pb-12 relative overflow-hidden">
+    <div class="absolute inset-0 hero-pattern"></div>
+    <div class="absolute top-0 left-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-brand-400 rounded-full blur-[100px] opacity-20 animate-pulse"></div>
+    <div class="absolute bottom-0 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-violet-500 rounded-full blur-[100px] opacity-20 animate-pulse"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative">
+      <div class="text-center max-w-4xl mx-auto">
+        <div class="inline-flex flex-wrap justify-center items-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+          <span class="px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-brand-100 to-violet-100 text-brand-700 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse"></span>
+            <span data-i18n="hero_badge_web3">Web3 × AI 融合</span>
+          </span>
+          <span class="px-2.5 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] sm:text-xs font-medium flex items-center gap-1">
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span data-i18n="hero_badge_transparency">资金透明</span>
+          </span>
+        </div>
+        
+        <h1 class="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 mb-4 sm:mb-6 leading-tight">
+          <span data-i18n="hero_title_prefix">持有$HODLAI</span><br><span class="gradient-text" data-i18n="hero_title_suffix">AI API 永久免费</span>
+        </h1>
+        
+        <p class="text-base sm:text-xl md:text-2xl text-slate-600 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-2">
+          <span data-i18n="hero_desc">3% 交易税保障 API 资金池，200+ 顶级模型一站式调用</span>
+        </p>
+        
+        <div class="grid grid-cols-4 gap-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-4 md:gap-6 mb-6 sm:mb-8 px-2">
+          <div class="stat-card px-3 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl border border-slate-200/50 shadow-lg">
+            <p class="text-xl sm:text-3xl font-bold gradient-text">200+</p>
+            <p class="text-[10px] sm:text-sm text-slate-500" data-i18n="hero_models_tag">AI 模型</p>
+          </div>
+          <div class="stat-card px-3 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl border border-slate-200/50 shadow-lg">
+            <p class="text-xl sm:text-3xl font-bold gradient-text">$10</p>
+            <p class="text-[10px] sm:text-sm text-slate-500"><span data-i18n="hero_cost_prefix">持仓=</span><span id="heroDailyQuota">$1</span><span data-i18n="hero_cost_suffix">/天</span></p>
+          </div>
+          <div class="stat-card px-3 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl border border-slate-200/50 shadow-lg">
+            <p class="text-xl sm:text-3xl font-bold gradient-text">24h</p>
+            <p class="text-[10px] sm:text-sm text-slate-500" data-i18n="hero_diamond_tag">💎100%</p>
+          </div>
+          <div class="stat-card px-3 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl border border-slate-200/50 shadow-lg">
+            <p class="text-xl sm:text-3xl font-bold gradient-text">∞</p>
+            <p class="text-[10px] sm:text-sm text-slate-500" data-i18n="hero_hold_tag">持有即享</p>
+          </div>
+        </div>
+        
+        <div class="flex flex-wrap justify-center gap-1.5 sm:gap-2 px-2">
+          <span class="px-2 sm:px-3 py-1 sm:py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-xs sm:text-sm font-medium">GPT-5.2</span>
+          <span class="px-2 sm:px-3 py-1 sm:py-1.5 bg-orange-100 text-orange-700 rounded-lg text-xs sm:text-sm font-medium">Claude 4.5</span>
+          <span class="px-2 sm:px-3 py-1 sm:py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs sm:text-sm font-medium">Gemini 3 Pro</span>
+          <span class="px-2 sm:px-3 py-1 sm:py-1.5 bg-violet-100 text-violet-700 rounded-lg text-xs sm:text-sm font-medium">DeepSeek</span>
+          <span class="px-2 sm:px-3 py-1 sm:py-1.5 bg-slate-100 text-slate-600 rounded-lg text-xs sm:text-sm font-medium">200+</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<!-- API Key 面板 -->
+<section id="api-panel" class="py-8 sm:py-12 bg-gradient-to-b from-slate-50 to-white">
+  <div class="max-w-4xl mx-auto px-2 sm:px-6">
+    <div id="apiPanelCard" class="bg-white rounded-xl sm:rounded-3xl shadow-2xl overflow-hidden border-2 border-slate-200 transition-all duration-300">
+      
+      <div id="panelHeader" class="gradient-brand p-3 sm:p-6 text-white">
+        <div class="flex items-start sm:items-center justify-between gap-2 sm:gap-4">
+          <div class="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
+            <div class="w-10 h-10 sm:w-16 sm:h-16 rounded-lg sm:rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur flex-shrink-0">
+              <span id="userStatusEmoji" class="text-xl sm:text-4xl">🔑</span>
+            </div>
+            <div class="min-w-0 flex-1">
+              <p id="panelStatusText" class="text-white/70 text-[10px] sm:text-sm truncate" data-i18n="panel_status_connect">连接钱包获取 API Key</p>
+              <p class="font-mono text-sm sm:text-xl font-bold truncate" id="userAddress">0x...</p>
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row items-end sm:items-center gap-1.5 sm:gap-3 flex-shrink-0">
+            <div id="hodlBadge" class="hidden px-2 sm:px-4 py-1 sm:py-2 bg-amber-400 text-amber-900 rounded-lg sm:rounded-xl text-[10px] sm:text-sm font-bold shadow-lg whitespace-nowrap">💎 Diamond Hands</div>
+            <button id="disconnectBtn" onclick="disconnectWallet()" class="hidden touch-feedback px-2 sm:px-4 py-1 sm:py-2 bg-white/20 rounded-lg sm:rounded-xl hover:bg-white/30 transition-all text-[10px] sm:text-sm backdrop-blur whitespace-nowrap" data-i18n="btn_disconnect">断开</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="p-3 sm:p-6 md:p-8 relative">
+        
+        <div id="notConnectedOverlay" class="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center p-4 sm:p-6">
+          <div class="text-center max-w-md">
+            <div class="w-16 h-16 sm:w-24 sm:h-24 mx-auto mb-3 sm:mb-6 rounded-xl sm:rounded-2xl gradient-brand flex items-center justify-center shadow-xl shadow-brand-500/30 animate-pulse-border border-4 border-brand-300">
+              <span class="text-3xl sm:text-5xl">🔐</span>
+            </div>
+            <h3 class="text-lg sm:text-2xl font-bold text-slate-800 mb-2 sm:mb-3" data-i18n="panel_status_connect">连接钱包获取 API Key</h3>
+            <p class="text-xs sm:text-base text-slate-600 mb-3 sm:mb-6">
+              <span data-i18n="panel_unconnected_desc">持有 $HODLAI 代币即可获得每日免费额度</span><br>
+              <span class="text-brand-600 font-medium" data-i18n="panel_unconnected_sub">每 $10 持仓 = $0.3~1/天（动态比例）</span>
+            </p>
+            <button onclick="handleWalletClick()" class="touch-feedback px-5 sm:px-8 py-2.5 sm:py-4 gradient-brand text-white rounded-xl sm:rounded-2xl font-bold text-sm sm:text-lg hover:opacity-90 transition-all shadow-xl shadow-brand-500/30 flex items-center justify-center gap-2 sm:gap-3 mx-auto">
+              <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <span data-i18n="panel_connect_btn">连接钱包</span>
+            </button>
+            <p class="text-[10px] sm:text-xs text-slate-500 mt-3 sm:mt-4" data-i18n="panel_secure_tip">🔒 签名验证安全，不会转移资产</p>
+          </div>
+        </div>
+        
+        <!-- API Key 区域 -->
+        <div class="bg-gradient-to-r from-brand-50 via-violet-50 to-pink-50 rounded-lg sm:rounded-2xl p-3 sm:p-6 mb-4 sm:mb-8 border border-brand-200">
+          <div class="flex items-center justify-between gap-2 mb-2 sm:mb-4">
+            <h3 class="font-bold text-slate-800 flex items-center gap-2 text-sm sm:text-lg shrink-0">
+              <span>🔑</span> 
+              <span data-i18n="panel_key_title">你的 API Key</span>
+            </h3>
+            <div class="flex gap-1 sm:gap-2 shrink-0 flex-nowrap">
+              <button onclick="refreshBalance()" class="touch-feedback px-1.5 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-sm bg-white text-slate-700 rounded-md sm:rounded-lg hover:bg-slate-100 border border-slate-200 flex items-center gap-0.5 sm:gap-1 whitespace-nowrap">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <span data-i18n="panel_refresh" class="xs:inline">刷新</span>
+              </button>
+              <button onclick="goToLogs()" class="touch-feedback px-1.5 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-sm bg-violet-100 text-violet-700 rounded-md sm:rounded-lg hover:bg-violet-200 border border-violet-200 flex items-center gap-0.5 sm:gap-1 whitespace-nowrap" data-i18n-title="panel_logs_tip" title="查看使用日志">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <span data-i18n="panel_logs" class="xs:inline">日志</span>
+              </button>
+              <button onclick="regenerateKey()" class="touch-feedback px-1.5 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-sm bg-white text-red-600 rounded-md sm:rounded-lg hover:bg-red-50 border border-red-200 whitespace-nowrap" data-i18n="panel_regen">重新生成</button>
+            </div>
+          </div>
+          
+          <div class="relative">
+            <div class="w-full px-2 sm:px-4 py-2.5 sm:py-4 pr-20 sm:pr-28 bg-white border-2 border-brand-200 rounded-lg sm:rounded-xl overflow-hidden">
+              <span id="userApiKeyMasked" class="api-key-masked text-[10px] sm:text-sm text-slate-600 break-all">sk-••••••••••••••••••••••••</span>
+              <input type="hidden" id="userApiKey" value="">
+            </div>
+            <div class="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 flex gap-0.5 sm:gap-1">
+              <button onclick="toggleApiKeyVisibility()" id="toggleKeyBtn" class="touch-feedback p-1.5 sm:p-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded sm:rounded-lg transition-colors" title="显示/隐藏">
+                <svg id="eyeIcon" class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                <svg id="eyeOffIcon" class="w-3.5 h-3.5 sm:w-4 sm:h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
+              </button>
+              <button onclick="copyApiKey()" class="touch-feedback px-2 sm:px-4 py-1.5 sm:py-2 gradient-brand text-white rounded sm:rounded-lg text-[10px] sm:text-sm font-medium shadow-lg shadow-brand-500/20" data-i18n="btn_copy">复制</button>
+            </div>
+          </div>
+          
+          <p class="text-[10px] sm:text-xs text-slate-500 mt-2 flex items-start sm:items-center gap-1 flex-wrap">
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0 mt-0.5 sm:mt-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span data-i18n="panel_copy_tip">Base URL:</span> <code class="text-brand-600 break-all">https://api.hodlai.fun/v1</code>
+          </p>
+        </div>
+        
+        <!-- 额度统计 -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-4 mb-4 sm:mb-8">
+          <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg sm:rounded-2xl p-2 sm:p-5 text-center border border-emerald-200">
+            <p class="text-slate-500 text-[8px] sm:text-sm mb-0.5 sm:mb-1 truncate" data-i18n="panel_quota_today">今日额度</p>
+            <p class="text-lg sm:text-3xl font-black text-emerald-600">$<span id="userDailyQuotaUSD">0.00</span></p>
+          </div>
+          <div class="bg-gradient-to-br from-brand-50 to-sky-50 rounded-lg sm:rounded-2xl p-2 sm:p-5 text-center border border-brand-200">
+            <p class="text-slate-500 text-[8px] sm:text-sm mb-0.5 sm:mb-1 truncate" data-i18n="panel_quota_remain">剩余额度</p>
+            <p class="text-lg sm:text-3xl font-black text-brand-600">$<span id="userRemainQuotaUSD">0.00</span></p>
+          </div>
+          <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg sm:rounded-2xl p-2 sm:p-5 text-center border border-amber-200">
+            <p class="text-slate-500 text-[8px] sm:text-sm mb-0.5 sm:mb-1 truncate" data-i18n="panel_quota_used">今日已用</p>
+            <p class="text-lg sm:text-3xl font-black text-amber-600">$<span id="userUsedQuotaUSD">0.00</span></p>
+          </div>
+          <div class="bg-gradient-to-br from-violet-50 to-purple-50 rounded-lg sm:rounded-2xl p-2 sm:p-5 text-center border border-violet-200">
+            <p class="text-slate-500 text-[8px] sm:text-sm mb-0.5 sm:mb-1 truncate" data-i18n="panel_hold_balance">持有代币</p>
+            <p class="text-lg sm:text-3xl font-black text-violet-600 truncate" id="userBalance">0</p>
+          </div>
+        </div>
+        
+        <!-- 钻石手状态 -->
+        <div id="hodlStatusCard" class="p-3 sm:p-5 rounded-lg sm:rounded-2xl border-2 bg-slate-50 border-slate-200">
+          <div class="flex flex-col gap-2 sm:gap-0 sm:flex-row sm:items-center justify-between">
+            <div class="flex items-center gap-2 sm:gap-4">
+              <span id="hodlStatusIcon" class="text-xl sm:text-4xl flex-shrink-0">⏳</span>
+              <div class="min-w-0">
+                <p id="hodlStatusMessage" class="font-medium text-slate-700 text-xs sm:text-base truncate" data-i18n="panel_hodl_default">持有代币即可获得额度</p>
+                <p id="hodlStatusTip" class="text-[10px] sm:text-sm text-slate-500 mt-0.5 sm:mt-1 truncate" data-i18n="panel_hodl_tip_default">连接钱包查看你的持有状态</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 sm:gap-3">
+              <div class="flex-1 sm:w-40 bg-slate-200 rounded-full h-2 sm:h-3">
+                <div id="hodlProgressBar" class="progress-bar gradient-brand h-2 sm:h-3 rounded-full" style="width: 0%"></div>
+              </div>
+              <span id="hodlReleasePercent" class="text-sm sm:text-lg font-bold text-slate-700 min-w-[40px] sm:min-w-[45px] text-right">0%</span>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- HodlAI Chat -->
+    <div id="nextchatPromo" class="mt-3 sm:mt-6">
+      <div class="bg-gradient-to-r from-brand-500 via-violet-500 to-purple-600 rounded-lg sm:rounded-2xl p-2.5 sm:p-4 shadow-lg shadow-brand-500/25">
+        <div class="flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2 sm:gap-3">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-white/20 backdrop-blur rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+              <span class="text-base sm:text-xl">💬</span>
+            </div>
+            <div class="text-white min-w-0">
+              <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <span class="font-bold text-xs sm:text-base" data-i18n="nextchat_title">一键使用：HodlAI Chat</span>
+                <span class="px-1 py-0.5 bg-amber-400 text-amber-900 rounded text-[8px] sm:text-[10px] font-bold whitespace-nowrap">⭐ <span data-i18n="nextchat_badge">推荐</span></span>
+              </div>
+              <p class="text-white/70 text-[10px] sm:text-xs truncate" data-i18n="nextchat_desc">官方网页端 · 自动配置 · 无需下载</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 sm:gap-2 w-full xs:w-auto">
+            <button onclick="copyHodlAIChatUrl()" class="touch-feedback flex-1 xs:flex-initial px-2 sm:px-3 py-1.5 sm:py-2 bg-white/20 hover:bg-white/30 backdrop-blur text-white rounded-md sm:rounded-lg text-[10px] sm:text-xs font-medium transition-all flex items-center justify-center gap-1" title="复制链接到其他浏览器使用">
+              <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              <span data-i18n="nextchat_copy_url">复制链接</span>
+            </button>
+            <button onclick="launchHodlAIChat()" class="touch-feedback flex-1 xs:flex-initial px-3 sm:px-4 py-1.5 sm:py-2 bg-white text-brand-600 hover:bg-slate-50 rounded-md sm:rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1 group">
+              <span data-i18n="nextchat_btn">立即使用</span>
+              <svg class="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 一键跳转使用 -->
+    <div id="quickLaunchSection" class="mt-4 sm:mt-8 bg-white rounded-xl sm:rounded-2xl p-3 sm:p-6 border border-slate-200">
+      <div class="flex items-center justify-between mb-2 sm:mb-4">
+        <h4 class="font-bold text-slate-800 flex items-center gap-1.5 sm:gap-2 text-xs sm:text-base">
+          <span>🚀</span> <span data-i18n="panel_quick_launch">一键跳转使用</span>
+        </h4>
+        <span class="text-[10px] sm:text-xs text-slate-500 whitespace-nowrap" data-i18n="panel_auto_config">自动填充配置</span>
+      </div>
+      
+      <div class="grid grid-cols-4 gap-1.5 sm:gap-3">
+        <button onclick="launchApp('aiaw')" class="touch-feedback group flex flex-col items-center gap-1 sm:gap-2 p-2 sm:p-4 bg-slate-50 hover:bg-gradient-to-br hover:from-purple-50 hover:to-pink-50 rounded-lg sm:rounded-xl border-2 border-slate-200 hover:border-purple-300 transition-all">
+          <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg group-hover:shadow-purple-500/30 transition-shadow">
+            <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
+            </svg>
+          </div>
+          <div class="text-center">
+            <p class="font-semibold text-slate-700 text-[10px] sm:text-sm">AIaW</p>
+            <p class="text-[8px] sm:text-[10px] text-slate-400 hidden sm:block" data-i18n="platform_web">网页</p>
+          </div>
+        </button>
+    
+        <button onclick="launchNextChatOriginal()" class="touch-feedback group flex flex-col items-center gap-1 sm:gap-2 p-2 sm:p-4 bg-slate-50 hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 rounded-lg sm:rounded-xl border-2 border-slate-200 hover:border-blue-300 transition-all">
+          <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg group-hover:shadow-blue-500/30 transition-shadow">
+            <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+            </svg>
+          </div>
+          <div class="text-center">
+            <p class="font-semibold text-slate-700 text-[10px] sm:text-sm">NextChat</p>
+            <p class="text-[8px] sm:text-[10px] text-slate-400 hidden sm:block" data-i18n="platform_web">网页</p>
+          </div>
+        </button>
+        
+        <button onclick="launchApp('opencat')" class="touch-feedback group flex flex-col items-center gap-1 sm:gap-2 p-2 sm:p-4 bg-slate-50 hover:bg-gradient-to-br hover:from-orange-50 hover:to-amber-50 rounded-lg sm:rounded-xl border-2 border-slate-200 hover:border-orange-300 transition-all">
+          <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center shadow-lg group-hover:shadow-orange-500/30 transition-shadow">
+            <span class="text-base sm:text-2xl">🐱</span>
+          </div>
+          <div class="text-center">
+            <p class="font-semibold text-slate-700 text-[10px] sm:text-sm">OpenCat</p>
+            <p class="text-[8px] sm:text-[10px] text-slate-400 hidden sm:block" data-i18n="platform_ios_mac">iOS/Mac</p>
+          </div>
+        </button>
+        
+        <button onclick="launchApp('botgem')" class="touch-feedback group flex flex-col items-center gap-1 sm:gap-2 p-2 sm:p-4 bg-slate-50 hover:bg-gradient-to-br hover:from-emerald-50 hover:to-teal-50 rounded-lg sm:rounded-xl border-2 border-slate-200 hover:border-emerald-300 transition-all">
+          <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg group-hover:shadow-emerald-500/30 transition-shadow">
+            <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+            </svg>
+          </div>
+          <div class="text-center">
+            <p class="font-semibold text-slate-700 text-[10px] sm:text-sm">BotGem</p>
+            <p class="text-[8px] sm:text-[10px] text-slate-400 hidden sm:block" data-i18n="platform_android">安卓</p>
+          </div>
+        </button>
+      </div>
+      
+      <!-- 更多应用 -->
+      <details class="mt-2 sm:mt-4">
+        <summary class="text-[10px] sm:text-sm text-slate-500 hover:text-slate-700 cursor-pointer flex items-center gap-1">
+          <svg class="w-3 h-3 sm:w-4 sm:h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          <span data-i18n="panel_more_clients">更多客户端 & 手动配置</span>
+        </summary>
+        <div class="mt-2 sm:mt-3 space-y-2 sm:space-y-3">
+          <div class="bg-slate-50 rounded-lg sm:rounded-xl p-2.5 sm:p-4 border border-slate-200">
+            <p class="text-[10px] sm:text-sm text-slate-600 mb-2 sm:mb-3" data-i18n="panel_config_guide">在兼容 OpenAI 的应用中配置：</p>
+            <div class="space-y-1.5 sm:space-y-2">
+              <div class="flex items-center justify-between bg-white rounded-md sm:rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 border border-slate-200 gap-2">
+                <div class="min-w-0 flex-1">
+                  <p class="text-[8px] sm:text-[10px] text-slate-400">API Base URL</p>
+                  <code class="text-[10px] sm:text-xs text-slate-700 block truncate">https://api.hodlai.fun/v1</code>
+                </div>
+                <button onclick="copyText('https://api.hodlai.fun/v1')" class="touch-feedback px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs bg-slate-100 hover:bg-slate-200 rounded transition-colors flex-shrink-0">Copy</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
+            <button onclick="launchApp('chatbox')" class="touch-feedback flex flex-col items-center gap-1 p-2 sm:p-3 bg-white hover:bg-slate-50 rounded-md sm:rounded-lg border border-slate-200 transition-all">
+              <span class="text-sm sm:text-lg">📦</span>
+              <span class="text-[10px] sm:text-xs text-slate-600">ChatBox</span>
+            </button>
+            <button onclick="launchApp('lobehub')" class="touch-feedback flex flex-col items-center gap-1 p-2 sm:p-3 bg-white hover:bg-slate-50 rounded-md sm:rounded-lg border border-slate-200 transition-all">
+              <span class="text-sm sm:text-lg">🤖</span>
+              <span class="text-[10px] sm:text-xs text-slate-600">LobeHub</span>
+            </button>
+            <button onclick="launchApp('cursor')" class="touch-feedback flex flex-col items-center gap-1 p-2 sm:p-3 bg-white hover:bg-slate-50 rounded-md sm:rounded-lg border border-slate-200 transition-all">
+              <span class="text-sm sm:text-lg">⚡</span>
+              <span class="text-[10px] sm:text-xs text-slate-600">Cursor</span>
+            </button>
+          </div>
+        </div>
+      </details>
+    </div>
+    <!-- 快速操作按钮 -->
+    <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center mt-4 sm:mt-8">
+      <a href="index.html#pricing" class="touch-feedback px-5 sm:px-8 py-2.5 sm:py-4 bg-white text-slate-800 rounded-lg sm:rounded-2xl font-bold text-sm sm:text-lg hover:bg-slate-50 transition-all border-2 border-slate-200 flex items-center justify-center gap-2">
+        <span>💰</span><span data-i18n="panel_btn_buy">购买代币</span>
+      </a>
+      <a href="index.html#how-it-works" class="touch-feedback px-5 sm:px-8 py-2.5 sm:py-4 bg-white text-slate-800 rounded-lg sm:rounded-2xl font-bold text-sm sm:text-lg hover:bg-slate-50 transition-all border-2 border-slate-200 flex items-center justify-center gap-2">
+        <span>📖</span><span data-i18n="panel_btn_how">运作机制</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 项目优势 -->
+<section id="features" class="py-12 sm:py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-10 sm:mb-12">
+      <span class="px-3 sm:px-4 py-1.5 sm:py-2 bg-brand-100 text-brand-700 rounded-full text-xs sm:text-sm font-semibold" data-i18n="feat_badge">核心优势</span>
+      <h2 class="text-2xl sm:text-4xl font-bold text-slate-900 mt-4 sm:mt-6 mb-3 sm:mb-4" data-i18n="feat_title">Web2 与 Web3 的完美融合</h2>
+    </div>
+    
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-5 sm:p-6 border border-amber-200/50 card-hover">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-2xl mb-4 shadow-lg shadow-amber-500/30">💰</div>
+        <h3 class="text-lg font-bold text-slate-800 mb-2" data-i18n="feat_tax_title">交易税驱动</h3>
+        <p class="text-sm text-slate-600" data-i18n="feat_tax_desc">每笔交易 3% 税费 进入资金池，可持续运作。</p>
+      </div>
+      
+      <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-5 sm:p-6 border border-emerald-200/50 card-hover">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-2xl mb-4 shadow-lg shadow-emerald-500/30">🔐</div>
+        <h3 class="text-lg font-bold text-slate-800 mb-2" data-i18n="feat_asset_title">资产在你钱包</h3>
+        <p class="text-sm text-slate-600" data-i18n="feat_asset_desc">无需充值托管，持有即权益，可随时交易。</p>
+      </div>
+      
+      <div class="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-5 sm:p-6 border border-violet-200/50 card-hover">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center text-2xl mb-4 shadow-lg shadow-violet-500/30">💎</div>
+        <h3 class="text-lg font-bold text-slate-800 mb-2" data-i18n="feat_diamond_title">钻石手机制</h3>
+        <p class="text-sm text-slate-600" data-i18n="feat_diamond_desc">持有越久额度越多，24h 达 100%。</p>
+      </div>
+      
+      <div class="bg-gradient-to-br from-sky-50 to-blue-50 rounded-2xl p-5 sm:p-6 border border-sky-200/50 card-hover">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center text-2xl mb-4 shadow-lg shadow-sky-500/30">🔌</div>
+        <h3 class="text-lg font-bold text-slate-800 mb-2" data-i18n="feat_sdk_title">全接口兼容</h3>
+        <p class="text-sm text-slate-600" data-i18n="feat_sdk_desc">OpenAI + Claude 格式全支持，12+ API 端点覆盖对话、向量、图像、音频。</p>
+      </div>
+      
+      <div class="bg-gradient-to-br from-rose-50 to-pink-50 rounded-2xl p-5 sm:p-6 border border-rose-200/50 card-hover">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center text-2xl mb-4 shadow-lg shadow-rose-500/30">🤖</div>
+        <h3 class="text-lg font-bold text-slate-800 mb-2" data-i18n="feat_models_title">200+ 顶级模型</h3>
+        <p class="text-sm text-slate-600" data-i18n="feat_models_desc">GPT-5.2、Claude、Gemini、DeepSeek 等一站调用。</p>
+      </div>
+      
+      <div class="bg-gradient-to-br from-slate-50 to-gray-100 rounded-2xl p-5 sm:p-6 border border-slate-200/50 card-hover">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-slate-600 to-gray-700 flex items-center justify-center text-2xl mb-4 shadow-lg shadow-slate-500/30">⛓️</div>
+        <h3 class="text-lg font-bold text-slate-800 mb-2" data-i18n="feat_chain_title">链上透明</h3>
+        <p class="text-sm text-slate-600" data-i18n="feat_chain_desc">持有量、时间全部链上可验证。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 税收透明公示 -->
+<section id="transparency" class="py-12 sm:py-16 bg-gradient-to-b from-emerald-50 via-white to-slate-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    
+    <div class="text-center mb-8 sm:mb-10">
+      <div class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold mb-4">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+        <span data-i18n="trans_badge">100% 公开透明</span>
+      </div>
+      <h2 class="text-2xl sm:text-4xl font-bold text-slate-900 mb-3"><span data-i18n="trans_title_prefix">税收资金</span> <span class="text-emerald-600" data-i18n="trans_title_suffix">全程可验</span></h2>
+      <p class="text-base sm:text-lg text-slate-600" data-i18n="trans_desc">3% 交易税优先保障 AI API，盈余动态赋能生态</p>
+    </div>
+
+    <div class="grid lg:grid-cols-5 gap-6">
+      
+      <!-- 左侧统计 -->
+      <div class="lg:col-span-3 space-y-4">
+        
+        <!-- 统计卡片 -->
+        <div class="grid grid-cols-4 gap-2 sm:gap-3">
+          <div class="bg-white rounded-xl p-3 sm:p-4 border border-emerald-200 text-center shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center mx-auto mb-2 text-white text-sm">💰</div>
+            <p class="text-lg sm:text-xl font-black text-emerald-600">$<span id="transparencyTotal">0</span></p>
+            <p class="text-slate-500 text-[10px]" data-i18n="trans_stat_total">累计支出</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 sm:p-4 border border-violet-200 text-center shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-violet-500 flex items-center justify-center mx-auto mb-2 text-white text-sm">📋</div>
+            <p class="text-lg sm:text-xl font-black text-violet-600" id="transparencyCount">0</p>
+            <p class="text-slate-500 text-[10px]" data-i18n="trans_stat_count">公开账单</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 sm:p-4 border border-yellow-200 text-center shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-yellow-500 flex items-center justify-center mx-auto mb-2 text-white text-sm">🔗</div>
+            <p class="text-lg sm:text-xl font-black text-yellow-600" id="transparencyBscCount">0</p>
+            <p class="text-slate-500 text-[10px]" data-i18n="trans_stat_chain">链上记录</p>
+          </div>
+          <div class="bg-white rounded-xl p-3 sm:p-4 border border-amber-200 text-center shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center mx-auto mb-2 text-white text-sm">🤝</div>
+            <p class="text-lg sm:text-xl font-black text-amber-600">0%</p>
+            <p class="text-slate-500 text-[10px]" data-i18n="trans_stat_team">团队抽成</p>
+          </div>
+        </div>
+
+        <!-- 资金分配说明 -->
+        <div class="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-5 sm:p-6 text-white shadow-xl relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          
+          <div class="relative">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur">
+                <span class="text-2xl">💡</span>
+              </div>
+              <div>
+                <h3 class="font-bold text-lg" data-i18n="trans_alloc_title">3% 交易税合理分配</h3>
+                <p class="text-emerald-100 text-sm" data-i18n="trans_alloc_sub">优先保障 AI API 运行</p>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-2 sm:gap-3">
+              <div class="bg-white/15 rounded-xl p-3 backdrop-blur text-center">
+                <span class="text-xl block mb-1">🤖</span>
+                <p class="font-bold text-sm" data-i18n="trans_type_api">AI API</p>
+                <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded-full mt-1 inline-block" data-i18n="trans_tag_core">核心</span>
+              </div>
+              <div class="bg-white/15 rounded-xl p-3 backdrop-blur text-center">
+                <span class="text-xl block mb-1">🔥</span>
+                <p class="font-bold text-sm" data-i18n="trans_type_burn">回购销毁</p>
+                <span class="text-[10px] bg-amber-400/30 px-2 py-0.5 rounded-full mt-1 inline-block" data-i18n="trans_tag_dynamic">动态</span>
+              </div>
+              <div class="bg-white/15 rounded-xl p-3 backdrop-blur text-center">
+                <span class="text-xl block mb-1">📢</span>
+                <p class="font-bold text-sm" data-i18n="trans_type_marketing">营销推广</p>
+                <span class="text-[10px] bg-amber-400/30 px-2 py-0.5 rounded-full mt-1 inline-block" data-i18n="trans_tag_dynamic">动态</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 对比 -->
+        <div class="grid sm:grid-cols-2 gap-3">
+          <div class="bg-red-50 rounded-xl p-4 border border-red-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-6 h-6 rounded-full bg-red-200 flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              </span>
+              <span class="text-sm font-bold text-red-700" data-i18n="trans_comp_trad">传统项目</span>
+            </div>
+            <ul class="text-xs text-red-600 space-y-1">
+              <li>• <span data-i18n="trans_comp_trad_1">税收用途不公开</span></li>
+              <li>• <span data-i18n="trans_comp_trad_2">团队私自抽成</span></li>
+            </ul>
+          </div>
+          <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-6 h-6 rounded-full bg-emerald-200 flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              </span>
+              <span class="text-sm font-bold text-emerald-700" data-i18n="trans_comp_hodl">HodlAI</span>
+            </div>
+            <ul class="text-xs text-emerald-600 space-y-1">
+              <li>• <strong><span data-i18n="trans_comp_hodl_1">100% 透明可验</span></strong></li>
+              <li>• <strong><span data-i18n="trans_comp_hodl_2">团队 0 抽成</span></strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧：账单列表 -->
+      <div class="lg:col-span-2">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden h-full flex flex-col">
+          <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+            <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+              <span>📋</span> <span data-i18n="trans_latest">最新支出</span>
+            </h3>
+            <button onclick="loadTransparencyData()" class="text-xs text-slate-500 hover:text-brand-600 flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              <span data-i18n="trans_refresh">刷新</span>
+            </button>
+          </div>
+          
+          <div id="recentInvoices" class="flex-1 divide-y divide-slate-100 overflow-y-auto max-h-[400px]">
+            <div class="p-4 animate-pulse">
+              <div class="h-3 bg-slate-200 rounded w-1/3 mb-2"></div>
+              <div class="h-5 bg-slate-200 rounded w-1/4 mb-2"></div>
+              <div class="h-3 bg-slate-200 rounded w-2/3"></div>
+            </div>
+            <div class="p-4 animate-pulse">
+              <div class="h-3 bg-slate-200 rounded w-1/3 mb-2"></div>
+              <div class="h-5 bg-slate-200 rounded w-1/4 mb-2"></div>
+              <div class="h-3 bg-slate-200 rounded w-2/3"></div>
+            </div>
+          </div>
+          
+          <div class="p-4 border-t border-slate-100 bg-slate-50">
+            <a href="transparency.html" class="block w-full py-2.5 text-center bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-medium transition-colors" data-i18n="trans_view_all">
+              查看完整公示 →
+            </a>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+</section>
+
+<!-- 运作机制 -->
+<section id="how-it-works" class="py-12 sm:py-16 bg-white relative overflow-hidden">
+  <div class="absolute inset-0 hero-pattern opacity-50"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative">
+    <div class="text-center mb-10 sm:mb-12">
+      <span class="px-3 sm:px-4 py-1.5 sm:py-2 bg-web3-100 text-web3-700 rounded-full text-xs sm:text-sm font-semibold" data-i18n="how_badge">经济模型</span>
+      <h2 class="text-2xl sm:text-4xl font-bold text-slate-900 mt-4 sm:mt-6 mb-3" data-i18n="how_title">交易税 → AI 额度</h2>
+    </div>
+    
+    <div class="max-w-5xl mx-auto">
+      <div class="grid grid-cols-4 gap-3 sm:gap-4 md:gap-0 relative">
+        <div class="hidden md:block absolute top-16 left-[12.5%] right-[12.5%] h-1 bg-gradient-to-r from-amber-400 via-emerald-400 via-violet-400 to-brand-400 rounded-full"></div>
+        
+        <div class="relative text-center">
+          <div class="w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-2xl sm:text-4xl shadow-xl shadow-amber-500/30 mb-3 sm:mb-4 relative z-10">💱</div>
+          <h3 class="text-xs sm:text-base font-bold text-slate-800 mb-1" data-i18n="how_step_1">代币交易</h3>
+          <p class="text-[10px] sm:text-sm text-slate-600"><strong class="text-amber-600" data-i18n="how_step_1_sub">收取 3%</strong></p>
+        </div>
+        
+        <div class="relative text-center">
+          <div class="w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-2xl sm:text-4xl shadow-xl shadow-emerald-500/30 mb-3 sm:mb-4 relative z-10">🏦</div>
+          <h3 class="text-xs sm:text-base font-bold text-slate-800 mb-1" data-i18n="how_step_2">合理分配</h3>
+          <p class="text-[10px] sm:text-sm text-slate-600"><strong class="text-emerald-600" data-i18n="how_step_2_sub">优先 API</strong></p>
+        </div>
+        
+        <div class="relative text-center">
+          <div class="w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-2xl bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center text-2xl sm:text-4xl shadow-xl shadow-violet-500/30 mb-3 sm:mb-4 relative z-10">📊</div>
+          <h3 class="text-xs sm:text-base font-bold text-slate-800 mb-1" data-i18n="how_step_3">按持有分配</h3>
+          <p class="text-[10px] sm:text-sm text-slate-600"><strong class="text-violet-600" data-i18n="how_step_3_sub">每日额度</strong></p>
+        </div>
+        
+        <div class="relative text-center">
+          <div class="w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-2xl bg-gradient-to-br from-brand-400 to-sky-500 flex items-center justify-center text-2xl sm:text-4xl shadow-xl shadow-brand-500/30 mb-3 sm:mb-4 relative z-10">🤖</div>
+          <h3 class="text-xs sm:text-base font-bold text-slate-800 mb-1" data-i18n="how_step_4">免费用 AI</h3>
+          <p class="text-[10px] sm:text-sm text-slate-600"><strong class="text-brand-600" data-i18n="how_step_4_sub">每日刷新</strong></p>
+        </div>
+      </div>
+      
+
+        <div class="mt-8 sm:mt-10 bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6 sm:p-8 text-white">
+          <div class="grid grid-cols-5 gap-2 sm:gap-6 text-center">
+            <div>
+              <p class="text-lg sm:text-3xl font-black mb-1">$0.001</p>
+              <p class="text-slate-400 text-[10px] sm:text-sm" data-i18n="how_stat_tier">价格档位</p>
+            </div>
+            <div>
+              <p class="text-lg sm:text-3xl font-black mb-1">30-100%</p>
+              <p class="text-slate-400 text-[10px] sm:text-sm" data-i18n="how_stat_ratio">动态比例</p>
+            </div>
+            <div>
+              <p class="text-lg sm:text-3xl font-black mb-1">10%</p>
+              <p class="text-slate-400 text-[10px] sm:text-sm" data-i18n="how_stat_init">立即释放</p>
+            </div>
+            <div>
+              <p class="text-lg sm:text-3xl font-black mb-1">~4%/h</p>
+              <p class="text-slate-400 text-[10px] sm:text-sm" data-i18n="how_stat_rate">每小时增加</p>
+            </div>
+            <div>
+              <p class="text-lg sm:text-3xl font-black mb-1">24h</p>
+              <p class="text-slate-400 text-[10px] sm:text-sm" data-i18n="how_stat_full">💎 100%</p>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI 模型 -->
+<section id="models" class="py-12 sm:py-16 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-10 sm:mb-12">
+      <span class="px-3 sm:px-4 py-1.5 sm:py-2 bg-rose-100 text-rose-700 rounded-full text-xs sm:text-sm font-semibold" data-i18n="model_badge">顶级模型</span>
+      <h2 class="text-2xl sm:text-4xl font-bold text-slate-900 mt-4 sm:mt-6 mb-3" data-i18n="model_title">200+ AI 模型一键调用</h2>
+    </div>
+    
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div class="model-card bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 cursor-pointer border-2 shadow-sm touch-feedback">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center"><span class="text-white font-bold text-xs">●</span></div>
+          <span class="text-[10px] sm:text-xs text-slate-500">OpenAI</span>
+        </div>
+        <p class="font-bold text-slate-800 text-sm sm:text-base">GPT-5.2</p>
+        <p class="text-[10px] text-emerald-600 mt-1 font-medium">🔥 Flagship</p>
+      </div>
+      
+      <div class="model-card bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 cursor-pointer border-2 shadow-sm touch-feedback">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center"><span class="text-white font-bold text-xs">●</span></div>
+          <span class="text-[10px] sm:text-xs text-slate-500">OpenAI</span>
+        </div>
+        <p class="font-bold text-slate-800 text-sm sm:text-base">o3 Pro</p>
+        <p class="text-[10px] text-violet-600 mt-1 font-medium">🧠 Reasoning</p>
+      </div>
+      
+      <div class="model-card bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 cursor-pointer border-2 shadow-sm touch-feedback">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center"><span class="text-white font-bold text-xs">A</span></div>
+          <span class="text-[10px] sm:text-xs text-slate-500">Anthropic</span>
+        </div>
+        <p class="font-bold text-slate-800 text-sm sm:text-base">Claude 4.5 Opus</p>
+        <p class="text-[10px] text-orange-600 mt-1 font-medium">⭐ Best Value</p>
+      </div>
+      
+      <div class="model-card bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 cursor-pointer border-2 shadow-sm touch-feedback">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-lg bg-blue-500 flex items-center justify-center"><span class="text-white font-bold text-xs">G</span></div>
+          <span class="text-[10px] sm:text-xs text-slate-500">Google</span>
+        </div>
+        <p class="font-bold text-slate-800 text-sm sm:text-base">Gemini 3 Pro</p>
+        <p class="text-[10px] text-blue-600 mt-1 font-medium">🔥 Next Gen</p>
+      </div>
+
+      <div class="model-card bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 cursor-pointer border-2 shadow-sm touch-feedback">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-lg bg-violet-600 flex items-center justify-center"><span class="text-white font-bold text-xs">D</span></div>
+          <span class="text-[10px] sm:text-xs text-slate-500">DeepSeek</span>
+        </div>
+        <p class="font-bold text-slate-800 text-sm sm:text-base">DeepSeek R1</p>
+        <p class="text-[10px] text-indigo-600 mt-1 font-medium">🧠 Top Logic</p>
+      </div>
+      
+      <div class="model-card bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 cursor-pointer border-2 shadow-sm touch-feedback">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-lg bg-gray-800 flex items-center justify-center"><span class="text-white font-bold text-xs">𝕏</span></div>
+          <span class="text-[10px] sm:text-xs text-slate-500">xAI</span>
+        </div>
+        <p class="font-bold text-slate-800 text-sm sm:text-base">Grok 4</p>
+        <p class="text-[10px] text-gray-600 mt-1 font-medium">🔥 Uncensored</p>
+      </div>
+      
+      <div class="model-card bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 cursor-pointer border-2 shadow-sm touch-feedback">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-lg bg-sky-500 flex items-center justify-center"><span class="text-white font-bold text-xs">K</span></div>
+          <span class="text-[10px] sm:text-xs text-slate-500">Moonshot</span>
+        </div>
+        <p class="font-bold text-slate-800 text-sm sm:text-base">Kimi K2</p>
+        <p class="text-[10px] text-sky-600 mt-1 font-medium">🔥 MoE Arch</p>
+      </div>
+      
+      <div class="model-card bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 cursor-pointer border-2 shadow-sm touch-feedback">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-lg bg-purple-500 flex items-center justify-center"><span class="text-white font-bold text-xs">Q</span></div>
+          <span class="text-[10px] sm:text-xs text-slate-500">Alibaba</span>
+        </div>
+        <p class="font-bold text-slate-800 text-sm sm:text-base">Qwen3 Max</p>
+        <p class="text-[10px] text-purple-600 mt-1 font-medium">🔥 Top Open</p>
+      </div>
+    </div>
+    
+    <div class="text-center mt-8">
+      <a href="https://api.hodlai.fun/pricing" target="_blank" class="touch-feedback inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 gradient-brand text-white rounded-lg sm:rounded-xl hover:opacity-90 font-medium shadow-lg shadow-brand-500/20 text-sm sm:text-base">
+        <span data-i18n="model_view_all">查看全部 200+ 模型</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 额度说明 -->
+<section id="pricing" class="py-12 sm:py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-10 sm:mb-12">
+      <span class="px-3 sm:px-4 py-1.5 sm:py-2 bg-amber-100 text-amber-700 rounded-full text-xs sm:text-sm font-semibold" data-i18n="price_badge">额度规则</span>
+      <h2 class="text-2xl sm:text-4xl font-bold text-slate-900 mt-4 sm:mt-6 mb-3" data-i18n="price_title">持仓价值 = 每日免费额度</h2>
+      <p class="text-base sm:text-lg text-slate-600" data-i18n="price_desc">动态定价：币价越低额度比例越高，保护低位持有者</p>
+    </div>
+
+    <!-- 动态定价说明卡片 -->
+    <div class="max-w-4xl mx-auto mb-8">
+      <div class="bg-gradient-to-br from-violet-50 via-purple-50 to-pink-50 rounded-2xl p-5 sm:p-6 border-2 border-violet-200 shadow-lg">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg">
+            <span class="text-xl sm:text-2xl">📊</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-800 text-sm sm:text-lg" data-i18n="price_dynamic_title">动态额度比例</h3>
+            <p class="text-xs sm:text-sm text-slate-500" data-i18n="price_dynamic_sub">币价每变动 $0.001 档位时自动调整</p>
+          </div>
+        </div>
+        
+        <!-- 价格档位表格 -->
+        <div class="overflow-x-auto -mx-2 px-2">
+          <table class="w-full text-xs sm:text-sm">
+            <thead>
+              <tr class="text-left border-b border-violet-200">
+                <th class="pb-2 text-slate-500 font-medium" data-i18n="price_table_tier">币价档位</th>
+                <th class="pb-2 text-slate-500 font-medium text-center" data-i18n="price_table_ratio">额度比例</th>
+                <th class="pb-2 text-slate-500 font-medium text-right" data-i18n="price_table_example">$10持仓=日额度</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-violet-100">
+              <tr class="bg-emerald-50/50">
+                <td class="py-2 font-medium text-emerald-700">≤ $0.001</td>
+                <td class="py-2 text-center"><span class="px-2 py-0.5 bg-emerald-500 text-white rounded-full font-bold">100%</span></td>
+                <td class="py-2 text-right font-bold text-emerald-600">$1/天</td>
+              </tr>
+              <tr>
+                <td class="py-2 font-medium text-slate-700">$0.002</td>
+                <td class="py-2 text-center"><span class="px-2 py-0.5 bg-teal-500 text-white rounded-full font-bold">96%</span></td>
+                <td class="py-2 text-right font-bold text-slate-600">$0.96/天</td>
+              </tr>
+              <tr>
+                <td class="py-2 font-medium text-slate-700">$0.005</td>
+                <td class="py-2 text-center"><span class="px-2 py-0.5 bg-sky-500 text-white rounded-full font-bold">82%</span></td>
+                <td class="py-2 text-right font-bold text-slate-600">$0.82/天</td>
+              </tr>
+              <tr>
+                <td class="py-2 font-medium text-slate-700">$0.010</td>
+                <td class="py-2 text-center"><span class="px-2 py-0.5 bg-violet-500 text-white rounded-full font-bold">63%</span></td>
+                <td class="py-2 text-right font-bold text-slate-600">$0.63/天</td>
+              </tr>
+              <tr>
+                <td class="py-2 font-medium text-slate-700">$0.015</td>
+                <td class="py-2 text-center"><span class="px-2 py-0.5 bg-purple-500 text-white rounded-full font-bold">45%</span></td>
+                <td class="py-2 text-right font-bold text-slate-600">$0.45/天</td>
+              </tr>
+              <tr class="bg-amber-50/50">
+                <td class="py-2 font-medium text-amber-700">≥ $0.020</td>
+                <td class="py-2 text-center"><span class="px-2 py-0.5 bg-amber-500 text-white rounded-full font-bold">30%</span></td>
+                <td class="py-2 text-right font-bold text-amber-600">$0.3/天</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- 当前状态指示器 -->
+        <div class="mt-4 p-3 bg-white rounded-xl border border-violet-200">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              <span class="text-xs sm:text-sm text-slate-600" data-i18n="price_current_status">当前状态</span>
+            </div>
+            <div class="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm">
+              <span class="text-slate-500" data-i18n="price_current_price">档位:</span>
+              <span class="font-mono font-bold text-brand-600" id="currentPriceTier">$0.00...</span>
+              <span class="text-slate-400">|</span>
+              <span class="text-slate-500" data-i18n="price_current_ratio">比例:</span>
+              <span class="font-bold text-violet-600" id="currentQuotaRatio">...%</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 说明提示 -->
+        <div class="mt-3 flex items-start gap-2 text-[10px] sm:text-xs text-slate-500">
+          <svg class="w-4 h-4 flex-shrink-0 mt-0.5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span data-i18n="price_dynamic_tip">价格按 $0.001 为一档取整计算（四舍五入）。只有跨越档位时才会重新计算额度，同档位内波动不影响当前额度。</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 规则说明 -->
+    <div class="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+      <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200">
+        <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2 text-sm"><span>💡</span> <span data-i18n="price_rule_title">额度规则</span></h3>
+        <ul class="space-y-2 text-xs sm:text-sm text-slate-600">
+          <li class="flex items-start gap-2"><span class="text-brand-500">✓</span><span data-i18n="price_rule_1">基础额度：每 $10 持仓 = $1 × 当前比例</span></li>
+          <li class="flex items-start gap-2"><span class="text-brand-500">✓</span><span data-i18n="price_rule_2">首次持有 5 分钟后立即 10%，每小时 +4%</span></li>
+          <li class="flex items-start gap-2"><span class="text-brand-500">✓</span><span data-i18n="price_rule_3">每日 00:00 (北京时间) 重置</span></li>
+          <li class="flex items-start gap-2"><span class="text-brand-500">✓</span><span data-i18n="price_rule_4">价格跨档时自动重新计算</span></li>
+        </ul>
+      </div>
+      
+      <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-4 sm:p-5 border border-amber-200">
+        <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2 text-sm"><span>💎</span> <span data-i18n="price_diamond_title">钻石手机制</span></h3>
+        <ul class="space-y-2 text-xs sm:text-sm text-slate-600">
+          <li class="flex items-start gap-2"><span class="text-amber-500">◆</span><span data-i18n="price_diamond_1">从未卖出/转出 + 24h = 100%</span></li>
+          <li class="flex items-start gap-2"><span class="text-amber-500">◆</span><span data-i18n="price_diamond_2">曾卖出/转出最高只能 80%</span></li>
+          <li class="flex items-start gap-2"><span class="text-amber-500">◆</span><span data-i18n="price_diamond_3">卖出/转出后 30 分钟冷却期</span></li>
+          <li class="flex items-start gap-2"><span class="text-amber-500">◆</span><span data-i18n="price_diamond_4">链上验证，无法作弊</span></li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- 为什么动态定价 -->
+    <div class="max-w-4xl mx-auto mt-6">
+      <div class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-5 sm:p-6 text-white">
+        <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+          <span>🤔</span>
+          <span data-i18n="price_why_dynamic">为什么采用动态定价？</span>
+        </h3>
+        <div class="grid sm:grid-cols-3 gap-4 text-sm">
+          <div class="bg-white/10 rounded-xl p-4 backdrop-blur">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center mb-2">
+              <span class="text-lg">🛡️</span>
+            </div>
+            <h4 class="font-semibold mb-1" data-i18n="price_why_1_title">保护低位持有者</h4>
+            <p class="text-slate-300 text-xs" data-i18n="price_why_1_desc">币价低时比例高达100%，早期支持者获得最大收益</p>
+          </div>
+          <div class="bg-white/10 rounded-xl p-4 backdrop-blur">
+            <div class="w-8 h-8 rounded-lg bg-violet-500/20 flex items-center justify-center mb-2">
+              <span class="text-lg">⚖️</span>
+            </div>
+            <h4 class="font-semibold mb-1" data-i18n="price_why_2_title">平衡资金池</h4>
+            <p class="text-slate-300 text-xs" data-i18n="price_why_2_desc">币价高时降低比例，确保API资金池可持续运营</p>
+          </div>
+          <div class="bg-white/10 rounded-xl p-4 backdrop-blur">
+            <div class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center mb-2">
+              <span class="text-lg">📈</span>
+            </div>
+            <h4 class="font-semibold mb-1" data-i18n="price_why_3_title">稳定预期</h4>
+            <p class="text-slate-300 text-xs" data-i18n="price_why_3_desc">按$0.001档位计算，小幅波动不影响额度</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 代币 CA -->
+    <div class="max-w-2xl mx-auto mt-8 sm:mt-10 mb-6">
+      <div class="ca-box rounded-xl sm:rounded-2xl p-4 border-2 border-amber-300 shadow-lg">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <span class="text-2xl">🪙</span>
+            <div class="text-left">
+              <p class="text-xs text-amber-700 font-medium" data-i18n="price_ca_title">$HODLAI 合约地址 (BSC)</p>
+              <p class="font-mono text-[10px] sm:text-xs text-amber-900 break-all" id="tokenCA">0x987e6269c6b7ea6898221882f11ea16f87b97777</p>
+            </div>
+          </div>
+          <button onclick="copyCA()" class="touch-feedback px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium shadow-md transition-colors flex items-center gap-1.5 whitespace-nowrap">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span data-i18n="btn_copy">复制</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 购买按钮 -->
+    <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8">
+      <a href="https://pancakeswap.finance/swap?chain=bsc&outputCurrency=0x987e6269c6b7ea6898221882f11ea16f87b97777" 
+         target="_blank" 
+         class="group touch-feedback px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-bold text-base hover:from-amber-600 hover:to-orange-600 transition-all shadow-xl flex items-center justify-center gap-2">
+        <span>🥞</span>
+        <span data-i18n="price_btn_pancake">PancakeSwap 购买</span>
+        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+      </a>
+      
+      <a href="https://flap.sh/bnb/0x987e6269c6b7ea6898221882f11ea16f87b97777" 
+         target="_blank" 
+         class="group touch-feedback px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-bold text-base hover:from-purple-600 hover:to-pink-600 transition-all shadow-xl flex items-center justify-center gap-2">
+        <span>🦋</span>
+        <span data-i18n="price_btn_flap">Flap.sh 购买</span>
+        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- API 文档 -->
+<section id="docs" class="py-10 sm:py-16 bg-slate-50">
+  <div class="max-w-4xl mx-auto px-2 sm:px-6">
+    <div class="text-center mb-8 sm:mb-12">
+      <span class="px-3 py-1 sm:px-4 sm:py-2 bg-slate-100 text-slate-700 rounded-full text-[10px] sm:text-sm font-semibold" data-i18n="docs_badge">开发文档</span>
+      <h2 class="text-xl sm:text-4xl font-bold text-slate-900 mt-3 sm:mt-6 mb-2 sm:mb-3" data-i18n="docs_title">3 分钟接入</h2>
+      <p class="text-sm sm:text-lg text-slate-600" data-i18n="docs_desc">兼容 OpenAI / Anthropic SDK，全接口覆盖</p>
+    </div>
+    
+    <div class="space-y-3 sm:space-y-4">
+      <!-- API 地址 -->
+      <div class="bg-white rounded-lg sm:rounded-xl p-3 sm:p-5 border border-slate-200">
+        <h3 class="font-bold text-slate-800 mb-2 sm:mb-3 text-xs sm:text-sm">🔗 <span data-i18n="docs_addr">API 地址</span></h3>
+        <div class="bg-slate-50 rounded-md sm:rounded-lg p-2 sm:p-3 font-mono text-[10px] sm:text-sm flex items-center justify-between border border-slate-200 gap-2">
+          <code id="apiBaseUrl" class="text-brand-600 break-all min-w-0 flex-1">https://api.hodlai.fun/v1</code>
+          <button onclick="copyText(document.getElementById('apiBaseUrl').textContent)" class="touch-feedback px-2 sm:px-3 py-1 sm:py-1.5 bg-white rounded-md sm:rounded-lg text-[10px] sm:text-xs hover:bg-slate-100 font-medium whitespace-nowrap border border-slate-200 flex-shrink-0">Copy</button>
+        </div>
+      </div>
+      
+      <!-- 全面的接口支持 -->
+      <div class="bg-white rounded-lg sm:rounded-xl p-3 sm:p-5 border border-slate-200">
+        <div class="flex items-center justify-between mb-3 sm:mb-4">
+          <h3 class="font-bold text-slate-800 text-xs sm:text-sm">🛠️ <span data-i18n="docs_support">支持的接口</span></h3>
+          <span class="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-emerald-100 text-emerald-700 rounded-full text-[8px] sm:text-[10px] font-bold" data-i18n="docs_endpoints_count">15+ 端点</span>
+        </div>
+        
+        <!-- 对话 & 文本 -->
+        <div class="mb-3 sm:mb-4">
+          <p class="text-[10px] sm:text-xs text-slate-500 mb-1.5 sm:mb-2 font-medium" data-i18n="docs_cat_chat">💬 对话 & 文本</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
+            <div class="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-md sm:rounded-lg p-2 sm:p-3 border border-emerald-200">
+              <div class="flex items-center justify-between gap-1">
+                <span class="font-semibold text-slate-700 text-[10px] sm:text-xs truncate">Chat Completions</span>
+                <span class="px-1 py-0.5 bg-emerald-500 text-white text-[6px] sm:text-[8px] rounded font-bold flex-shrink-0">OpenAI</span>
+              </div>
+              <code class="text-[8px] sm:text-xs text-emerald-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/chat/completions</code>
+            </div>
+            <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-md sm:rounded-lg p-2 sm:p-3 border border-orange-200">
+              <div class="flex items-center justify-between gap-1">
+                <span class="font-semibold text-slate-700 text-[10px] sm:text-xs truncate">Messages API</span>
+                <span class="px-1 py-0.5 bg-orange-500 text-white text-[6px] sm:text-[8px] rounded font-bold flex-shrink-0">Claude</span>
+              </div>
+              <code class="text-[8px] sm:text-xs text-orange-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/messages</code>
+            </div>
+            <div class="bg-gradient-to-r from-violet-50 to-purple-50 rounded-md sm:rounded-lg p-2 sm:p-3 border border-violet-200">
+              <div class="flex items-center justify-between gap-1">
+                <span class="font-semibold text-slate-700 text-[10px] sm:text-xs truncate">Responses API</span>
+                <span class="px-1 py-0.5 bg-violet-500 text-white text-[6px] sm:text-[8px] rounded font-bold flex-shrink-0">NEW</span>
+              </div>
+              <code class="text-[8px] sm:text-xs text-violet-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/responses</code>
+            </div>
+            <div class="bg-slate-50 rounded-md sm:rounded-lg p-2 sm:p-3 border border-slate-200">
+              <span class="font-semibold text-slate-700 text-[10px] sm:text-xs">Models List</span>
+              <code class="text-[8px] sm:text-xs text-brand-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1beta/models</code>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 向量 & 搜索 -->
+        <div class="mb-3 sm:mb-4">
+          <p class="text-[10px] sm:text-xs text-slate-500 mb-1.5 sm:mb-2 font-medium" data-i18n="docs_cat_vector">🔢 向量 & 搜索</p>
+          <div class="grid grid-cols-2 gap-1.5 sm:gap-2">
+            <div class="bg-slate-50 rounded-md sm:rounded-lg p-2 sm:p-3 border border-slate-200">
+              <span class="font-semibold text-slate-700 text-[10px] sm:text-xs" data-i18n="docs_embed">Embeddings</span>
+              <code class="text-[8px] sm:text-xs text-brand-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/embeddings</code>
+            </div>
+            <div class="bg-gradient-to-r from-sky-50 to-blue-50 rounded-md sm:rounded-lg p-2 sm:p-3 border border-sky-200">
+              <div class="flex items-center justify-between gap-1">
+                <span class="font-semibold text-slate-700 text-[10px] sm:text-xs">Rerank</span>
+                <span class="px-1 py-0.5 bg-sky-500 text-white text-[6px] sm:text-[8px] rounded font-bold flex-shrink-0">RAG</span>
+              </div>
+              <code class="text-[8px] sm:text-xs text-sky-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/rerank</code>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 图像生成 -->
+        <div class="mb-3 sm:mb-4">
+          <p class="text-[10px] sm:text-xs text-slate-500 mb-1.5 sm:mb-2 font-medium" data-i18n="docs_cat_image">🎨 图像生成</p>
+          <div class="grid grid-cols-3 gap-1 sm:gap-2">
+            <div class="bg-gradient-to-r from-pink-50 to-rose-50 rounded-md sm:rounded-lg p-1.5 sm:p-3 border border-pink-200">
+              <span class="font-semibold text-slate-700 text-[9px] sm:text-xs block truncate" data-i18n="docs_img_gen">生成</span>
+              <code class="text-[7px] sm:text-[10px] text-pink-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/images/generations</code>
+            </div>
+            <div class="bg-slate-50 rounded-md sm:rounded-lg p-1.5 sm:p-3 border border-slate-200">
+              <span class="font-semibold text-slate-700 text-[9px] sm:text-xs block truncate" data-i18n="docs_img_edit">编辑</span>
+              <code class="text-[7px] sm:text-[10px] text-brand-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/images/edits</code>
+            </div>
+            <div class="bg-slate-50 rounded-md sm:rounded-lg p-1.5 sm:p-3 border border-slate-200">
+              <span class="font-semibold text-slate-700 text-[9px] sm:text-xs block truncate" data-i18n="docs_img_var">变体</span>
+              <code class="text-[7px] sm:text-[10px] text-brand-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/images/variations</code>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 🎬 视频生成 (Sora 2) - 新增部分 -->
+        <div class="mb-3 sm:mb-4">
+          <p class="text-[10px] sm:text-xs text-slate-500 mb-1.5 sm:mb-2 font-medium" data-i18n="docs_cat_video">🎬 视频生成</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
+            <div class="bg-gradient-to-r from-fuchsia-50 via-purple-50 to-violet-50 rounded-md sm:rounded-lg p-2 sm:p-3 border border-fuchsia-200 relative overflow-hidden">
+              <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-fuchsia-200/30 to-transparent rounded-bl-full"></div>
+              <div class="flex items-center justify-between gap-1 relative">
+                <span class="font-semibold text-slate-700 text-[10px] sm:text-xs truncate">Video Generation</span>
+                <span class="px-1 py-0.5 bg-gradient-to-r from-fuchsia-500 to-violet-500 text-white text-[6px] sm:text-[8px] rounded font-bold flex-shrink-0 animate-pulse">Sora 2</span>
+              </div>
+              <code class="text-[8px] sm:text-xs text-fuchsia-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/video/generations</code>
+              <p class="text-[7px] sm:text-[9px] text-slate-500 mt-1" data-i18n="docs_video_gen_desc">文本/图像生成视频</p>
+            </div>
+            <div class="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-md sm:rounded-lg p-2 sm:p-3 border border-indigo-200">
+              <div class="flex items-center justify-between gap-1">
+                <span class="font-semibold text-slate-700 text-[10px] sm:text-xs truncate">Task Status</span>
+                <span class="px-1 py-0.5 bg-indigo-500 text-white text-[6px] sm:text-[8px] rounded font-bold flex-shrink-0">ASYNC</span>
+              </div>
+              <code class="text-[8px] sm:text-xs text-indigo-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/video/generations/{id}</code>
+              <p class="text-[7px] sm:text-[9px] text-slate-500 mt-1" data-i18n="docs_video_status_desc">查询生成状态</p>
+            </div>
+            <div class="bg-slate-50 rounded-md sm:rounded-lg p-2 sm:p-3 border border-slate-200">
+              <span class="font-semibold text-slate-700 text-[10px] sm:text-xs" data-i18n="docs_video_extend">视频扩展</span>
+              <code class="text-[8px] sm:text-xs text-brand-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/video/extend</code>
+            </div>
+            <div class="bg-slate-50 rounded-md sm:rounded-lg p-2 sm:p-3 border border-slate-200">
+              <span class="font-semibold text-slate-700 text-[10px] sm:text-xs" data-i18n="docs_video_storyboard">分镜生成</span>
+              <code class="text-[8px] sm:text-xs text-brand-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/video/storyboard</code>
+            </div>
+          </div>
+          <!-- Sora 2 特性标签 -->
+          <div class="mt-2 flex flex-wrap gap-1">
+            <span class="px-1.5 py-0.5 bg-fuchsia-100 text-fuchsia-700 rounded text-[7px] sm:text-[9px] font-medium">1080p</span>
+            <span class="px-1.5 py-0.5 bg-violet-100 text-violet-700 rounded text-[7px] sm:text-[9px] font-medium">最长20秒</span>
+            <span class="px-1.5 py-0.5 bg-purple-100 text-purple-700 rounded text-[7px] sm:text-[9px] font-medium">图生视频</span>
+            <span class="px-1.5 py-0.5 bg-indigo-100 text-indigo-700 rounded text-[7px] sm:text-[9px] font-medium">视频混合</span>
+          </div>
+        </div>
+        
+        <!-- 音频处理 -->
+        <div>
+          <p class="text-[10px] sm:text-xs text-slate-500 mb-1.5 sm:mb-2 font-medium" data-i18n="docs_cat_audio">🎵 音频处理</p>
+          <div class="grid grid-cols-3 gap-1 sm:gap-2">
+            <div class="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-md sm:rounded-lg p-1.5 sm:p-3 border border-amber-200">
+              <span class="font-semibold text-slate-700 text-[9px] sm:text-xs block truncate" data-i18n="docs_audio_tts">TTS</span>
+              <code class="text-[7px] sm:text-[10px] text-amber-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/audio/speech</code>
+            </div>
+            <div class="bg-slate-50 rounded-md sm:rounded-lg p-1.5 sm:p-3 border border-slate-200">
+              <span class="font-semibold text-slate-700 text-[9px] sm:text-xs block truncate" data-i18n="docs_audio_stt">识别</span>
+              <code class="text-[7px] sm:text-[10px] text-brand-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/audio/transcriptions</code>
+            </div>
+            <div class="bg-slate-50 rounded-md sm:rounded-lg p-1.5 sm:p-3 border border-slate-200">
+              <span class="font-semibold text-slate-700 text-[9px] sm:text-xs block truncate" data-i18n="docs_audio_trans">翻译</span>
+              <code class="text-[7px] sm:text-[10px] text-brand-600 font-mono block mt-0.5 sm:mt-1 truncate">/v1/audio/translations</code>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- SDK 兼容性提示 -->
+      <div class="bg-gradient-to-r from-brand-50 via-violet-50 to-pink-50 rounded-lg sm:rounded-xl p-3 sm:p-5 border border-brand-200">
+        <h3 class="font-bold text-slate-800 mb-2 sm:mb-3 text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2">
+          <span>🔌</span> <span data-i18n="docs_compat">SDK 兼容性</span>
+        </h3>
+        <div class="grid grid-cols-4 gap-1 sm:gap-2 text-center">
+          <div class="bg-white rounded-md sm:rounded-lg p-1.5 sm:p-2 border border-slate-200">
+            <span class="text-sm sm:text-lg">🐍</span>
+            <p class="text-[9px] sm:text-xs font-medium text-slate-700 mt-0.5 sm:mt-1">Python</p>
+            <p class="text-[7px] sm:text-[10px] text-slate-500 hidden sm:block">openai / anthropic</p>
+          </div>
+          <div class="bg-white rounded-md sm:rounded-lg p-1.5 sm:p-2 border border-slate-200">
+            <span class="text-sm sm:text-lg">🟨</span>
+            <p class="text-[9px] sm:text-xs font-medium text-slate-700 mt-0.5 sm:mt-1">JS</p>
+            <p class="text-[7px] sm:text-[10px] text-slate-500 hidden sm:block">Node.js / Browser</p>
+          </div>
+          <div class="bg-white rounded-md sm:rounded-lg p-1.5 sm:p-2 border border-slate-200">
+            <span class="text-sm sm:text-lg">🦀</span>
+            <p class="text-[9px] sm:text-xs font-medium text-slate-700 mt-0.5 sm:mt-1">Rust/Go</p>
+            <p class="text-[7px] sm:text-[10px] text-slate-500 hidden sm:block" data-i18n="docs_http_compat">HTTP</p>
+          </div>
+          <div class="bg-white rounded-md sm:rounded-lg p-1.5 sm:p-2 border border-slate-200">
+            <span class="text-sm sm:text-lg">📱</span>
+            <p class="text-[9px] sm:text-xs font-medium text-slate-700 mt-0.5 sm:mt-1" data-i18n="docs_mobile">移动端</p>
+            <p class="text-[7px] sm:text-[10px] text-slate-500 hidden sm:block">iOS / Android</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Python 示例 (OpenAI) -->
+      <div class="bg-white rounded-lg sm:rounded-xl p-3 sm:p-5 border border-slate-200">
+        <div class="flex items-center justify-between mb-2 sm:mb-3">
+          <h3 class="font-bold text-slate-800 text-xs sm:text-sm">🐍 <span data-i18n="docs_py_title">Python</span> <span class="text-slate-400 font-normal text-[10px] sm:text-sm">- OpenAI</span></h3>
+          <span class="px-1.5 sm:px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded text-[8px] sm:text-[10px] font-medium" data-i18n="badge_recommended">推荐</span>
+        </div>
+        <div class="rounded-md sm:rounded-lg p-2 sm:p-4 overflow-x-auto shadow-lg bg-slate-900 -mx-1 sm:mx-0">
+          <pre class="text-[9px] sm:text-sm font-mono leading-relaxed whitespace-pre-wrap break-all sm:whitespace-pre sm:break-normal"><code><span class="text-purple-400">from</span> <span class="text-blue-400">openai</span> <span class="text-purple-400">import</span> <span class="text-emerald-400">OpenAI</span>
+
+<span class="text-slate-300">client = OpenAI(</span>
+    <span class="text-orange-400">api_key</span><span class="text-slate-300">=</span><span class="text-emerald-400">"sk-YOUR_KEY"</span><span class="text-slate-300">,</span>
+    <span class="text-orange-400">base_url</span><span class="text-slate-300">=</span><span class="text-emerald-400">"https://api.hodlai.fun/v1"</span>
+<span class="text-slate-300">)</span>
+
+<span class="text-slate-300">response = client.chat.completions.create(</span>
+    <span class="text-orange-400">model</span><span class="text-slate-300">=</span><span class="text-emerald-400">"gpt-4o"</span><span class="text-slate-300">,</span>
+    <span class="text-orange-400">messages</span><span class="text-slate-300">=[{</span><span class="text-emerald-400">"role"</span><span class="text-slate-300">:</span> <span class="text-emerald-400">"user"</span><span class="text-slate-300">,</span> <span class="text-emerald-400">"content"</span><span class="text-slate-300">:</span> <span class="text-emerald-400">"Hello!"</span><span class="text-slate-300">}]</span>
+<span class="text-slate-300">)</span></code></pre>
+        </div>
+      </div>
+      
+      <!-- Python 示例 (Anthropic Claude) -->
+      <div class="bg-white rounded-lg sm:rounded-xl p-3 sm:p-5 border border-slate-200">
+        <div class="flex items-center justify-between mb-2 sm:mb-3">
+          <h3 class="font-bold text-slate-800 text-xs sm:text-sm">🟠 <span data-i18n="docs_claude_title">Claude</span></h3>
+          <span class="px-1.5 sm:px-2 py-0.5 bg-orange-100 text-orange-700 rounded text-[8px] sm:text-[10px] font-medium">Messages API</span>
+        </div>
+        <div class="rounded-md sm:rounded-lg p-2 sm:p-4 overflow-x-auto shadow-lg bg-slate-900 -mx-1 sm:mx-0">
+          <pre class="text-[9px] sm:text-sm font-mono leading-relaxed whitespace-pre-wrap break-all sm:whitespace-pre sm:break-normal"><code><span class="text-purple-400">import</span> <span class="text-blue-400">anthropic</span>
+
+<span class="text-slate-300">client = anthropic.Anthropic(</span>
+    <span class="text-orange-400">api_key</span><span class="text-slate-300">=</span><span class="text-emerald-400">"sk-YOUR_KEY"</span><span class="text-slate-300">,</span>
+    <span class="text-orange-400">base_url</span><span class="text-slate-300">=</span><span class="text-emerald-400">"https://api.hodlai.fun"</span>
+<span class="text-slate-300">)</span>
+
+<span class="text-slate-300">message = client.messages.create(</span>
+    <span class="text-orange-400">model</span><span class="text-slate-300">=</span><span class="text-emerald-400">"claude-sonnet-4.5"</span><span class="text-slate-300">,</span>
+    <span class="text-orange-400">max_tokens</span><span class="text-slate-300">=</span><span class="text-amber-400">1024</span><span class="text-slate-300">,</span>
+    <span class="text-orange-400">messages</span><span class="text-slate-300">=[{</span><span class="text-emerald-400">"role"</span><span class="text-slate-300">:</span> <span class="text-emerald-400">"user"</span><span class="text-slate-300">,</span> <span class="text-emerald-400">"content"</span><span class="text-slate-300">:</span> <span class="text-emerald-400">"Hello!"</span><span class="text-slate-300">}]</span>
+<span class="text-slate-300">)</span></code></pre>
+        </div>
+      </div>
+      
+      <!-- 🎬 Sora 2 视频生成示例 - 新增 -->
+      <div class="bg-white rounded-lg sm:rounded-xl p-3 sm:p-5 border border-slate-200">
+        <div class="flex items-center justify-between mb-2 sm:mb-3">
+          <h3 class="font-bold text-slate-800 text-xs sm:text-sm">🎬 <span data-i18n="docs_sora_title">Sora 2 视频生成</span></h3>
+          <span class="px-1.5 sm:px-2 py-0.5 bg-gradient-to-r from-fuchsia-100 to-violet-100 text-fuchsia-700 rounded text-[8px] sm:text-[10px] font-medium">NEW</span>
+        </div>
+        <div class="rounded-md sm:rounded-lg p-2 sm:p-4 overflow-x-auto shadow-lg bg-slate-900 -mx-1 sm:mx-0">
+          <pre class="text-[9px] sm:text-sm font-mono leading-relaxed whitespace-pre-wrap break-all sm:whitespace-pre sm:break-normal"><code><span class="text-slate-500"># 创建视频生成任务</span>
+<span class="text-slate-300">response = client.post(</span>
+    <span class="text-emerald-400">"/v1/video/generations"</span><span class="text-slate-300">,</span>
+    <span class="text-orange-400">json</span><span class="text-slate-300">={</span>
+        <span class="text-emerald-400">"model"</span><span class="text-slate-300">:</span> <span class="text-emerald-400">"sora-2"</span><span class="text-slate-300">,</span>
+        <span class="text-emerald-400">"prompt"</span><span class="text-slate-300">:</span> <span class="text-emerald-400">"A cat walking on Mars"</span><span class="text-slate-300">,</span>
+        <span class="text-emerald-400">"duration"</span><span class="text-slate-300">:</span> <span class="text-amber-400">10</span><span class="text-slate-300">,</span>  <span class="text-slate-500"># 5-20秒</span>
+        <span class="text-emerald-400">"resolution"</span><span class="text-slate-300">:</span> <span class="text-emerald-400">"1080p"</span><span class="text-slate-300">,</span>
+        <span class="text-emerald-400">"aspect_ratio"</span><span class="text-slate-300">:</span> <span class="text-emerald-400">"16:9"</span>
+    <span class="text-slate-300">}</span>
+<span class="text-slate-300">)</span>
+<span class="text-slate-300">task_id = response[</span><span class="text-emerald-400">"id"</span><span class="text-slate-300">]</span>
+
+<span class="text-slate-500"># 查询任务状态</span>
+<span class="text-slate-300">status = client.get(</span><span class="text-emerald-400">f"https://api.hodlai.fun/v1/video/generations/{task_id}"</span><span class="text-slate-300">)</span>
+<span class="text-purple-400">print</span><span class="text-slate-300">(status[</span><span class="text-emerald-400">"status"</span><span class="text-slate-300">])</span>  <span class="text-slate-500"># pending/processing/completed</span>
+<span class="text-purple-400">print</span><span class="text-slate-300">(status[</span><span class="text-emerald-400">"video_url"</span><span class="text-slate-300">])</span>  <span class="text-slate-500"># 完成后返回视频URL</span></code></pre>
+        </div>
+        <!-- Sora 2 参数说明 -->
+        <div class="mt-3 sm:mt-4 p-2 sm:p-3 bg-gradient-to-r from-fuchsia-50 to-violet-50 rounded-md sm:rounded-lg border border-fuchsia-200">
+          <p class="text-[9px] sm:text-xs font-semibold text-slate-700 mb-1.5 sm:mb-2" data-i18n="docs_sora_params">📋 支持参数</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 text-[8px] sm:text-[10px]">
+            <div class="bg-white rounded p-1.5 border border-fuchsia-100">
+              <span class="font-medium text-slate-700">duration</span>
+              <p class="text-slate-500">5-20秒</p>
+            </div>
+            <div class="bg-white rounded p-1.5 border border-fuchsia-100">
+              <span class="font-medium text-slate-700">resolution</span>
+              <p class="text-slate-500">480p/720p/1080p</p>
+            </div>
+            <div class="bg-white rounded p-1.5 border border-fuchsia-100">
+              <span class="font-medium text-slate-700">aspect_ratio</span>
+              <p class="text-slate-500">16:9/9:16/1:1</p>
+            </div>
+            <div class="bg-white rounded p-1.5 border border-fuchsia-100">
+              <span class="font-medium text-slate-700">image_url</span>
+              <p class="text-slate-500">图生视频</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- cURL 示例 -->
+      <div class="bg-white rounded-lg sm:rounded-xl p-3 sm:p-5 border border-slate-200">
+        <div class="flex items-center justify-between mb-2 sm:mb-3">
+          <h3 class="font-bold text-slate-800 text-xs sm:text-sm">⚡ <span data-i18n="docs_curl_title">cURL</span></h3>
+          <span class="px-1.5 sm:px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[8px] sm:text-[10px] font-medium" data-i18n="docs_universal">通用</span>
+        </div>
+        <div class="rounded-md sm:rounded-lg p-2 sm:p-4 overflow-x-auto shadow-lg bg-slate-900 -mx-1 sm:mx-0">
+          <pre class="text-[9px] sm:text-sm font-mono leading-relaxed whitespace-pre-wrap break-all sm:whitespace-pre sm:break-normal"><code><span class="text-emerald-400">curl</span> <span class="text-slate-300">https://api.hodlai.fun/v1/chat/completions \</span>
+  <span class="text-orange-400">-H</span> <span class="text-emerald-400">"Authorization: Bearer sk-YOUR_KEY"</span> <span class="text-slate-300">\</span>
+  <span class="text-orange-400">-H</span> <span class="text-emerald-400">"Content-Type: application/json"</span> <span class="text-slate-300">\</span>
+  <span class="text-orange-400">-d</span> <span class="text-emerald-400">'{
+    "model": "gpt-5.2",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'</span></code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ - 精简版 -->
+<section id="faq" class="py-12 sm:py-16 bg-white pb-24 lg:pb-16">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-10">
+      <h2 class="text-2xl sm:text-4xl font-bold text-slate-900" data-i18n="faq_title">常见问题</h2>
+    </div>
+    
+    <div class="space-y-3">
+      <!-- Q0: API 稳定性 -->
+      <details class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200" open>
+        <summary class="px-4 py-4 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 flex items-center justify-between text-sm">
+          <span data-i18n="faq_q0">HodlAI API 稳定吗？上游是什么？</span>
+          <svg class="w-4 h-4 text-slate-400 transition-transform flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-4 pb-4 text-slate-600 text-xs sm:text-sm">
+          <p data-i18n="faq_a0">✅ 稳定可靠！当前主要使用 OpenAI、OpenRouter 官方渠道作为上游，全部通过官方渠道调用。所有计费与官方一致，如发现漏掉或不一致的情况，请联系我们修正。</p>
+        </div>
+      </details>
+      
+      <!-- Q1: 签名安全 -->
+      <details class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200">
+        <summary class="px-4 py-4 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 flex items-center justify-between text-sm">
+          <span data-i18n="faq_q1">签名安全吗？</span>
+          <svg class="w-4 h-4 text-slate-400 transition-transform flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-4 pb-4 text-slate-600 text-xs sm:text-sm">
+          <p data-i18n="faq_a1">✅ 完全安全！签名仅验证钱包所有权，不产生链上交易，不消耗 Gas，代币始终在你钱包中。</p>
+        </div>
+      </details>
+      
+      <!-- Q2: 交易税 -->
+      <details class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200">
+        <summary class="px-4 py-4 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 flex items-center justify-between text-sm">
+          <span data-i18n="faq_q2">3% 交易税怎么用？</span>
+          <svg class="w-4 h-4 text-slate-400 transition-transform flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-4 pb-4 text-slate-600 text-xs sm:text-sm">
+          <p data-i18n="faq_a2">优先保障 AI API 资金池，持有者按持有量比例每日分享免费额度。盈余用于回购销毁或营销推广，团队 0 抽成。</p>
+        </div>
+      </details>
+      
+        <!-- Q3 额度释放 - 需要补充动态定价说明 -->
+        <details class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200">
+          <summary class="px-4 py-4 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 flex items-center justify-between text-sm">
+            <span data-i18n="faq_q3">额度怎么计算和释放？</span>
+            <svg class="w-4 h-4 text-slate-400 transition-transform flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-4 pb-4 text-slate-600 text-xs sm:text-sm">
+            <p data-i18n="faq_a3">基础额度：每$10持仓=$1×当前价格比例（币价≤$0.001时100%，≥$0.02时30%）。释放规则：0-5分钟0%→5分钟后10%→每小时+4%→24小时100%💎。买入不重置，卖出/转出才重置，曾卖出过最高80%。</p>
+          </div>
+        </details>
+      
+      <!-- Q4: 额度用完 -->
+      <details class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200">
+        <summary class="px-4 py-4 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 flex items-center justify-between text-sm">
+          <span data-i18n="faq_q4">额度用完怎么办？</span>
+          <svg class="w-4 h-4 text-slate-400 transition-transform flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-4 pb-4 text-slate-600 text-xs sm:text-sm">
+          <p data-i18n="faq_a4">① 等待每日 00:00 (北京时间) 重置 ② 增持代币获得更多额度 ③ 成为钻石手享受 100% 额度</p>
+        </div>
+      </details>
+      
+      <!-- Q5: 隐私承诺 -->
+      <details class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200">
+        <summary class="px-4 py-4 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 flex items-center justify-between text-sm">
+          <span data-i18n="faq_q5">我的对话数据安全吗？</span>
+          <svg class="w-4 h-4 text-slate-400 transition-transform flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </summary>
+        <div class="px-4 pb-4 text-slate-600 text-xs sm:text-sm">
+          <p data-i18n="faq_a5">🔒 绝对隐私！我们承诺不会记录、存储或分析任何对话数据。所有请求直接转发至上游 API，我们的服务器不做任何记录，你的隐私由我们全力守护。</p>
+        </div>
+      </details>
+        <!-- 新增一个关于动态定价的 FAQ -->
+        <details class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200">
+          <summary class="px-4 py-4 cursor-pointer font-semibold text-slate-800 hover:bg-slate-50 flex items-center justify-between text-sm">
+            <span data-i18n="faq_q6">什么是动态价格比例？</span>
+            <svg class="w-4 h-4 text-slate-400 transition-transform flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-4 pb-4 text-slate-600 text-xs sm:text-sm">
+            <p data-i18n="faq_a6">为保护早期持有者，币价越低额度比例越高。币价按$0.001档位计算：≤$0.001=100%，$0.005=82%，$0.01=63%，≥$0.02=30%。只有跨越档位时才重新计算，同档位内波动不影响现有额度。</p>
+          </div>
+        </details>
+    </div>
+  </div>
+</section>
+
+<!-- 页脚 - 精简版 -->
+<footer class="bg-slate-900 text-white py-10 sm:py-12 pb-24 lg:pb-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
+      <div class="sm:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <img src="logo.jpg" alt="HodlAI Logo" class="w-10 h-10 rounded-xl object-cover shadow-lg shadow-brand-500/30">
+          <div>
+            <span class="font-bold text-lg">HodlAI</span>
+            <p class="text-slate-400 text-xs">Use AI Free</p>
+          </div>
+        </div>
+        <p class="text-slate-400 leading-relaxed max-w-md mb-4 text-sm" data-i18n="footer_desc">
+          Web3 × AI 融合平台。持有 $HODLAI 代币即可免费调用 200+ AI 模型。
+        </p>
+        <div class="flex items-center gap-3">
+          <a href="https://x.com/hodlai_bsc" target="_blank" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition-colors">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://t.me/hodlai_fun" target="_blank" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition-colors">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <h4 class="font-bold mb-4 text-sm" data-i18n="footer_quick">快速链接</h4>
+        <ul class="space-y-2 text-slate-400 text-sm">
+          <li><a href="index.html#api-panel" class="hover:text-white transition-colors" data-i18n="nav_api">API Key</a></li>
+          <li><a href="index.html#transparency" class="hover:text-white transition-colors" data-i18n="nav_transparency">透明公示</a></li>
+          <li><a href="index.html#models" class="hover:text-white transition-colors" data-i18n="nav_models">AI 模型</a></li>
+          <li><a href="index.html#pricing" class="hover:text-white transition-colors" data-i18n="nav_pricing">额度说明</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h4 class="font-bold mb-4 text-sm" data-i18n="footer_res">资源</h4>
+        <ul class="space-y-2 text-slate-400 text-sm">
+          <li><a href="https://api.hodlai.fun/pricing" target="_blank" class="hover:text-white transition-colors flex items-center gap-1"><span data-i18n="footer_list_model">完整模型列表</span> <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></a></li>
+          <li><a href="transparency.html" class="hover:text-white transition-colors" data-i18n="footer_list_trans">完整透明公示</a></li>
+        </ul>
+      </div>
+
+      <!-- 新增：友情链接 -->
+      <div>
+        <h4 class="font-bold mb-4 text-sm" data-i18n="footer_friends">友情链接</h4>
+        <ul class="space-y-2 text-slate-400 text-sm">
+          <li>
+            <a href="https://v2ex.com/go/hodlai" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-1.5">
+              <span>V2EX</span>
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="border-t border-slate-800 pt-6">
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
+        <p class="text-slate-500 text-xs" data-i18n="footer_copy">&copy; 2026 HodlAI. HODL Once, AI Forever Free.</p>
+        <div class="flex items-center gap-4 text-xs text-slate-500">
+          <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span data-i18n="footer_status">服务正常</span></span>
+          <span>BSC Network</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-20 lg:bottom-6 right-4 sm:right-6 transform translate-y-full opacity-0 transition-all duration-300 z-50 max-w-[calc(100%-2rem)] sm:max-w-sm">
+  <div class="bg-slate-800 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl shadow-2xl flex items-center gap-2 sm:gap-3 border border-slate-700">
+    <span id="toastIcon" class="text-xl sm:text-2xl flex-shrink-0">✓</span>
+    <span id="toastMessage" class="font-medium text-sm sm:text-base"></span>
+  </div>
+</div>
+
+<!-- Loading -->
+<div id="loadingOverlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 text-center shadow-2xl max-w-[280px] sm:max-w-sm mx-4">
+    <div class="w-12 h-12 sm:w-16 sm:h-16 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin mx-auto mb-4 sm:mb-6"></div>
+    <p id="loadingText" class="text-slate-700 font-semibold text-base sm:text-lg">Processing...</p>
+    <p class="text-slate-500 text-xs sm:text-sm mt-1.5 sm:mt-2" data-i18n="loading_sign_wallet">Please sign in wallet</p>
+  </div>
+</div>
+
+ <script type="module">
+import { EthereumProvider } from 'https://esm.sh/@walletconnect/ethereum-provider@2.11.0';
+
+const API_BASE = window.location.origin;
+const TOKEN_CA = '0x987e6269c6b7ea6898221882f11ea16f87b97777';
+const STORAGE_KEY = 'hodlai_session';
+const WALLETCONNECT_PROJECT_ID = 'b460d24f7aaa1a403ad76a3f16cb8bea';
+
+const BSC_CHAIN_CONFIG = {
+  chainId: '0x38',
+  chainName: 'BNB Smart Chain',
+  nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+  rpcUrls: ['https://bsc-dataseed.binance.org/', 'https://bsc-dataseed1.defibit.io/'],
+  blockExplorerUrls: ['https://bscscan.com/']
+};
+
+let wcProvider = null;
+
+async function getWalletConnectProvider() {
+  if (wcProvider) return wcProvider;
+
+  wcProvider = await EthereumProvider.init({
+    projectId: WALLETCONNECT_PROJECT_ID,
+    chains: [56],
+    optionalChains: [1, 137, 42161, 10, 43114, 8453],
+    showQrModal: true,
+    qrModalOptions: {
+      themeMode: 'light',
+      themeVariables: {
+        '--wcm-z-index': '9999'
+      }
+    },
+    metadata: {
+      name: 'HodlAI',
+      description: 'HodlAI API Key Auth',
+      url: window.location.origin,
+      icons: ['https://walletconnect.com/walletconnect-logo.png']
+    }
+  });
+
+  wcProvider.on('disconnect', () => {
+    console.log('WalletConnect disconnected');
+    if (connectedWalletId === 'walletconnect') {
+      disconnectWallet();
+    }
+  });
+
+  wcProvider.on('accountsChanged', (accounts) => {
+    console.log('WC accounts changed:', accounts);
+    if (accounts.length === 0) {
+      disconnectWallet();
+    } else if (currentAccount && accounts[0].toLowerCase() !== currentAccount.toLowerCase()) {
+      clearSession();
+      resetUI();
+      showToast(t('toast_account_changed') || '账户已更改', '🔄');
+    }
+  });
+
+  return wcProvider;
+}
+
+const APP_CONFIGS = {
+  aiaw: {
+    name: 'AIaW',
+    type: 'web',
+    buildUrl: (apiKey, baseUrl) => `https://aiaw.app/?api_key=${encodeURIComponent(apiKey)}&base_url=${encodeURIComponent(baseUrl)}`
+  },
+  lobehub: {
+    name: 'LobeHub',
+    type: 'web',
+    buildUrl: (apiKey, baseUrl) => {
+      const settings = { keyVaults: { openai: { apiKey: apiKey, baseURL: baseUrl } } };
+      return `https://lobechat784894.zeabur.app/?settings=${encodeURIComponent(JSON.stringify(settings))}`;
+    }
+  },
+  opencat: {
+    name: 'OpenCat',
+    type: 'app',
+    buildUrl: (apiKey, baseUrl) => `opencat://team/join?domain=${encodeURIComponent(baseUrl)}&token=${encodeURIComponent(apiKey)}`,
+    fallbackUrl: 'https://apps.apple.com/app/opencat/id6445999201',
+    instructions: {
+      zh: '1. 打开 OpenCat 应用\n2. 设置 → API 设置\n3. 填入 API Key 和 Base URL',
+      en: '1. Open OpenCat app\n2. Settings → API Settings\n3. Enter API Key and Base URL'
+    }
+  },
+  botgem: {
+    name: 'BotGem',
+    type: 'guide',
+    url: 'https://play.google.com/store/apps/details?id=com.chatbot.botgem',
+    copyOnLaunch: true,
+    instructions: {
+      zh: '1. 打开 BotGem 应用\n2. 设置 → 自定义 API\n3. 粘贴 API Key\n4. 设置 Base URL: https://api.hodlai.fun/v1',
+      en: '1. Open BotGem app\n2. Settings → Custom API\n3. Paste API Key\n4. Set Base URL: https://api.hodlai.fun/v1'
+    }
+  },
+  chatbox: {
+    name: 'ChatBox',
+    type: 'guide',
+    url: 'https://chatboxai.app/',
+    copyOnLaunch: true,
+    instructions: {
+      zh: '1. 下载并打开 ChatBox\n2. 设置 → API 提供商 → OpenAI API\n3. 输入 API Key\n4. 设置 API Host: https://api.hodlai.fun',
+      en: '1. Download and open ChatBox\n2. Settings → API Provider → OpenAI API\n3. Enter API Key\n4. Set API Host: https://api.hodlai.fun'
+    }
+  },
+  nextchat: {
+    name: 'NextChat',
+    type: 'web',
+    buildUrl: (apiKey, baseUrl) => `https://app.nextchat.dev/#/?settings={"openaiApiKey":"${apiKey}","openaiUrl":"${baseUrl}"}`
+  },
+  cursor: {
+    name: 'Cursor',
+    type: 'info',
+    downloadUrl: 'https://cursor.sh/',
+    apiBaseUrl: 'https://cursor.hodlai.fun/v1',
+    instructions: {
+      zh: '1. 打开 Cursor 设置\n2. 找到 Models → OpenAI API Key\n3. 输入 API Key\n4. 设置 Override OpenAI Base URL:\n   https://cursor.hodlai.fun/v1',
+      en: '1. Open Cursor Settings\n2. Find Models → OpenAI API Key\n3. Enter API Key\n4. Set Override OpenAI Base URL:\n   https://cursor.hodlai.fun/v1'
+    }
+  }
+};
+
+let i18nData = {};
+let currentLang = localStorage.getItem('app_lang') || (navigator.language.startsWith('zh') ? 'zh' : 'en');
+
+async function initI18n() {
+  try {
+    const res = await fetch('/locales.json');
+    i18nData = await res.json();
+    updatePageLanguage();
+  } catch (e) {
+    console.error('Failed to load locales', e);
+    i18nData = getBuiltInTranslations();
+    updatePageLanguage();
+  }
+}
+
+function getBuiltInTranslations() {
+  return {
+    zh: {
+      panel_status_connect: "连接钱包获取 API Key",
+      panel_status_connected: "已连接钱包",
+      panel_unconnected_desc: "持有 $HODLAI 代币即可获得每日免费额度",
+      panel_unconnected_sub: "每 3000 代币 = 每日 $1 额度",
+      panel_connect_btn: "连接钱包",
+      panel_secure_tip: "🔒 签名验证安全，不会转移资产",
+      panel_key_title: "你的 API Key",
+      panel_refresh: "刷新",
+      panel_regen: "重新生成",
+      panel_copy_tip: "Base URL:",
+      panel_quota_today: "今日额度",
+      panel_quota_remain: "剩余额度",
+      panel_quota_used: "今日已用",
+      panel_hold_balance: "持有代币",
+      panel_hodl_default: "持有代币即可获得额度",
+      panel_hodl_tip_default: "连接钱包查看你的持有状态",
+      panel_quick_launch: "一键跳转使用",
+      panel_auto_config: "自动填充配置",
+      panel_more_clients: "更多客户端 & 手动配置",
+      panel_config_guide: "在兼容 OpenAI 的应用中配置：",
+      panel_btn_buy: "购买代币",
+      panel_btn_how: "运作机制",
+      platform_web: "网页",
+      platform_ios_mac: "iOS/Mac",
+      platform_android: "安卓",
+      btn_copy: "复制",
+      btn_disconnect: "断开连接",
+      toast_copied: "已复制到剪贴板",
+      toast_copy_fail: "复制失败",
+      toast_connect_first: "请先连接钱包",
+      toast_welcome: "欢迎回来！",
+      toast_welcome_new: "🎉 欢迎加入 HodlAI！",
+      toast_connected: "连接成功！",
+      toast_cancelled: "用户取消签名",
+      toast_fail: "连接失败",
+      toast_disconnected: "已断开连接",
+      toast_refreshed: "数据已刷新",
+      toast_key_updated: "API Key 已更新",
+      toast_account_changed: "账户已切换，请重新连接",
+      loading_connect: "连接钱包中...",
+      loading_sync: "同步数据...",
+      loading_sign_msg: "获取签名消息...",
+      loading_sign_wallet: "请在钱包中签名...",
+      loading_verify: "验证签名...",
+      loading_refresh: "刷新数据...",
+      loading_new_key: "生成新 Key...",
+      confirm_regen_key: "确定要重新生成 Key 吗？旧 Key 将失效。",
+      launch_redirect: "正在跳转到",
+      launch_open: "正在打开",
+      launch_copied: "API Key 已复制",
+      launch_connect_first: "请先连接钱包获取 API Key",
+      launch_unknown_app: "未知应用",
+      launch_not_installed: "未检测到",
+      launch_install_first: "请先安装应用后再试",
+      launch_download: "去下载",
+      launch_cancel: "取消",
+      launch_close: "关闭",
+      launch_open_app: "打开",
+      launch_config_title: "配置方法",
+      launch_config_steps: "配置步骤",
+      launch_download_app: "下载应用"
+    },
+    en: {
+      panel_status_connect: "Connect Wallet for API Key",
+      panel_status_connected: "Wallet Connected",
+      panel_unconnected_desc: "Hold $HODLAI tokens to receive daily free credits.",
+      panel_unconnected_sub: "$10 Tokens = $1 Daily Credit",
+      panel_connect_btn: "Connect Wallet",
+      panel_secure_tip: "🔒 Secure signature, no assets transferred",
+      panel_key_title: "Your API Key",
+      panel_refresh: "Refresh",
+      panel_regen: "Regenerate",
+      panel_copy_tip: "Copy for full API Key, Base URL:",
+      panel_quota_today: "Daily Limit",
+      panel_quota_remain: "Remaining",
+      panel_quota_used: "Used Today",
+      panel_hold_balance: "Tokens Held",
+      panel_hodl_default: "Hold tokens to get quota",
+      panel_hodl_tip_default: "Connect wallet to check status",
+      panel_quick_launch: "Quick Launch",
+      panel_auto_config: "Auto Configuration",
+      panel_more_clients: "More Clients & Manual Config",
+      panel_config_guide: "Configure in OpenAI-compatible apps:",
+      panel_btn_buy: "Buy Tokens",
+      panel_btn_how: "How it Works",
+      platform_web: "Web",
+      platform_ios_mac: "iOS/Mac",
+      platform_android: "Android",
+      btn_copy: "Copy",
+      btn_disconnect: "Disconnect",
+      toast_copied: "Copied to clipboard",
+      toast_copy_fail: "Copy failed",
+      toast_connect_first: "Connect wallet first",
+      toast_welcome: "Welcome back!",
+      toast_welcome_new: "🎉 Welcome to HodlAI!",
+      toast_connected: "Connected successfully!",
+      toast_cancelled: "Signature cancelled",
+      toast_fail: "Connection failed",
+      toast_disconnected: "Disconnected",
+      toast_refreshed: "Data refreshed",
+      toast_key_updated: "API Key updated",
+      toast_account_changed: "Account changed, please reconnect",
+      loading_connect: "Connecting...",
+      loading_sync: "Syncing data...",
+      loading_sign_msg: "Getting message...",
+      loading_sign_wallet: "Please sign in wallet...",
+      loading_verify: "Verifying...",
+      loading_refresh: "Refreshing...",
+      loading_new_key: "Generating key...",
+      confirm_regen_key: "Confirm to regenerate key? Old key will be invalid.",
+      launch_redirect: "Redirecting to",
+      launch_open: "Opening",
+      launch_copied: "API Key copied",
+      launch_connect_first: "Connect wallet to get API Key first",
+      launch_unknown_app: "Unknown app",
+      launch_not_installed: "Not detected",
+      launch_install_first: "Please install the app first",
+      launch_download: "Download",
+      launch_cancel: "Cancel",
+      launch_close: "Close",
+      launch_open_app: "Open",
+      launch_config_title: "Configuration",
+      launch_config_steps: "Configuration Steps",
+      launch_download_app: "Download App"
+    }
+  };
+}
+
+function t(key, params = {}) {
+  if (!i18nData[currentLang]) return key;
+  let text = i18nData[currentLang][key] || key;
+  for (const [k, v] of Object.entries(params)) text = text.replace(`{${k}}`, v);
+  return text;
+}
+
+function updatePageLanguage() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18nData[currentLang] && i18nData[currentLang][key]) {
+      if (el.tagName === 'INPUT' && el.getAttribute('placeholder')) el.placeholder = i18nData[currentLang][key];
+      else el.textContent = i18nData[currentLang][key];
+    }
+  });
+
+  const btn = document.getElementById('langSwitchBtn');
+  if (btn) btn.textContent = currentLang === 'zh' ? 'EN' : '中';
+  document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+
+  if (currentToken && currentToken.quotaInfo) renderHodlStatus(currentToken.quotaInfo);
+  updateApiKeyDisplay();
+  updateWalletModalTexts();
+}
+
+function toggleLanguage() {
+  currentLang = currentLang === 'zh' ? 'en' : 'zh';
+  localStorage.setItem('app_lang', currentLang);
+  updatePageLanguage();
+  if (typeof loadRecentInvoices === 'function') loadRecentInvoices();
+  if (currentAccount) refreshBalance();
+}
+function launchApp(appId) {
+  const config = APP_CONFIGS[appId];
+  if (!config) {
+    showToast(t('launch_unknown_app'), '❌');
+    return;
+  }
+  if (!currentToken || !currentToken.key) {
+    showToast(t('launch_connect_first'), '⚠️');
+    return;
+  }
+
+  const apiKey = currentToken.key.startsWith('sk-') ? currentToken.key : 'sk-' + currentToken.key;
+  
+  const baseUrl = appId === 'cursor' 
+    ? 'https://cursor.hodlai.fun/v1' 
+    : 'https://api.hodlai.fun/v1';
+
+  switch (config.type) {
+    case 'web': {
+      const webUrl = config.buildUrl(apiKey, baseUrl);
+      window.open(webUrl, '_blank');
+      showToast(`${t('launch_redirect')} ${config.name}...`, '🚀');
+      break;
+    }
+    case 'guide':
+      if (config.copyOnLaunch) copyText(apiKey);
+      showGuideModal(config, apiKey, baseUrl);
+      break;
+    case 'app':
+      launchNativeApp(config, apiKey, baseUrl);
+      break;
+    case 'info':
+      showConfigInstructions(config, apiKey, baseUrl);
+      break;
+  }
+}
+
+function launchNativeApp(config, apiKey, baseUrl) {
+  const appUrl = config.buildUrl(apiKey, baseUrl);
+  const textOpening = currentLang === 'zh' ? '正在打开' : 'Opening';
+
+  const iframe = document.createElement('iframe');
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+
+  const startTime = Date.now();
+  const timeout = setTimeout(() => {
+    if (document.visibilityState === 'visible' && Date.now() - startTime >= 2400) showAppNotInstalledModal(config);
+    if (iframe.parentNode) document.body.removeChild(iframe);
+  }, 2500);
+
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === 'hidden') {
+      clearTimeout(timeout);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (iframe.parentNode) document.body.removeChild(iframe);
+    }
+  };
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+
+  iframe.src = appUrl;
+  showToast(`${textOpening} ${config.name}...`, '📱');
+}
+
+function buildNextChatOriginalUrl() {
+  if (!currentToken || !currentToken.key) return null;
+  const apiKey = currentToken.key.startsWith('sk-') ? currentToken.key : 'sk-' + currentToken.key;
+  const baseUrl = 'https://api.hodlai.fun';
+  const config = { key: apiKey, url: baseUrl };
+  return `https://chat.hodlai.fun/#/?settings=${encodeURIComponent(JSON.stringify(config))}`;
+}
+
+function launchNextChatOriginal() {
+  const url = buildNextChatOriginalUrl();
+  if (!url) {
+    showToast(t('launch_connect_first'), '⚠️');
+    openWalletModal();
+    return;
+  }
+  window.open(url, '_blank');
+  showToast(currentLang === 'zh' ? '🚀 正在打开 NextChat...' : '🚀 Opening NextChat...', '💬');
+}
+
+function buildHodlAIChatUrl() {
+  if (!currentToken || !currentToken.key) return null;
+  const apiKey = currentToken.key.startsWith('sk-') ? currentToken.key : 'sk-' + currentToken.key;
+  return `https://ai.hodlai.fun/?apikey=${encodeURIComponent(apiKey)}`;
+}
+
+function launchHodlAIChat() {
+  const url = buildHodlAIChatUrl();
+  if (!url) {
+    showToast(t('launch_connect_first'), '⚠️');
+    openWalletModal();
+    return;
+  }
+  window.open(url, '_blank');
+  showToast(currentLang === 'zh' ? '🚀 正在打开 HodlAI Chat...' : '🚀 Opening HodlAI Chat...', '💬');
+}
+
+function copyHodlAIChatUrl() {
+  const url = buildHodlAIChatUrl();
+  if (!url) {
+    showToast(t('launch_connect_first'), '⚠️');
+    openWalletModal();
+    return;
+  }
+  navigator.clipboard.writeText(url).then(() => {
+    showToast(currentLang === 'zh' ? '链接已复制，粘贴到任意浏览器即可使用' : 'Link copied, paste in any browser to use', '📋');
+  }).catch(() => {
+    const input = document.createElement('input');
+    input.value = url;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+    showToast(currentLang === 'zh' ? '链接已复制，粘贴到任意浏览器即可使用' : 'Link copied, paste in any browser to use', '📋');
+  });
+}
+
+function buildNextChatUrl() {
+  if (!currentToken || !currentToken.key) return null;
+  const apiKey = currentToken.key.startsWith('sk-') ? currentToken.key : 'sk-' + currentToken.key;
+  const baseUrl = 'https://api.hodlai.fun';
+  const config = { key: apiKey, url: baseUrl };
+  return `https://chat.hodlai.fun/#/?settings=${encodeURIComponent(JSON.stringify(config))}`;
+}
+
+function launchNextChat() {
+  const url = buildNextChatUrl();
+  if (!url) {
+    showToast(t('launch_connect_first'), '⚠️');
+    openWalletModal();
+    return;
+  }
+  window.open(url, '_blank');
+  showToast(currentLang === 'zh' ? '🚀 正在打开 NextChat...' : '🚀 Opening NextChat...', '💬');
+}
+// 更新当前价格档位显示
+async function updateCurrentPriceTier() {
+  try {
+    const response = await fetch(`${API_BASE}/api/price`);
+    const data = await response.json();
+    
+    if (data.success && data.data) {
+      const price = data.data.price || 0;
+      const priceRounded = data.data.priceRounded || 0;
+      const quotaRatio = data.data.quotaConfig?.currentQuotaRatioPercent || 100;
+      
+      const priceEl = document.getElementById('currentPriceTier');
+      const ratioEl = document.getElementById('currentQuotaRatio');
+      
+      if (priceEl) {
+        priceEl.textContent = `$${priceRounded.toFixed(3)}`;
+      }
+      if (ratioEl) {
+        ratioEl.textContent = `${quotaRatio}%`;
+      }
+    }
+  } catch (e) {
+    console.warn('Failed to update price tier:', e);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateCurrentPriceTier();
+  setInterval(updateCurrentPriceTier, 60000);
+});
+
+async function updateHeroDailyQuota() {
+  try {
+    const response = await fetch(`${API_BASE}/api/price`);
+    const data = await response.json();
+    
+    if (data.success && data.data) {
+      const quotaRatio = data.data.quotaConfig?.currentQuotaRatioPercent || 100;
+      const dailyQuota = (quotaRatio / 100).toFixed(2);
+      
+      const el = document.getElementById('heroDailyQuota');
+      if (el) {
+        el.textContent = `$${dailyQuota}`;
+      }
+    }
+  } catch (e) {
+    console.warn('Failed to fetch price:', e);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateHeroDailyQuota();
+  setInterval(updateHeroDailyQuota, 60000);
+});
+
+function showGuideModal(config, apiKey, baseUrl) {
+  const textConfigGuide = currentLang === 'zh' ? '配置指南' : 'Configuration Guide';
+  const textCopied = currentLang === 'zh' ? 'API Key 已复制到剪贴板' : 'API Key copied to clipboard';
+  const textCopy = currentLang === 'zh' ? '复制' : 'Copy';
+  const textSteps = currentLang === 'zh' ? '配置步骤' : 'Configuration Steps';
+  const textCancel = currentLang === 'zh' ? '取消' : 'Cancel';
+  const textOpen = currentLang === 'zh' ? '打开' : 'Open';
+  const textToastCopied = currentLang === 'zh' ? '已复制' : 'Copied';
+
+  const instructions = config.instructions ? (config.instructions[currentLang] || config.instructions.en) : '';
+
+  const modal = document.createElement('div');
+  modal.className = 'fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4';
+  modal.id = 'guideModal';
+  modal.innerHTML = `
+    <div class="bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full shadow-2xl max-h-[85vh] overflow-hidden flex flex-col">
+      <div class="p-4 sm:p-6 border-b border-slate-100 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl gradient-brand flex items-center justify-center">
+            <span class="text-xl">🚀</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-800 text-lg">${config.name}</h3>
+            <p class="text-xs text-slate-500">${textConfigGuide}</p>
+          </div>
+        </div>
+        <button onclick="document.getElementById('guideModal').remove()" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors">
+          <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="p-4 sm:p-6 overflow-y-auto flex-1">
+        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 mb-4 flex items-center gap-2">
+          <span class="text-emerald-500">✅</span>
+          <span class="text-sm text-emerald-700 font-medium">${textCopied}</span>
+        </div>
+
+        <div class="space-y-3 mb-5">
+          <div class="bg-slate-50 rounded-xl p-3 sm:p-4 border border-slate-200">
+            <div class="flex items-center justify-between mb-1">
+              <p class="text-xs text-slate-500">API Key</p>
+              <button onclick="copyText('${apiKey}');showToast('${textToastCopied}','📋')" class="text-xs text-brand-600 hover:text-brand-700 font-medium">${textCopy}</button>
+            </div>
+            <code class="text-xs sm:text-sm text-slate-800 break-all font-mono">${apiKey}</code>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-3 sm:p-4 border border-slate-200">
+            <div class="flex items-center justify-between mb-1">
+              <p class="text-xs text-slate-500">API Base URL</p>
+              <button onclick="copyText('${baseUrl}');showToast('${textToastCopied}','📋')" class="text-xs text-brand-600 hover:text-brand-700 font-medium">${textCopy}</button>
+            </div>
+            <code class="text-xs sm:text-sm text-slate-800 break-all font-mono">${baseUrl}</code>
+          </div>
+        </div>
+
+        <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
+          <p class="font-semibold text-amber-800 mb-3 text-sm flex items-center gap-2">
+            <span>📝</span> ${textSteps}
+          </p>
+          <pre class="text-xs sm:text-sm text-amber-700 whitespace-pre-wrap leading-relaxed">${instructions}</pre>
+        </div>
+      </div>
+
+      <div class="p-4 sm:p-6 border-t border-slate-100 bg-slate-50 flex gap-3">
+        <button onclick="document.getElementById('guideModal').remove()" class="flex-1 px-4 py-2.5 bg-white text-slate-700 rounded-xl font-medium hover:bg-slate-100 transition-colors border border-slate-200">
+          ${textCancel}
+        </button>
+        <a href="https://hodlai.fun/${config.url}" target="_blank" onclick="document.getElementById('guideModal').remove()" class="flex-1 px-4 py-2.5 gradient-brand text-white rounded-xl font-medium text-center hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+          <span>${textOpen} ${config.name}</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+      </div>
+    </div>
+  `;
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+  document.body.appendChild(modal);
+}
+
+function showAppNotInstalledModal(config) {
+  const textNotInstalled = currentLang === 'zh' ? '未检测到' : 'Not detected';
+  const textInstallFirst = currentLang === 'zh' ? '请先安装应用后再试' : 'Please install the app first';
+  const textCancel = currentLang === 'zh' ? '取消' : 'Cancel';
+  const textDownload = currentLang === 'zh' ? '去下载' : 'Download';
+
+  const modal = document.createElement('div');
+  modal.className = 'fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4';
+  modal.innerHTML = `
+    <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+      <div class="text-center mb-4">
+        <span class="text-4xl">📱</span>
+        <h3 class="text-lg font-bold text-slate-800 mt-2">${textNotInstalled} ${config.name}</h3>
+        <p class="text-sm text-slate-600 mt-1">${textInstallFirst}</p>
+      </div>
+      <div class="flex gap-3">
+        <button onclick="this.closest('.fixed').remove()" class="flex-1 px-4 py-2.5 bg-slate-100 text-slate-700 rounded-xl font-medium hover:bg-slate-200 transition-colors">${textCancel}</button>
+        <a href="https://hodlai.fun/${config.fallbackUrl}" target="_blank" onclick="this.closest('.fixed').remove()" class="flex-1 px-4 py-2.5 gradient-brand text-white rounded-xl font-medium text-center hover:opacity-90 transition-opacity">${textDownload}</a>
+      </div>
+    </div>
+  `;
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+  document.body.appendChild(modal);
+}
+
+function showConfigInstructions(config, apiKey, baseUrl) {
+  const textConfigMethod = currentLang === 'zh' ? '配置方法' : 'Configuration';
+  const textSteps = currentLang === 'zh' ? '配置步骤' : 'Steps';
+  const textCopy = currentLang === 'zh' ? '复制' : 'Copy';
+  const textClose = currentLang === 'zh' ? '关闭' : 'Close';
+  const textDownloadApp = currentLang === 'zh' ? '下载应用' : 'Download App';
+  const textToastCopied = currentLang === 'zh' ? '已复制' : 'Copied';
+
+  const instructions = config.instructions ? (config.instructions[currentLang] || config.instructions.en) : '';
+
+  const modal = document.createElement('div');
+  modal.className = 'fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4';
+  modal.innerHTML = `
+    <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl max-h-[80vh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-slate-800">${config.name} ${textConfigMethod}</h3>
+        <button onclick="this.closest('.fixed').remove()" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors">
+          <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+          <p class="text-xs text-slate-500 mb-1">API Base URL</p>
+          <div class="flex items-center gap-2">
+            <code class="flex-1 text-sm text-slate-800 break-all">${baseUrl}</code>
+            <button onclick="copyText('${baseUrl}');showToast('${textToastCopied}','📋')" class="px-2 py-1 text-xs bg-white border border-slate-200 rounded hover:bg-slate-100">${textCopy}</button>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+          <p class="text-xs text-slate-500 mb-1">API Key</p>
+          <div class="flex items-center gap-2">
+            <code class="flex-1 text-sm text-slate-800 break-all">${apiKey}</code>
+            <button onclick="copyText('${apiKey}');showToast('${textToastCopied}','📋')" class="px-2 py-1 text-xs bg-white border border-slate-200 rounded hover:bg-slate-100">${textCopy}</button>
+          </div>
+        </div>
+
+        <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
+          <p class="font-medium text-amber-800 mb-2 text-sm">${textSteps}：</p>
+          <pre class="text-xs text-amber-700 whitespace-pre-wrap">${instructions}</pre>
+        </div>
+      </div>
+
+      <div class="flex gap-3 mt-6">
+        <button onclick="this.closest('.fixed').remove()" class="flex-1 px-4 py-2.5 bg-slate-100 text-slate-700 rounded-xl font-medium hover:bg-slate-200 transition-colors">${textClose}</button>
+        ${config.downloadUrl ? `<a href="https://hodlai.fun/${config.downloadUrl}" target="_blank" class="flex-1 px-4 py-2.5 gradient-brand text-white rounded-xl font-medium text-center hover:opacity-90 transition-opacity">${textDownloadApp}</a>` : ''}
+      </div>
+    </div>
+  `;
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+  document.body.appendChild(modal);
+}
+
+function wrapBinanceChainProvider(binanceChain) {
+  if (!binanceChain) return null;
+  if (typeof binanceChain.request === 'function') return binanceChain;
+
+  const wrappedProvider = {
+    ...binanceChain,
+    isBinance: true,
+    isBinanceChain: true,
+    _original: binanceChain,
+
+    request: async ({ method, params }) => {
+      return new Promise((resolve, reject) => {
+        switch (method) {
+          case 'eth_requestAccounts':
+          case 'eth_accounts':
+            if (typeof binanceChain.request === 'function') binanceChain.request({ method, params }).then(resolve).catch(reject);
+            else if (typeof binanceChain.enable === 'function') binanceChain.enable().then(resolve).catch(reject);
+            else if (typeof binanceChain.requestAccounts === 'function') binanceChain.requestAccounts().then(resolve).catch(reject);
+            else if (typeof binanceChain.getAccounts === 'function') binanceChain.getAccounts().then(resolve).catch(reject);
+            else reject(new Error('No account request method available'));
+            break;
+
+          case 'personal_sign': {
+            const [message, address] = params || [];
+            if (typeof binanceChain.signMessage === 'function') {
+              binanceChain.signMessage({ message, address }).then(result => resolve(result.signature || result)).catch(reject);
+            } else if (typeof binanceChain.sign === 'function') {
+              binanceChain.sign({ message, address }).then(result => resolve(result.signature || result)).catch(reject);
+            } else if (typeof binanceChain.bnbSign === 'function') {
+              const hexMsg = '0x' + Array.from(new TextEncoder().encode(message)).map(b => b.toString(16).padStart(2, '0')).join('');
+              binanceChain.bnbSign(address, hexMsg).then(result => resolve(result.signature || result)).catch(reject);
+            } else reject(new Error('No sign method available'));
+            break;
+          }
+
+          case 'wallet_switchEthereumChain':
+            if (typeof binanceChain.switchNetwork === 'function') {
+              const chainId = params?.[0]?.chainId;
+              binanceChain.switchNetwork(chainId).then(resolve).catch(reject);
+            } else if (typeof binanceChain.request === 'function') {
+              binanceChain.request({ method, params }).then(resolve).catch(reject);
+            } else resolve(null);
+            break;
+
+          case 'wallet_addEthereumChain':
+            if (typeof binanceChain.request === 'function') binanceChain.request({ method, params }).then(resolve).catch(reject);
+            else resolve(null);
+            break;
+
+          case 'eth_chainId':
+            if (typeof binanceChain.chainId === 'string') resolve(binanceChain.chainId);
+            else if (typeof binanceChain.getChainId === 'function') binanceChain.getChainId().then(resolve).catch(reject);
+            else resolve('0x38');
+            break;
+
+          default:
+            if (typeof binanceChain.request === 'function') binanceChain.request({ method, params }).then(resolve).catch(reject);
+            else if (typeof binanceChain[method] === 'function') Promise.resolve(binanceChain[method](...(params || []))).then(resolve).catch(reject);
+            else reject(new Error(`Method ${method} not supported`));
+        }
+      });
+    },
+
+    on: (event, handler) => { if (typeof binanceChain.on === 'function') binanceChain.on(event, handler); },
+    removeListener: (event, handler) => { if (typeof binanceChain.removeListener === 'function') binanceChain.removeListener(event, handler); },
+    removeAllListeners: (event) => { if (typeof binanceChain.removeAllListeners === 'function') binanceChain.removeAllListeners(event); }
+  };
+
+  return wrappedProvider;
+}
+
+const WALLET_CONFIGS = {
+  walletconnect: {
+    name: 'WalletConnect',
+    icon: 'https://walletconnect.com/favicon.ico',
+    checkInstalled: () => true,
+    getProvider: async () => await getWalletConnectProvider(),
+    downloadUrl: 'https://walletconnect.com/',
+    description: { zh: '扫码连接手机钱包 / 支持多钱包', en: 'Scan to connect mobile wallets' },
+    priority: 0,
+    supportedChains: ['bsc', 'ethereum', 'polygon', 'arbitrum', 'optimism', 'avalanche', 'base'],
+    type: 'walletconnect'
+  },
+
+  metamask: {
+    name: 'MetaMask',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg',
+    checkInstalled: () => {
+      if (typeof window.ethereum === 'undefined') return false;
+      if (window.ethereum.isMetaMask && !window.ethereum.isBraveWallet) return true;
+      if (window.ethereum.providers) return window.ethereum.providers.some(p => p.isMetaMask && !p.isBraveWallet);
+      return false;
+    },
+    getProvider: () => {
+      if (window.ethereum?.providers) return window.ethereum.providers.find(p => p.isMetaMask && !p.isBraveWallet) || window.ethereum;
+      return window.ethereum;
+    },
+    downloadUrl: 'https://metamask.io/download/',
+    description: { zh: '最流行的浏览器钱包', en: 'Most popular browser wallet' },
+    priority: 1,
+    supportedChains: ['ethereum', 'bsc', 'polygon', 'arbitrum', 'optimism', 'avalanche', 'base'],
+    type: 'extension'
+  },
+
+  okx: {
+    name: 'OKX Wallet',
+    icon: 'https://www.okx.com/cdn/assets/imgs/226/EB771F0EE8994DD5.png',
+    checkInstalled: () => typeof window.okxwallet !== 'undefined',
+    getProvider: () => window.okxwallet,
+    downloadUrl: 'https://www.okx.com/web3',
+    description: { zh: 'OKX 官方 Web3 钱包', en: 'OKX Official Web3 Wallet' },
+    priority: 2,
+    supportedChains: ['ethereum', 'bsc', 'polygon', 'arbitrum', 'optimism', 'avalanche', 'solana', 'aptos', 'sui'],
+    type: 'extension'
+  },
+
+  binance: {
+    name: 'Binance Wallet',
+    icon: 'https://public.bnbstatic.com/static/images/common/favicon.ico',
+    checkInstalled: () => {
+      if (typeof window.binancew3w !== 'undefined') return true;
+      if (typeof window.binanceWallet !== 'undefined') return true;
+      if (typeof window.BinanceChain !== 'undefined') return true;
+      if (window.ethereum) {
+        if (window.ethereum.isBinance || window.ethereum.isBinanceWallet || window.ethereum.isBinanceChain) return true;
+        if (window.ethereum.providers?.some(p => p.isBinance || p.isBinanceWallet || p.isBinanceChain)) return true;
+      }
+      if (/binance/i.test(navigator.userAgent) && window.ethereum) return true;
+      return false;
+    },
+    getProvider: () => {
+      if (window.binancew3w?.ethereum) return window.binancew3w.ethereum;
+      if (window.binancew3w?.request) return window.binancew3w;
+      if (window.binanceWallet?.ethereum) return window.binanceWallet.ethereum;
+      if (window.binanceWallet?.request) return window.binanceWallet;
+      if (window.ethereum) {
+        if (window.ethereum.isBinance || window.ethereum.isBinanceWallet || window.ethereum.isBinanceChain) return window.ethereum;
+        if (window.ethereum.providers) {
+          const p = window.ethereum.providers.find(p => p.isBinance || p.isBinanceWallet || p.isBinanceChain);
+          if (p) return p;
+        }
+        if (/binance/i.test(navigator.userAgent)) return window.ethereum;
+      }
+      if (window.BinanceChain) return wrapBinanceChainProvider(window.BinanceChain);
+      return null;
+    },
+    downloadUrl: 'https://www.binance.com/en/web3wallet',
+    description: { zh: '币安官方 Web3 钱包', en: 'Binance Official Web3 Wallet' },
+    priority: 3,
+    supportedChains: ['ethereum', 'bsc', 'polygon', 'arbitrum', 'optimism'],
+    type: 'extension'
+  },
+
+  trustwallet: {
+    name: 'Trust Wallet',
+    icon: 'https://trustwallet.com/assets/images/media/assets/TWT.png',
+    checkInstalled: () => window.trustwallet?.isTrust || window.ethereum?.isTrust || window.ethereum?.isTrustWallet || (window.ethereum?.providers?.some(p => p.isTrust || p.isTrustWallet)),
+    getProvider: () => {
+      if (window.trustwallet?.isTrust) return window.trustwallet;
+      if (window.ethereum?.isTrust || window.ethereum?.isTrustWallet) return window.ethereum;
+      if (window.ethereum?.providers) return window.ethereum.providers.find(p => p.isTrust || p.isTrustWallet);
+      return null;
+    },
+    downloadUrl: 'https://trustwallet.com/',
+    description: { zh: '安全易用的移动钱包', en: 'Secure & Easy Mobile Wallet' },
+    priority: 4,
+    supportedChains: ['ethereum', 'bsc', 'polygon', 'arbitrum', 'optimism', 'avalanche'],
+    type: 'mobile'
+  },
+
+  coinbase: {
+    name: 'Coinbase Wallet',
+    icon: 'https://altcoinsbox.com/wp-content/uploads/2022/12/coinbase-logo.png',
+    checkInstalled: () => window.coinbaseWalletExtension?.isCoinbaseWallet || window.ethereum?.isCoinbaseWallet || window.ethereum?.providers?.some(p => p.isCoinbaseWallet),
+    getProvider: () => {
+      if (window.coinbaseWalletExtension?.isCoinbaseWallet) return window.coinbaseWalletExtension;
+      if (window.ethereum?.isCoinbaseWallet) return window.ethereum;
+      if (window.ethereum?.providers) return window.ethereum.providers.find(p => p.isCoinbaseWallet);
+      return null;
+    },
+    downloadUrl: 'https://www.coinbase.com/wallet',
+    description: { zh: 'Coinbase 官方钱包', en: 'Coinbase Official Wallet' },
+    priority: 5,
+    supportedChains: ['ethereum', 'polygon', 'arbitrum', 'optimism', 'base', 'avalanche'],
+    type: 'extension'
+  },
+
+  bitget: {
+    name: 'Bitget Wallet',
+    icon: 'https://img.bitgetimg.com/image/third/1677738498686.png',
+    checkInstalled: () => typeof window.bitkeep !== 'undefined' || window.ethereum?.isBitKeep || window.ethereum?.isBitget || window.ethereum?.providers?.some(p => p.isBitKeep || p.isBitget),
+    getProvider: () => {
+      if (window.bitkeep?.ethereum) return window.bitkeep.ethereum;
+      if (window.ethereum?.isBitKeep || window.ethereum?.isBitget) return window.ethereum;
+      if (window.ethereum?.providers) return window.ethereum.providers.find(p => p.isBitKeep || p.isBitget);
+      return null;
+    },
+    downloadUrl: 'https://web3.bitget.com/',
+    description: { zh: 'Bitget 官方 Web3 钱包', en: 'Bitget Official Web3 Wallet' },
+    priority: 6,
+    supportedChains: ['ethereum', 'bsc', 'polygon', 'arbitrum', 'optimism', 'avalanche', 'solana'],
+    type: 'extension'
+  },
+
+  phantom: {
+    name: 'Phantom',
+    icon: 'https://phantom.com/_web_platform_assets/favicon.ico',
+    checkInstalled: () => typeof window.phantom?.ethereum !== 'undefined' || window.ethereum?.isPhantom,
+    getProvider: () => window.phantom?.ethereum || (window.ethereum?.isPhantom ? window.ethereum : null),
+    downloadUrl: 'https://phantom.app/',
+    description: { zh: '跨链加密钱包', en: 'Multi-chain Crypto Wallet' },
+    priority: 7,
+    supportedChains: ['ethereum', 'solana', 'polygon', 'base'],
+    type: 'extension'
+  },
+
+  tokenpocket: {
+    name: 'TokenPocket',
+    icon: 'https://tokenpocket.pro/favicon.ico',
+    checkInstalled: () => window.ethereum?.isTokenPocket || typeof window.tokenpocket !== 'undefined',
+    getProvider: () => window.tokenpocket?.ethereum || (window.ethereum?.isTokenPocket ? window.ethereum : null),
+    downloadUrl: 'https://www.tokenpocket.pro/',
+    description: { zh: '多链数字钱包', en: 'Multi-chain Digital Wallet' },
+    priority: 8,
+    supportedChains: ['ethereum', 'bsc', 'polygon', 'tron', 'eos', 'arbitrum'],
+    type: 'mobile'
+  },
+
+  imtoken: {
+    name: 'imToken',
+    icon: 'https://token.im/favicon.ico',
+    checkInstalled: () => window.ethereum?.isImToken || typeof window.imToken !== 'undefined',
+    getProvider: () => window.imToken?.ethereum || (window.ethereum?.isImToken ? window.ethereum : null),
+    downloadUrl: 'https://token.im/',
+    description: { zh: '安全的数字资产钱包', en: 'Secure Digital Asset Wallet' },
+    priority: 9,
+    supportedChains: ['ethereum', 'bsc', 'polygon', 'arbitrum'],
+    type: 'mobile'
+  },
+
+  rainbow: {
+    name: 'Rainbow',
+    icon: 'https://rainbow.me/favicon.ico',
+    checkInstalled: () => window.ethereum?.isRainbow || typeof window.rainbow !== 'undefined',
+    getProvider: () => window.rainbow || (window.ethereum?.isRainbow ? window.ethereum : null),
+    downloadUrl: 'https://rainbow.me/',
+    description: { zh: '以太坊 DeFi 钱包', en: 'Ethereum DeFi Wallet' },
+    priority: 10,
+    supportedChains: ['ethereum', 'polygon', 'arbitrum', 'optimism', 'base', 'zora'],
+    type: 'mobile'
+  },
+
+  safepal: {
+    name: 'SafePal',
+    icon: 'https://www.safepal.com/favicon.ico',
+    checkInstalled: () => window.ethereum?.isSafePal || typeof window.safepal !== 'undefined',
+    getProvider: () => window.safepal?.ethereum || (window.ethereum?.isSafePal ? window.ethereum : null),
+    downloadUrl: 'https://www.safepal.com/',
+    description: { zh: '安全便捷的加密钱包', en: 'Safe & Convenient Crypto Wallet' },
+    priority: 11,
+    supportedChains: ['ethereum', 'bsc', 'polygon', 'tron'],
+    type: 'mobile'
+  },
+
+  coin98: {
+    name: 'Coin98',
+    icon: 'https://coin98.com/favicon.ico',
+    checkInstalled: () => window.ethereum?.isCoin98 || typeof window.coin98 !== 'undefined',
+    getProvider: () => window.coin98?.provider || (window.ethereum?.isCoin98 ? window.ethereum : null),
+    downloadUrl: 'https://coin98.com/',
+    description: { zh: '多链 DeFi 网关', en: 'Multi-chain DeFi Gateway' },
+    priority: 12,
+    supportedChains: ['ethereum', 'bsc', 'polygon', 'solana', 'avalanche', 'near'],
+    type: 'extension'
+  },
+
+  onekey: {
+    name: 'OneKey',
+    icon: 'https://onekey.so/favicon.ico',
+    checkInstalled: () => window.ethereum?.isOneKey || typeof window.$onekey !== 'undefined',
+    getProvider: () => window.$onekey?.ethereum || (window.ethereum?.isOneKey ? window.ethereum : null),
+    downloadUrl: 'https://onekey.so/',
+    description: { zh: '开源硬件钱包', en: 'Open Source Hardware Wallet' },
+    priority: 13,
+    supportedChains: ['ethereum', 'bsc', 'polygon', 'arbitrum', 'optimism'],
+    type: 'hardware'
+  }
+};
+
+let currentAccount = null;
+let currentToken = null;
+let signMessage = null;
+let signature = null;
+let isConnected = false;
+let isApiKeyVisible = false;
+let connectedWalletId = null;
+let currentProvider = null;
+let isWalletModalOpen = false;
+let connectingWalletId = null;
+let installedWallets = [];
+
+function showToast(message, icon = '✓') {
+  const toast = document.getElementById('toast');
+  if (!toast) {
+    const tempToast = document.createElement('div');
+    tempToast.className = 'fixed bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-slate-800 text-white rounded-lg shadow-lg flex items-center gap-2 z-50';
+    tempToast.innerHTML = `<span>${icon}</span><span>${message}</span>`;
+    document.body.appendChild(tempToast);
+    setTimeout(() => tempToast.remove(), 3000);
+    return;
+  }
+  const toastMessage = document.getElementById('toastMessage');
+  const toastIcon = document.getElementById('toastIcon');
+  if (toastMessage) toastMessage.textContent = message;
+  if (toastIcon) toastIcon.textContent = icon;
+  toast.classList.remove('translate-y-full', 'opacity-0');
+  setTimeout(() => toast.classList.add('translate-y-full', 'opacity-0'), 3000);
+}
+
+function showLoading(textKey = 'loading_sync') {
+  const overlay = document.getElementById('loadingOverlay');
+  const text = document.getElementById('loadingText');
+  if (overlay) {
+    if (text) text.textContent = t(textKey) || textKey;
+    overlay.classList.remove('hidden');
+  }
+}
+
+function hideLoading() {
+  const overlay = document.getElementById('loadingOverlay');
+  if (overlay) overlay.classList.add('hidden');
+}
+
+function formatBalance(balance, decimals = 18) {
+  if (!balance) return '0';
+  const num = parseFloat(balance) / Math.pow(10, decimals);
+  if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
+  if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+  return num.toFixed(2);
+}
+
+function quotaToUSD(quota) {
+  return quota ? (quota / 500000).toFixed(2) : '0.00';
+}
+
+function copyText(text) {
+  if (!text) return;
+  navigator.clipboard.writeText(text)
+    .then(() => showToast(t('toast_copied') || '已复制', '📋'))
+    .catch(() => showToast(t('toast_copy_fail') || '复制失败', '❌'));
+}
+
+function maskApiKey(key) {
+  if (!key || key.length < 10) return 'sk-••••••••••••••••••••••••';
+  const prefix = key.substring(0, 7);
+  const suffix = key.substring(key.length - 4);
+  return prefix + '••••••••••••' + suffix;
+}
+
+function getFullApiKey() {
+  const keyInput = document.getElementById('userApiKey');
+  return keyInput ? keyInput.value : '';
+}
+
+function updateApiKeyDisplay() {
+  const maskedEl = document.getElementById('userApiKeyMasked');
+  const eyeIcon = document.getElementById('eyeIcon');
+  const eyeOffIcon = document.getElementById('eyeOffIcon');
+  const fullKey = getFullApiKey();
+
+  if (!maskedEl) return;
+
+  if (isApiKeyVisible && fullKey && fullKey.startsWith('sk-')) {
+    maskedEl.textContent = fullKey;
+    maskedEl.classList.remove('text-slate-600');
+    maskedEl.classList.add('text-slate-800');
+    if (eyeIcon) eyeIcon.classList.add('hidden');
+    if (eyeOffIcon) eyeOffIcon.classList.remove('hidden');
+  } else {
+    maskedEl.textContent = maskApiKey(fullKey);
+    maskedEl.classList.add('text-slate-600');
+    maskedEl.classList.remove('text-slate-800');
+    if (eyeIcon) eyeIcon.classList.remove('hidden');
+    if (eyeOffIcon) eyeOffIcon.classList.add('hidden');
+  }
+}
+
+function toggleApiKeyVisibility() {
+  const fullKey = getFullApiKey();
+  if (!fullKey || !fullKey.startsWith('sk-')) {
+    showToast(t('toast_connect_first') || '请先连接钱包', '🔐');
+    return;
+  }
+  isApiKeyVisible = !isApiKeyVisible;
+  updateApiKeyDisplay();
+}
+
+function copyApiKey() {
+  const key = getFullApiKey();
+  if (key && key.startsWith('sk-')) copyText(key);
+  else showToast(t('toast_connect_first') || '请先连接钱包', '⚠️');
+}
+
+function copyCA() { copyText(TOKEN_CA); }
+
+function saveSession() {
+  if (currentAccount && currentToken) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      account: currentAccount,
+      token: currentToken,
+      signMessage,
+      signature,
+      walletId: connectedWalletId,
+      timestamp: Date.now()
+    }));
+  }
+}
+
+function loadSession() {
+  try {
+    const data = localStorage.getItem(STORAGE_KEY);
+    if (!data) return null;
+    const session = JSON.parse(data);
+    if (Date.now() - session.timestamp > 7 * 24 * 60 * 60 * 1000) {
+      localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    return session;
+  } catch {
+    return null;
+  }
+}
+
+function clearSession() { localStorage.removeItem(STORAGE_KEY); }
+
+function detectInstalledWallets() {
+  installedWallets = [];
+  Object.entries(WALLET_CONFIGS).forEach(([id, config]) => {
+    try {
+      if (config.checkInstalled()) installedWallets.push({ id, ...config });
+    } catch (e) {}
+  });
+  installedWallets.sort((a, b) => (a.priority || 99) - (b.priority || 99));
+  return installedWallets;
+}
+
+function updateWalletModalTexts() {
+  const title = document.getElementById('walletModalTitle');
+  const subtitle = document.getElementById('walletModalSubtitle');
+  const tip = document.getElementById('walletModalSecurityTip');
+  const noWalletTip = document.getElementById('walletModalNoWalletTip');
+
+  if (title) title.textContent = currentLang === 'zh' ? '连接钱包' : 'Connect Wallet';
+  if (subtitle) subtitle.textContent = currentLang === 'zh' ? '选择你的钱包' : 'Choose your wallet';
+  if (tip) tip.textContent = currentLang === 'zh' ? '🔒 签名验证安全，不会转移资产' : '🔒 Secure signature, no asset transfer';
+  if (noWalletTip) {
+    noWalletTip.innerHTML = currentLang === 'zh'
+      ? '未检测到钱包？<a href="https://metamask.io/download/" target="_blank" class="text-indigo-600 hover:underline">安装 MetaMask</a>'
+      : 'No wallet detected? <a href="https://metamask.io/download/" target="_blank" class="text-indigo-600 hover:underline">Install MetaMask</a>';
+  }
+}
+
+function renderWalletList() {
+  const container = document.getElementById('walletList');
+  if (!container) return;
+
+  detectInstalledWallets();
+
+  if (installedWallets.length === 0) {
+    container.innerHTML = `
+      <div class="p-8 text-center">
+        <div class="text-5xl mb-4">🔍</div>
+        <p class="text-slate-600 font-medium mb-2">${currentLang === 'zh' ? '未检测到钱包' : 'No Wallet Detected'}</p>
+        <p class="text-slate-500 text-sm mb-4">${currentLang === 'zh' ? '请安装以下推荐钱包之一' : 'Please install one of the recommended wallets'}</p>
+        <div class="space-y-2">
+          <a href="https://metamask.io/download/" target="_blank"
+            class="block w-full py-3 px-4 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-medium transition-colors">
+            📥 ${currentLang === 'zh' ? '安装 MetaMask' : 'Install MetaMask'}
+          </a>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  let html = '';
+  installedWallets.forEach((wallet) => {
+    const isConnecting = connectingWalletId === wallet.id;
+    const desc = wallet.description[currentLang] || wallet.description.en;
+    const badge = wallet.id === 'walletconnect' 
+      ? (currentLang === 'zh' ? '扫码/移动端' : 'QR/Mobile') 
+      : (currentLang === 'zh' ? '已安装' : 'Ready');
+
+    html += `
+      <div class="wallet-item ${isConnecting ? 'wallet-item-connecting' : ''}"
+           onclick="selectWallet('${wallet.id}')">
+        <div class="wallet-item-icon">
+          <img src="https://hodlai.fun/${wallet.icon}" alt="${wallet.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='🔷';">
+        </div>
+        <div class="wallet-item-info">
+          <h4>
+            ${wallet.name}
+            <span class="wallet-installed-badge">${badge}</span>
+          </h4>
+          <p>${desc}</p>
+        </div>
+        <div class="wallet-item-action">
+          ${isConnecting ? '<div class="spinner"></div>' : `<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>`}
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+function openWalletModal() {
+  const modal = document.getElementById('walletModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    isWalletModalOpen = true;
+    connectingWalletId = null;
+    renderWalletList();
+    updateWalletModalTexts();
+  }
+}
+
+function closeWalletModal() {
+  const modal = document.getElementById('walletModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
+    isWalletModalOpen = false;
+    connectingWalletId = null;
+  }
+}
+
+function downloadWallet(walletId) {
+  const config = WALLET_CONFIGS[walletId];
+  if (config?.downloadUrl) window.open(config.downloadUrl, '_blank');
+}
+
+async function switchToBSC(provider) {
+  try {
+    await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: BSC_CHAIN_CONFIG.chainId }] });
+    return true;
+  } catch (switchError) {
+    if (switchError.code === 4902) {
+      try {
+        await provider.request({ method: 'wallet_addEthereumChain', params: [BSC_CHAIN_CONFIG] });
+        return true;
+      } catch {
+        return false;
+      }
+    }
+    return false;
+  }
+}
+
+async function selectWallet(walletId) {
+  const config = WALLET_CONFIGS[walletId];
+  if (!config) return;
+
+  if (walletId !== 'walletconnect' && !config.checkInstalled()) {
+    downloadWallet(walletId);
+    return;
+  }
+
+  connectingWalletId = walletId;
+  renderWalletList();
+
+  try {
+    let provider;
+    
+    if (walletId === 'walletconnect') {
+      showLoading('loading_connect');
+      provider = await config.getProvider();
+      
+      if (provider.connected) {
+        await provider.disconnect();
+      }
+      
+      await provider.connect();
+      hideLoading();
+    } else {
+      provider = config.getProvider();
+    }
+
+    if (!provider) throw new Error(currentLang === 'zh' ? '无法获取钱包 Provider' : 'Cannot get wallet provider');
+
+    if (walletId !== 'walletconnect') {
+      await switchToBSC(provider);
+    }
+
+    let accounts;
+    if (walletId === 'walletconnect') {
+      accounts = provider.accounts;
+    } else {
+      accounts = await provider.request({ method: 'eth_requestAccounts' });
+    }
+    
+    if (!accounts || accounts.length === 0) throw new Error(currentLang === 'zh' ? '未获取到账户' : 'No accounts found');
+
+    currentProvider = provider;
+    connectedWalletId = walletId;
+
+    closeWalletModal();
+    await performSignatureAuth(accounts[0], provider);
+
+  } catch (error) {
+    hideLoading();
+    connectingWalletId = null;
+    renderWalletList();
+
+    console.error('Connection error:', error);
+
+    if (error?.code === 4001) {
+      showToast(t('toast_cancelled') || '用户取消', '❌');
+    } else {
+      showToast(error?.message || (currentLang === 'zh' ? '连接失败' : 'Connection failed'), '❌');
+    }
+  }
+}
+
+async function performSignatureAuth(account, provider) {
+  const newAccount = account.toLowerCase();
+
+  try {
+    const session = loadSession();
+    if (session?.account?.toLowerCase() === newAccount && session.token && session.walletId) {
+      currentAccount = session.account;
+      currentToken = session.token;
+      signMessage = session.signMessage;
+      signature = session.signature;
+      connectedWalletId = session.walletId;
+
+      showLoading('loading_sync');
+      try {
+        const res = await fetch(`${API_BASE}/api/refresh?_t=${Date.now()}`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json', 
+            'x-lang': currentLang,
+            'Cache-Control': 'no-cache'
+          },
+          body: JSON.stringify({ 
+            address: currentAccount,
+            forceRefresh: true
+          })
+        });
+        const data = await res.json();
+        if (data.success && data.data) {
+          currentToken = {
+            ...currentToken,
+            ...data.data,
+            balance: data.data.newBalance || data.data.balance || currentToken.balance,
+            dailyQuota: data.data.dailyQuota ?? currentToken.dailyQuota,
+            remainQuota: data.data.remainQuota ?? currentToken.remainQuota,
+            usedQuota: data.data.usedQuota ?? currentToken.usedQuota,
+            quotaInfo: data.data.quotaInfo || currentToken.quotaInfo
+          };
+        }
+      } catch {}
+      hideLoading();
+
+      updateUI(currentToken);
+      setupProviderListeners(provider);
+      showToast(t('toast_welcome') || '欢迎回来！', '👋');
+      document.getElementById('api-panel')?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+
+    currentAccount = newAccount;
+
+    showLoading('loading_sign_msg');
+    const msgRes = await fetch(`${API_BASE}/api/auth/message`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-lang': currentLang },
+      body: JSON.stringify({ address: currentAccount })
+    });
+    const msgData = await msgRes.json();
+    if (!msgData.success) throw new Error(msgData.error || 'Failed to get message');
+    signMessage = msgData.data.message;
+
+    showLoading('loading_sign_wallet');
+    signature = await provider.request({ method: 'personal_sign', params: [signMessage, currentAccount] });
+
+    showLoading('loading_verify');
+    const verifyRes = await fetch(`${API_BASE}/api/auth/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-lang': currentLang },
+      body: JSON.stringify({ address: currentAccount, message: signMessage, signature })
+    });
+    const verifyData = await verifyRes.json();
+    if (!verifyData.success) throw new Error(verifyData.error || 'Verification failed');
+
+    hideLoading();
+    updateUI(verifyData.data.token);
+    setupProviderListeners(provider);
+
+    showToast(
+      verifyData.data.isNew ? (t('toast_welcome_new') || '欢迎加入！') : (t('toast_connected') || '连接成功！'),
+      verifyData.data.isNew ? '💎' : '✅'
+    );
+    document.getElementById('api-panel')?.scrollIntoView({ behavior: 'smooth' });
+
+  } catch (error) {
+    hideLoading();
+    if (error?.code === 4001) showToast(t('toast_cancelled') || '用户取消', '❌');
+    else showToast(error?.message || (currentLang === 'zh' ? '验证失败' : 'Verification failed'), '❌');
+
+    currentAccount = null;
+    signMessage = null;
+    signature = null;
+    connectedWalletId = null;
+    currentProvider = null;
+  }
+}
+
+function goToLogs() {
+  const apiKey = document.getElementById('userApiKey')?.value;
+  if (apiKey) {
+    localStorage.setItem('hodlai_apikey', apiKey);
+    window.location.href = '/logs.html?key=' + encodeURIComponent(apiKey);
+  } else {
+    window.location.href = '/logs.html';
+  }
+}
+
+function setupProviderListeners(provider) {
+  if (!provider) return;
+
+  try {
+    provider.removeAllListeners?.('accountsChanged');
+    provider.removeAllListeners?.('chainChanged');
+    provider.removeAllListeners?.('disconnect');
+
+    provider.on?.('accountsChanged', (accounts) => {
+      if (!accounts || accounts.length === 0) {
+        disconnectWallet();
+      } else if (currentAccount && accounts[0]?.toLowerCase() !== currentAccount.toLowerCase()) {
+        clearSession();
+        resetUI();
+        showToast(t('toast_account_changed') || '账户已更改', '🔄');
+      }
+    });
+    provider.on?.('chainChanged', (chainId) => {
+      if (chainId !== BSC_CHAIN_CONFIG.chainId) {
+        showToast(currentLang === 'zh' ? '请切换到 BSC 链' : 'Please switch to BSC', '⚠️');
+      }
+    });
+
+    provider.on?.('disconnect', () => {
+      disconnectWallet();
+    });
+  } catch {}
+}
+
+function renderHodlStatus(quotaInfo) {
+  if (!quotaInfo) return;
+  
+  const releasePercent = quotaInfo.releasePercent || 0;
+  const hasEverSold = quotaInfo.hasEverSold || false;
+  const isDiamondHands = quotaInfo.isDiamondHands || false;
+  
+  const statusConfig = {
+    'warming': { icon: '🔥', bgClass: 'bg-orange-50 border-orange-200' },
+    'hodling': { icon: '🙌', bgClass: 'bg-blue-50 border-blue-200' },
+    'recovering': { icon: '🔄', bgClass: 'bg-purple-50 border-purple-200' },
+    'diamond': { icon: '💎', bgClass: 'bg-amber-50 border-amber-300' },
+    'cooldown': { icon: '🧻', bgClass: 'bg-slate-100 border-slate-300' },
+    'full': { icon: '✅', bgClass: 'bg-emerald-50 border-emerald-200' },
+    'no_balance': { icon: '⏳', bgClass: 'bg-slate-50 border-slate-200' }
+  };
+  
+  const maxPercent = hasEverSold ? 80 : 100;
+  const isFullyRecovered = releasePercent >= maxPercent;
+  
+  let effectiveStatus = quotaInfo.status;
+  
+  if (effectiveStatus === 'recovering' && isFullyRecovered) {
+    effectiveStatus = 'full';
+  }
+  
+  if (isDiamondHands && releasePercent >= 100) {
+    effectiveStatus = 'diamond';
+  }
+  
+  const config = statusConfig[effectiveStatus] || statusConfig['no_balance'];
+
+  const el = (id) => document.getElementById(id);
+  
+  if (el('hodlStatusIcon')) el('hodlStatusIcon').textContent = config.icon;
+  
+  if (el('hodlStatusMessage')) {
+    let message = quotaInfo.message || '-';
+    
+    if (hasEverSold && releasePercent >= 80) {
+      message = currentLang === 'zh' 
+        ? '已达最大额度 (80%)' 
+        : 'Max quota reached (80%)';
+    }
+    else if (!hasEverSold && releasePercent >= 100) {
+      message = currentLang === 'zh' 
+        ? '💎 钻石手满额度' 
+        : '💎 Diamond hands full quota';
+    }
+    
+    el('hodlStatusMessage').textContent = message;
+  }
+  
+  if (el('hodlStatusTip')) {
+    let tip = quotaInfo.tip || '-';
+    
+    if (hasEverSold && releasePercent >= 80) {
+      tip = currentLang === 'zh' 
+        ? '🧻 存在卖出/转出记录' 
+        : '🧻 There are sales/transfer records';
+    }
+    else if (!hasEverSold && releasePercent >= 100) {
+      tip = currentLang === 'zh'
+        ? '继续持有保持钻石手身份'
+        : 'Keep holding for diamond hands';
+    }
+    
+    el('hodlStatusTip').textContent = tip;
+  }
+  
+  if (el('hodlReleasePercent')) el('hodlReleasePercent').textContent = releasePercent + '%';
+  if (el('hodlProgressBar')) el('hodlProgressBar').style.width = Math.min(releasePercent, 100) + '%';
+  if (el('hodlStatusCard')) el('hodlStatusCard').className = `p-3 sm:p-5 rounded-lg sm:rounded-2xl border-2 ${config.bgClass}`;
+  if (el('hodlBadge')) isDiamondHands ? el('hodlBadge').classList.remove('hidden') : el('hodlBadge').classList.add('hidden');
+  if (el('userStatusEmoji')) el('userStatusEmoji').textContent = isDiamondHands ? '💎' : (hasEverSold ? '🧻' : '🙌');
+}
+
+function updateUI(tokenData) {
+  if (!tokenData) return;
+  currentToken = tokenData;
+  isConnected = true;
+
+  const el = (id) => document.getElementById(id);
+  el('notConnectedOverlay')?.classList.add('hidden');
+  el('apiPanelCard')?.classList.remove('border-slate-200');
+  el('apiPanelCard')?.classList.add('border-indigo-300');
+  if (el('panelStatusText')) el('panelStatusText').textContent = t('panel_status_connected') || '已连接';
+  if (el('userAddress') && tokenData.web3) el('userAddress').textContent = tokenData.web3.slice(0, 6) + '...' + tokenData.web3.slice(-4);
+  el('disconnectBtn')?.classList.remove('hidden');
+
+  if (el('userApiKey') && tokenData.key) el('userApiKey').value = (tokenData.key.startsWith('sk-') ? tokenData.key : 'sk-' + tokenData.key);
+
+  isApiKeyVisible = false;
+  updateApiKeyDisplay();
+
+  const displayBalance = tokenData.newBalance || tokenData.balance;
+  if (el('userBalance')) {
+    el('userBalance').textContent = formatBalance(displayBalance);
+    
+    if (tokenData.balanceIncreased) {
+      el('userBalance').classList.add('text-green-600');
+      setTimeout(() => el('userBalance').classList.remove('text-green-600'), 2000);
+    } else if (tokenData.balanceDecreased) {
+      el('userBalance').classList.add('text-red-600');
+      setTimeout(() => el('userBalance').classList.remove('text-red-600'), 2000);
+    }
+  }
+
+  if (el('userDailyQuotaUSD')) el('userDailyQuotaUSD').textContent = quotaToUSD(tokenData.dailyQuota);
+  if (el('userRemainQuotaUSD')) el('userRemainQuotaUSD').textContent = quotaToUSD(tokenData.remainQuota);
+  if (el('userUsedQuotaUSD')) el('userUsedQuotaUSD').textContent = quotaToUSD(tokenData.usedQuota);
+  if (tokenData.quotaInfo) renderHodlStatus(tokenData.quotaInfo);
+  if (el('connectBtnText') && tokenData.web3) el('connectBtnText').textContent = tokenData.web3.slice(0, 6) + '...' + tokenData.web3.slice(-4);
+
+  saveSession();
+}
+
+function resetUI() {
+  isConnected = false;
+  currentAccount = null;
+  currentToken = null;
+  signMessage = null;
+  signature = null;
+  isApiKeyVisible = false;
+  connectedWalletId = null;
+  currentProvider = null;
+
+  const el = (id) => document.getElementById(id);
+  el('notConnectedOverlay')?.classList.remove('hidden');
+  el('apiPanelCard')?.classList.add('border-slate-200');
+  el('apiPanelCard')?.classList.remove('border-indigo-300');
+  if (el('panelStatusText')) el('panelStatusText').textContent = t('panel_status_connect') || '连接钱包获取 API Key';
+  if (el('userAddress')) el('userAddress').textContent = '0x...';
+  el('disconnectBtn')?.classList.add('hidden');
+  el('hodlBadge')?.classList.add('hidden');
+
+  if (el('userApiKey')) el('userApiKey').value = '';
+  updateApiKeyDisplay();
+
+  ['userBalance', 'userDailyQuotaUSD', 'userRemainQuotaUSD', 'userUsedQuotaUSD'].forEach(id => {
+    if (el(id)) el(id).textContent = id === 'userBalance' ? '0' : '0.00';
+  });
+
+  if (el('hodlStatusIcon')) el('hodlStatusIcon').textContent = '⏳';
+  if (el('hodlStatusMessage')) el('hodlStatusMessage').textContent = t('panel_hodl_default') || '持有代币即可获得额度';
+  if (el('hodlStatusTip')) el('hodlStatusTip').textContent = t('panel_hodl_tip_default') || '连接钱包查看你的持有状态';
+  if (el('hodlReleasePercent')) el('hodlReleasePercent').textContent = '0%';
+  if (el('hodlProgressBar')) el('hodlProgressBar').style.width = '0%';
+  if (el('hodlStatusCard')) el('hodlStatusCard').className = 'p-4 sm:p-5 rounded-xl sm:rounded-2xl border-2 bg-slate-50 border-slate-200';
+  if (el('userStatusEmoji')) el('userStatusEmoji').textContent = '🔑';
+  if (el('connectBtnText')) el('connectBtnText').textContent = t('nav_connect') || '连接钱包';
+}
+
+async function handleWalletClick() {
+  if (isConnected && currentAccount) {
+    document.getElementById('api-panel')?.scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+  openWalletModal();
+}
+
+async function disconnectWallet() {
+  if (connectedWalletId === 'walletconnect' && wcProvider) {
+    try {
+      await wcProvider.disconnect();
+    } catch (e) {
+      console.error('WC disconnect error:', e);
+    }
+    wcProvider = null;
+  }
+
+  if (currentProvider) {
+    try {
+      currentProvider.removeAllListeners?.('accountsChanged');
+      currentProvider.removeAllListeners?.('chainChanged');
+      currentProvider.removeAllListeners?.('disconnect');
+    } catch {}
+  }
+
+  connectedWalletId = null;
+  currentProvider = null;
+
+  clearSession();
+  resetUI();
+  showToast(t('toast_disconnected') || '已断开连接', '👋');
+}
+
+async function refreshBalance() {
+  if (!currentAccount) {
+    showToast(t('toast_connect_first') || '请先连接钱包', '⚠️');
+    return;
+  }
+
+  try {
+    showLoading('loading_refresh');
+    
+    const res = await fetch(`${API_BASE}/api/refresh?_t=${Date.now()}`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'x-lang': currentLang,
+        'Cache-Control': 'no-cache'
+      },
+      body: JSON.stringify({ 
+        address: currentAccount,
+        forceRefresh: true
+      })
+    });
+    const data = await res.json();
+    hideLoading();
+
+    if (data.success && data.data) {
+      const newTokenData = {
+        ...currentToken,
+        ...data.data,
+        balance: data.data.newBalance || data.data.balance || currentToken.balance,
+        dailyQuota: data.data.dailyQuota ?? currentToken.dailyQuota,
+        remainQuota: data.data.remainQuota ?? currentToken.remainQuota,
+        usedQuota: data.data.usedQuota ?? currentToken.usedQuota,
+        quotaInfo: data.data.quotaInfo || currentToken.quotaInfo
+      };
+      
+      currentToken = newTokenData;
+      updateUI(currentToken);
+      saveSession();
+      
+      if (data.data.balanceUpdated || data.data.balanceIncreased || data.data.balanceDecreased) {
+        const changeIcon = data.data.balanceIncreased ? '📈' : (data.data.balanceDecreased ? '📉' : '🔄');
+        showToast(t('toast_refreshed') || '已刷新', changeIcon);
+      } else {
+        showToast(t('toast_refreshed') || '已刷新', '🔄');
+      }
+    } else {
+      showToast(data.error || t('toast_fail') || '操作失败', '❌');
+    }
+  } catch (error) {
+    hideLoading();
+    console.error('Refresh error:', error);
+    showToast(t('toast_fail') || '操作失败', '❌');
+  }
+}
+
+async function regenerateKey() {
+  if (!currentAccount) {
+    showToast(t('toast_connect_first') || '请先连接钱包', '⚠️');
+    return;
+  }
+  if (!currentProvider) {
+    showToast(currentLang === 'zh' ? '钱包连接已断开，请重新连接' : 'Wallet disconnected', '⚠️');
+    return;
+  }
+  if (!confirm(t('confirm_regen_key') || '重新生成后旧 Key 将失效，确定继续？')) return;
+
+  try {
+    showLoading('loading_sign_msg');
+    const msgRes = await fetch(`${API_BASE}/api/auth/message`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-lang': currentLang },
+      body: JSON.stringify({ address: currentAccount })
+    });
+    const msgData = await msgRes.json();
+    if (!msgData.success) throw new Error(msgData.error);
+    const newSignMessage = msgData.data.message;
+
+    showLoading('loading_sign_wallet');
+    const newSignature = await currentProvider.request({ method: 'personal_sign', params: [newSignMessage, currentAccount] });
+
+    showLoading('loading_new_key');
+    const res = await fetch(`${API_BASE}/api/regenerate-key`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-lang': currentLang },
+      body: JSON.stringify({ address: currentAccount, message: newSignMessage, signature: newSignature })
+    });
+    const data = await res.json();
+    hideLoading();
+
+    if (data.success && data.data) {
+      signMessage = newSignMessage;
+      signature = newSignature;
+      currentToken.key = data.data.key;
+      document.getElementById('userApiKey').value = 'sk-' + data.data.key;
+
+      isApiKeyVisible = false;
+      updateApiKeyDisplay();
+
+      saveSession();
+      showToast(t('toast_key_updated') || 'API Key 已更新', '🔑');
+    } else {
+      showToast(data.error || t('toast_fail') || '操作失败', '❌');
+    }
+  } catch (error) {
+    hideLoading();
+    showToast(error?.code === 4001 ? (t('toast_cancelled') || '用户取消') : (t('toast_fail') || '操作失败'), '❌');
+  }
+}
+
+function animateNumber(element, target, duration = 1000) {
+  if (!element) return;
+  const start = 0;
+  const startTime = performance.now();
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const easeOut = 1 - Math.pow(1 - progress, 3);
+    const current = start + (target - start) * easeOut;
+    if (typeof target === 'number' && target % 1 !== 0) element.textContent = current.toFixed(2);
+    else element.textContent = Math.floor(current);
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+function detectLinkType(url) {
+  if (!url) return { type: 'unknown', label: 'Manual', icon: 'ℹ️', bgClass: 'bg-slate-400' };
+  const lowerUrl = url.toLowerCase();
+
+  if (lowerUrl.includes('stripe.com') || lowerUrl.includes('invoice.stripe.com')) {
+    return {
+      type: 'stripe',
+      label: 'Stripe 验证',
+      dotColor: 'bg-violet-500',
+      bgClass: 'bg-violet-500',
+      icon: `<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg>`
+    };
+  }
+
+  if (lowerUrl.includes('bscscan.com')) {
+    return { type: 'bsc', label: 'BSCScan', dotColor: 'bg-yellow-500', bgClass: 'bg-yellow-500', icon: `<span class="font-bold text-[10px]">BSC</span>` };
+  }
+
+  return { type: 'unknown', label: 'View', icon: '📄', bgClass: 'bg-slate-500 hover:bg-slate-600' };
+}
+
+function detectRecordType(description, linkType) {
+  const desc = (description || '').toLowerCase();
+  if (linkType === 'bsc') {
+    if (desc.includes('销毁') || desc.includes('burn') || desc.includes('回购')) return { icon: '🔥', label: '回购销毁', bgClass: 'bg-red-100', textClass: 'text-red-700' };
+    if (desc.includes('营销') || desc.includes('推广') || desc.includes('marketing')) return { icon: '📢', label: '营销推广', bgClass: 'bg-blue-100', textClass: 'text-blue-700' };
+    if (desc.includes('空投') || desc.includes('激励') || desc.includes('airdrop')) return { icon: '🎁', label: '社区激励', bgClass: 'bg-purple-100', textClass: 'text-purple-700' };
+    return { icon: '🔗', label: '链上操作', bgClass: 'bg-yellow-100', textClass: 'text-yellow-700' };
+  }
+  return { icon: '🤖', label: 'API 充值', bgClass: 'bg-emerald-100', textClass: 'text-emerald-700' };
+}
+
+async function loadRecentInvoices() {
+  const container = document.getElementById('recentInvoices');
+  if (!container) return;
+
+  try {
+    const res = await fetch(`${API_BASE}/api/transparency?page=1&limit=5`);
+    const { success, data, error } = await res.json();
+    if (!success) throw new Error(error);
+
+    let bscCount = 0;
+    data.records.forEach(r => { if ((r.invoiceUrl || '').toLowerCase().includes('bscscan')) bscCount++; });
+
+    const transparencyTotal = document.getElementById('transparencyTotal');
+    const transparencyCount = document.getElementById('transparencyCount');
+    const transparencyBscCount = document.getElementById('transparencyBscCount');
+
+    if (transparencyTotal) animateNumber(transparencyTotal, parseFloat(data.summary.totalAmount), 1500);
+    if (transparencyCount) animateNumber(transparencyCount, data.summary.totalRecords, 1200);
+    if (transparencyBscCount) animateNumber(transparencyBscCount, bscCount, 1000);
+
+    if (data.records.length === 0) {
+      container.innerHTML = `
+        <div class="p-8 text-center">
+          <span class="text-4xl mb-3 block">📭</span>
+          <p class="text-slate-500 text-sm">${currentLang === 'zh' ? '暂无记录' : 'No records'}</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = data.records.map(r => {
+      const linkInfo = detectLinkType(r.invoiceUrl);
+      const recordType = detectRecordType(r.description, linkInfo.type);
+      const dateOnly = r.dateOnly || (r.createdAt ? r.createdAt.split(' ')[0] : '');
+
+      return `
+        <div class="px-4 py-3 hover:bg-slate-50 transition-colors">
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0 flex-1">
+              <div class="relative flex-shrink-0">
+                <div class="w-9 h-9 rounded-lg ${recordType.bgClass} flex items-center justify-center">
+                  <span class="text-base">${recordType.icon}</span>
+                </div>
+                <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full ${linkInfo.dotColor} border-2 border-white"></span>
+              </div>
+              <div class="min-w-0 flex-1">
+                <p class="font-medium text-slate-800 text-sm truncate">${r.description || (linkInfo.type === 'stripe' ? 'API 服务充值' : '链上操作')}</p>
+                <p class="text-xs text-slate-400">${dateOnly}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 flex-shrink-0">
+              <span class="font-bold text-emerald-600 text-sm">$${r.amount.toFixed(2)}</span>
+              ${r.invoiceUrl ? `
+                <a href="https://hodlai.fun/${r.invoiceUrl}" target="_blank" class="w-7 h-7 ${linkInfo.bgClass} rounded-lg flex items-center justify-center text-white hover:opacity-80 transition-opacity shadow-sm" title="${linkInfo.label}">
+                  ${linkInfo.icon}
+                </a>
+              ` : `
+                <span class="w-7 h-7 bg-slate-200 rounded-lg flex items-center justify-center text-slate-400">
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                  </svg>
+                </span>
+              `}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+  } catch (error) {
+    container.innerHTML = `
+      <div class="p-8 text-center">
+        <span class="text-4xl mb-3 block">❌</span>
+        <p class="text-red-500 text-sm mb-3">${currentLang === 'zh' ? '加载失败' : 'Load failed'}</p>
+        <button onclick="loadRecentInvoices()" class="px-4 py-2 bg-indigo-500 text-white rounded-lg text-xs font-medium hover:bg-indigo-600">
+          ${currentLang === 'zh' ? '重试' : 'Retry'}
+        </button>
+      </div>
+    `;
+  }
+}
+
+window.openWalletModal = openWalletModal;
+window.closeWalletModal = closeWalletModal;
+window.selectWallet = selectWallet;
+window.handleWalletClick = handleWalletClick;
+window.disconnectWallet = disconnectWallet;
+window.refreshBalance = refreshBalance;
+window.regenerateKey = regenerateKey;
+window.copyApiKey = copyApiKey;
+window.toggleApiKeyVisibility = toggleApiKeyVisibility;
+window.copyText = copyText;
+window.copyCA = copyCA;
+window.showToast = showToast;
+window.launchApp = launchApp;
+window.launchNextChat = launchNextChat;
+window.launchNextChatOriginal = launchNextChatOriginal;
+window.launchHodlAIChat = launchHodlAIChat;
+window.copyHodlAIChatUrl = copyHodlAIChatUrl;
+window.toggleLanguage = toggleLanguage;
+window.loadRecentInvoices = loadRecentInvoices;
+window.downloadWallet = downloadWallet;
+window.goToLogs = goToLogs;
+
+async function init() {
+  console.log('HodlAI initializing...');
+  
+  await initI18n();
+
+  setTimeout(() => { detectInstalledWallets(); }, 500);
+
+  updateApiKeyDisplay();
+  loadRecentInvoices();
+  setInterval(loadRecentInvoices, 60000);
+
+  setInterval(() => {
+    if (isConnected && currentAccount) {
+      fetch(`${API_BASE}/api/refresh?_t=${Date.now()}`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json', 
+          'x-lang': currentLang 
+        },
+        body: JSON.stringify({ address: currentAccount })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.data) {
+          const oldBalance = currentToken.balance;
+          currentToken = {
+            ...currentToken,
+            ...data.data,
+            balance: data.data.newBalance || data.data.balance || currentToken.balance,
+            quotaInfo: data.data.quotaInfo || currentToken.quotaInfo
+          };
+          
+          const newBalance = currentToken.balance;
+          if (oldBalance !== newBalance) {
+            updateUI(currentToken);
+            saveSession();
+            console.log('Auto refresh balance changed:', oldBalance, '->', newBalance);
+          }
+        }
+      })
+      .catch(err => console.error('Auto refresh error:', err));
+    }
+  }, 5 * 60 * 1000);
+
+  setTimeout(async () => {
+    const session = loadSession();
+    if (session?.account && session?.token && session?.walletId) {
+      const walletConfig = WALLET_CONFIGS[session.walletId];
+      if (!walletConfig) return;
+
+      try {
+        let provider;
+        
+        if (session.walletId === 'walletconnect') {
+          try {
+            provider = await getWalletConnectProvider();
+            if (!provider.connected) {
+              console.log('WalletConnect session expired');
+              clearSession();
+              return;
+            }
+          } catch (e) {
+            console.log('WalletConnect restore failed:', e);
+            clearSession();
+            return;
+          }
+        } else {
+          if (!walletConfig.checkInstalled()) {
+            clearSession();
+            return;
+          }
+          provider = walletConfig.getProvider();
+        }
+
+        if (!provider) {
+          clearSession();
+          return;
+        }
+
+        const accounts = await provider.request({ method: 'eth_accounts' });
+
+        if (accounts?.length && accounts[0].toLowerCase() === session.account.toLowerCase()) {
+          currentAccount = session.account;
+          currentToken = session.token;
+          signMessage = session.signMessage;
+          signature = session.signature;
+          connectedWalletId = session.walletId;
+          currentProvider = provider;
+
+          setupProviderListeners(provider);
+          updateUI(currentToken);
+
+          try {
+            showLoading('loading_sync');
+            const res = await fetch(`${API_BASE}/api/refresh?_t=${Date.now()}`, {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json', 
+                'x-lang': currentLang,
+                'Cache-Control': 'no-cache'
+              },
+              body: JSON.stringify({ 
+                address: currentAccount,
+                forceRefresh: true
+              })
+            });
+            const data = await res.json();
+            hideLoading();
+            
+            if (data.success && data.data) {
+              currentToken = {
+                ...currentToken,
+                ...data.data,
+                balance: data.data.newBalance || data.data.balance || currentToken.balance,
+                dailyQuota: data.data.dailyQuota ?? currentToken.dailyQuota,
+                remainQuota: data.data.remainQuota ?? currentToken.remainQuota,
+                usedQuota: data.data.usedQuota ?? currentToken.usedQuota,
+                quotaInfo: data.data.quotaInfo || currentToken.quotaInfo
+              };
+              updateUI(currentToken);
+              saveSession();
+              
+              if (data.data.balanceUpdated) {
+                console.log('Balance updated:', data.data.oldBalance, '->', data.data.newBalance);
+              }
+            }
+          } catch (refreshError) {
+            hideLoading();
+            console.error('Session restore refresh error:', refreshError);
+          }
+          
+          console.log('Session restored:', currentAccount.slice(0, 8) + '...');
+        } else {
+          clearSession();
+        }
+      } catch (e) {
+        console.error('Session restore error:', e);
+        clearSession();
+      }
+    }
+  }, 300);
+
+  console.log('HodlAI initialized');
+}
+
+init();
+</script>
+
+</body>
+</html>

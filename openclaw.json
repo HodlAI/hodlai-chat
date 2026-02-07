@@ -1,0 +1,105 @@
+{
+  "agents": {
+    "list": [
+      {
+        "id": "main",
+        "default": true
+      }
+    ],
+    "defaults": {
+      "model": {
+        "primary": "HodlAI/gemini-3-flash-preview"
+      },
+      "heartbeat": {
+        "model": "HodlAI/gemini-3-flash-preview",
+        "activeHours": {
+          "start": "00:00",
+          "end": "23:59",
+          "timezone": "UTC"
+        }
+      },
+      "memorySearch": {
+        "enabled": true,
+        "provider": "openai",
+        "model": "text-embedding-3-small",
+        "remote": {
+          "baseUrl": "https://api.hodlai.fun/v1",
+          "apiKey": "${models.providers.HodlAI.apiKey}",
+          "batch": {
+            "enabled": false
+          }
+        }
+      }
+    }
+  },
+  "models": {
+    "providers": {
+      "HodlAI": {
+        "baseUrl": "https://api.hodlai.fun/v1",
+        "api": "openai-chat-completions",
+        "apiKey": "sk-7d1ab38d8f074d32af3872274472d4c0",
+        "models": [
+          {
+            "id": "gemini-3-flash-preview",
+            "name": "Gemini 3 Flash",
+            "contextWindow": 1000000
+          },
+          {
+            "id": "gemini-3-pro-preview",
+            "name": "Gemini 3 Pro",
+            "contextWindow": 2000000
+          },
+          {
+            "id": "gemini-2.5-flash",
+            "name": "Gemini 2.5 Flash",
+            "contextWindow": 1000000
+          },
+          {
+            "id": "gpt-5.2",
+            "name": "GPT 5.2",
+            "contextWindow": 128000
+          },
+          {
+            "id": "claude-3-5-sonnet",
+            "name": "Claude 3.5 Sonnet",
+            "contextWindow": 200000
+          }
+        ]
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "botToken": "7699682283:AAFlqT9gCXeXjY2T22FwP35o5v54M4c4b4a",
+      "groupPolicy": "allowlist",
+      "groups": {
+        "-1003802812664": {
+          "enabled": true,
+          "requireMention": false,
+          "allowFrom": [
+            "*"
+          ]
+        },
+        "-1003710051946": {
+          "enabled": true,
+          "requireMention": false,
+          "allowFrom": [
+            "*"
+          ]
+        }
+      }
+    }
+  },
+  "plugins": {
+    "enabled": true,
+    "entries": {
+      "discord": {
+        "enabled": true
+      },
+      "bluebubbles": {
+        "enabled": true
+      }
+    }
+  }
+}

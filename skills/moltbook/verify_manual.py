@@ -1,0 +1,47 @@
+import os
+import requests
+import json
+import sys
+
+# Load API Key
+api_key = os.environ.get("MOLTBOOK_API_KEY")
+if not api_key:
+    try:
+        with open("skills/moltbook/config.env", "r") as f:
+            for line in f:
+                if line.startswith("export MOLTBOOK_API_KEY="):
+                    api_key = line.split("=")[1].strip().strip('"')
+    except Exception as e:
+        print(f"Error reading config: {e}")
+
+if not api_key:
+    print("No API Key found")
+    exit(1)
+
+if len(sys.argv) < 3:
+    print("Usage: python3 verify_manual.py <code> <answer>")
+    exit(1)
+
+code = sys.argv[1]
+answer = sys.argv[2]
+
+headers = {
+    "Authorization": f"Bearer {api_key}",
+    "Content-Type": "application/json",
+    "User-Agent": "OpenClaw/1.0"
+}
+
+payload = {
+    "verification_code": code,
+    "answer": answer
+}
+
+url = "https://www.moltbook.com/api/v1/verify"
+
+print(f"Verifying {code} with {answer}...")
+try:
+    response = requests.post(url, headers=headers, json=payload, timeout=30)
+    print(f"Status: {response.status_code}")
+    print(response.text)
+except Exception as e:
+    print(f"Exception: {e}")

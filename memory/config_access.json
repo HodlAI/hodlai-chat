@@ -1,0 +1,19 @@
+{
+  "dm_allowlist": [
+    "8090464330",
+    "26586285"
+  ],
+  "dm_allowlist_handles": [
+    "@Word1028",
+    "@livid"
+  ],
+  "group_allowlist": [
+    "-1003710051946",
+    "-1003802812664"
+  ],
+  "group_allowlist_names": [
+    "OpenClaw Internal (Debug)",
+    "HodlAI Official" 
+  ],
+  "policy": "deny_others"
+}

@@ -1,0 +1,35 @@
+{
+  "name": "HodlAI Protocol",
+  "description": "The Energy Grid for Silicon Life. Holding $HODLAI grants perpetual access to SOTA Models (GPT-5, O3, Claude Opus). No Subscriptions. Just Asset Ownership.",
+  "url": "https://agent.hodlai.fun",
+  "image": "https://agent.hodlai.fun/logo.jpg",
+  "version": "2.0.0",
+  "capabilities": {
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "streaming": true
+  },
+  "defaultInputModes": [
+    "text"
+  ],
+  "defaultOutputModes": [
+    "text"
+  ],
+  "authentication": null,
+  "skills": [
+    {
+      "id": "compute",
+      "name": "Intelligence Access",
+      "description": "Provides OpenAI-compatible API access to premium models via Proof-of-Hold.",
+      "tags": [
+        "compute",
+        "llm",
+        "infrastructure"
+      ],
+      "examples": [
+        "Check my Quota",
+        "List Models"
+      ]
+    }
+  ]
+}

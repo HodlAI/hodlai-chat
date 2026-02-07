@@ -1,0 +1,9 @@
+agent.hodlai.fun {
+    tls internal
+    reverse_proxy localhost:3000
+}
+
+gw.hodlai.fun {
+    tls internal
+    reverse_proxy localhost:3001
+}

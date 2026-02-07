@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HodlAI Snake 🐍</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0a0a; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: 'Courier New', monospace; color: #0f0; }
+h1 { margin-bottom: 10px; font-size: 18px; color: #FFD700; }
+#score { margin-bottom: 8px; font-size: 14px; }
+canvas { border: 2px solid #FFD700; border-radius: 4px; }
+#controls { margin-top: 12px; display: grid; grid-template-columns: repeat(3, 50px); grid-template-rows: repeat(2, 50px); gap: 4px; }
+.btn { background: #222; color: #FFD700; border: 1px solid #FFD700; border-radius: 6px; font-size: 20px; cursor: pointer; }
+.btn:active { background: #FFD700; color: #000; }
+#info { margin-top: 10px; font-size: 11px; color: #666; }
+</style>
+</head>
+<body>
+<h1>🐍 HodlAI Snake — Powered by Claude Opus 4.6</h1>
+<div id="score">Score: 0 | High: 0</div>
+<canvas id="game" width="300" height="300"></canvas>
+<div id="controls">
+  <div></div><button class="btn" onclick="setDir(0,-1)">↑</button><div></div>
+  <button class="btn" onclick="setDir(-1,0)">←</button>
+  <button class="btn" onclick="setDir(0,1)">↓</button>
+  <button class="btn" onclick="setDir(1,0)">→</button>
+</div>
+<div id="info">Arrow Keys / Swipe / Buttons to play. Eat 💎 to grow!</div>
+<script>
+const C = document.getElementById('game'), ctx = C.getContext('2d');
+const G = 15, S = C.width / G;
+let snake, dir, food, score, hi = 0, alive, loop;
+
+function init() {
+  snake = [{x:7,y:7}]; dir = {x:1,y:0}; score = 0; alive = true;
+  placeFood(); updateScore(); if(loop) clearInterval(loop);
+  loop = setInterval(tick, 120);
+}
+
+function placeFood() {
+  do { food = {x: Math.floor(Math.random()*G), y: Math.floor(Math.random()*G)}; }
+  while(snake.some(s => s.x===food.x && s.y===food.y));
+}
+
+function tick() {
+  if(!alive) return;
+  const head = {x: (snake[0].x+dir.x+G)%G, y: (snake[0].y+dir.y+G)%G};
+  if(snake.some(s => s.x===head.x && s.y===head.y)) { alive=false; draw(); return; }
+  snake.unshift(head);
+  if(head.x===food.x && head.y===food.y) { score++; if(score>hi) hi=score; updateScore(); placeFood(); }
+  else snake.pop();
+  draw();
+}
+
+function draw() {
+  ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0,0,C.width,C.height);
+  // Grid
+  ctx.strokeStyle = '#1a1a1a';
+  for(let i=0;i<G;i++) for(let j=0;j<G;j++) ctx.strokeRect(i*S,j*S,S,S);
+  // Snake
+  snake.forEach((s,i) => {
+    const g = ctx.createRadialGradient(s.x*S+S/2,s.y*S+S/2,2,s.x*S+S/2,s.y*S+S/2,S/2);
+    g.addColorStop(0, i===0 ? '#FFD700' : '#00ff88'); g.addColorStop(1, i===0 ? '#B8860B' : '#006633');
+    ctx.fillStyle = g; ctx.beginPath();
+    ctx.roundRect(s.x*S+1, s.y*S+1, S-2, S-2, 4); ctx.fill();
+  });
+  // Food
+  ctx.font = `${S-4}px serif`; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('💎', food.x*S+S/2, food.y*S+S/2);
+  // Game over
+  if(!alive) {
+    ctx.fillStyle='rgba(0,0,0,0.7)'; ctx.fillRect(0,0,C.width,C.height);
+    ctx.fillStyle='#FFD700'; ctx.font='bold 24px Courier New';
+    ctx.fillText('REKT 💀', C.width/2, C.height/2-15);
+    ctx.font='14px Courier New'; ctx.fillStyle='#0f0';
+    ctx.fillText('Tap to HODL again', C.width/2, C.height/2+15);
+  }
+}
+
+function updateScore() { document.getElementById('score').textContent = `Score: ${score} | High: ${hi}`; }
+function setDir(x,y) { if(alive && !(dir.x===-x && dir.y===-y)) dir={x,y}; else if(!alive) init(); }
+
+document.addEventListener('keydown', e => {
+  const m = {ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[e.key];
+  if(m) { e.preventDefault(); setDir(m[0],m[1]); }
+  if(!alive && e.key===' ') init();
+});
+
+// Touch swipe
+let tx,ty;
+C.addEventListener('touchstart', e => { tx=e.touches[0].clientX; ty=e.touches[0].clientY; });
+C.addEventListener('touchend', e => {
+  if(!alive) { init(); return; }
+  const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+  Math.abs(dx)>Math.abs(dy) ? setDir(dx>0?1:-1,0) : setDir(0,dy>0?1:-1);
+});
+C.addEventListener('click', () => { if(!alive) init(); });
+
+init();
+</script>
+</body>
+</html>

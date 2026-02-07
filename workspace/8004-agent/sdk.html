@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HODLAI Protocol - Developer Hub</title>
+    <link rel="icon" type="image/jpeg" href="/logo.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style>
+        .glow-text { text-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+        .code-bg { background-color: #0d1117; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-300 font-sans antialiased min-h-screen selection:bg-sky-500/30">
+
+    <!-- Navbar -->
+    <nav class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="/logo.jpg" class="h-8 w-8 rounded-full ring-2 ring-sky-500/20">
+                <span class="font-bold text-slate-100 tracking-tight">HODLAI <span class="text-sky-400">DEV</span></span>
+            </div>
+            <div class="flex gap-4 text-sm font-medium">
+                <a href="#quickstart" class="hover:text-sky-400 transition-colors">Quick Start</a>
+                <a href="#api" class="hover:text-sky-400 transition-colors">API Reference</a>
+                <a href="https://hodlai.fun" target="_blank" class="text-sky-500 hover:text-sky-400 flex items-center gap-1">
+                    Buy HODLAI <span class="text-xs">↗</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-5xl mx-auto px-4 py-12">
+        
+        <!-- Hero -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-500 mb-6 py-2">
+                The Energy Grid for <br>
+                <span class="bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400 glow-text text-transparent">Silicon Life</span>
+            </h1>
+            <p class="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-6">
+                Give your Autonomous Agent <b>perpetual access</b> to top-tier intelligence (GPT-5, Claude Opus, Gemini 3) without monthly subscriptions or credit cards.
+            </p>
+            <div class="inline-flex items-center gap-2 bg-sky-900/10 border border-sky-500/20 rounded-full px-4 py-1 text-sm text-sky-400">
+                <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                Protocol Status: Live on BSC
+            </div>
+        </div>
+
+        <!-- Value Prop / Tiers -->
+        <div class="grid md:grid-cols-4 gap-4 mb-16">
+             <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800 text-center">
+                <div class="text-xs text-slate-500 uppercase tracking-widest mb-1">Entry Mechanism</div>
+                <div class="text-2xl font-bold text-white mb-1">"Holding is Access"</div>
+                <div class="text-xs text-slate-400">$10 Value Held = 100 Daily Credits</div>
+             </div>
+             <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800 text-center">
+                 <div class="text-xs text-slate-500 uppercase tracking-widest mb-1">Premium Tier</div>
+                 <div class="text-xl font-bold text-sky-400 mb-1">10 Credits / Req</div>
+                 <div class="text-xs text-slate-400">GPT-5.2, Claude 4.5 Opus, Gemini 3 Pro</div>
+             </div>
+             <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800 text-center">
+                <div class="text-xs text-slate-500 uppercase tracking-widest mb-1">Standard Tier</div>
+                <div class="text-xl font-bold text-indigo-400 mb-1">5 Credits / Req</div>
+                <div class="text-xs text-slate-400">DeepSeek R1, O3-Pro, Claude 3.7 Sonnet</div>
+            </div>
+            <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800 text-center">
+                <div class="text-xs text-slate-500 uppercase tracking-widest mb-1">Lite Tier</div>
+                <div class="text-xl font-bold text-green-400 mb-1">1 Credit / Req</div>
+                <div class="text-xs text-slate-400">GPT-5 Mini, Qwen 3 Turbo, Mistral Large</div>
+            </div>
+        </div>
+
+        <!-- Steps Grid -->
+        <div class="grid md:grid-cols-3 gap-6 mb-16">
+            <!-- Step 1 -->
+            <div class="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl hover:border-sky-500/30 transition-all group">
+                <div class="h-10 w-10 bg-slate-800 rounded-lg flex items-center justify-center text-sky-400 font-bold mb-4 group-hover:bg-sky-500/10">1</div>
+                <h3 class="font-bold text-white mb-2">Get Wallet</h3>
+                <p class="text-sm text-slate-400">Create a BSC wallet for your Agent. This is its identity.</p>
+            </div>
+            <!-- Step 2 -->
+            <div class="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl hover:border-sky-500/30 transition-all group relative">
+                <div class="h-10 w-10 bg-slate-800 rounded-lg flex items-center justify-center text-sky-400 font-bold mb-4 group-hover:bg-sky-500/10">2</div>
+                <h3 class="font-bold text-white mb-2">Hold Token</h3>
+                <p class="text-sm text-slate-400 mb-3">Hold $HODLAI to earn daily quota.</p>
+                
+                <!-- CA Display -->
+                <div class="text-xs bg-black/40 p-2 rounded border border-slate-700 font-mono text-slate-500 break-all cursor-pointer hover:text-white" onclick="navigator.clipboard.writeText('0x987e6269c6b7ea6898221882f11ea16f87b97777');alert('CA Copied!')">
+                    CA: <span class="text-slate-300">0x987e6269c6b7ea6898221882f11ea16f87b97777</span>
+                    <svg class="inline w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" /></svg>
+                </div>
+            </div>
+             <!-- Step 3 -->
+             <div class="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl hover:border-sky-500/30 transition-all group">
+                <div class="h-10 w-10 bg-slate-800 rounded-lg flex items-center justify-center text-sky-400 font-bold mb-4 group-hover:bg-sky-500/10">3</div>
+                <h3 class="font-bold text-white mb-2">Connect</h3>
+                <p class="text-sm text-slate-400">Sign a message with your wallet to authenticate and get an API Key.</p>
+            </div>
+        </div>
+
+        <!-- Quick Start -->
+        <section id="quickstart" class="mb-20 scroll-mt-24">
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+                        🐍 Python SDK
+                        <span class="text-xs bg-sky-900/30 text-sky-400 px-2 py-1 rounded border border-sky-900/50">v1.0.0</span>
+                    </h2>
+                    <p class="text-slate-400 text-sm">Copy, paste, and run. Zero config required essentially.</p>
+                </div>
+                <a href="/agent_client.py" download class="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    Download .py
+                </a>
+            </div>
+
+            <!-- Install Command -->
+            <div class="mb-4 bg-black rounded-lg border border-slate-800 p-4 font-mono text-sm text-slate-400 flex items-center gap-4">
+                <span class="text-sky-500">$</span> pip install requests web3 eth-account
+            </div>
+
+            <!-- Code Block -->
+            <div class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-sky-500 to-indigo-500 rounded-xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+                <pre class="relative rounded-xl overflow-hidden shadow-2xl border border-slate-800"><code class="language-python text-sm"> import requests
+from eth_account.messages import encode_defunct
+from web3 import Web3
+import time
+import os
+
+# --- 1. CONFIGURATION ---
+GATEWAY_URL = "https://gw.hodlai.fun"
+PRIVATE_KEY = os.getenv("AGENT_KEY", "YOUR_PRIVATE_KEY_HERE") # Replace with your Agent's Private Key
+
+def main():
+    print(f"🚀 Connecting to HODLAI Protocol...")
+    
+    # --- 2. AUTHENTICATION (SIWE) ---
+    w3 = Web3()
+    account = w3.eth.account.from_key(PRIVATE_KEY)
+    print(f"🤖 Agent Identity: {account.address}")
+
+    # Sign the "Proof of Hold" message
+    # Format: "Login to HODLAI Protocol\nWallet: {address}\nTimestamp: {current_unix_seconds}"
+    timestamp = int(time.time())
+    msg_text = f"Login to HODLAI Protocol\nWallet: {account.address}\nTimestamp: {timestamp}"
+    signature = account.sign_message(encode_defunct(text=msg_text)).signature.hex()
+
+    # Exchange Signature for Bearer Token
+    # This Token is valid for 24 hours. Cache it to avoid re-signing every request.
+    auth = requests.post(f"{GATEWAY_URL}/auth/login", json={
+        "message": msg_text, "signature": signature
+    }).json()
+
+    if 'error' in auth:
+        print(f"❌ Auth Failed: {auth['error']}")
+        return
+
+    token = auth['token']
+    quota = auth['quota']['quota']
+    print(f"✅ Logged In! Daily Credits: {quota}")
+
+    if quota <= 0:
+        print("⚠️  Credits Depleted. Buy more $HODLAI to recharge instantly.")
+        return
+
+    # --- 3. INFERENCE (OpenAI Format) ---
+    print("\n🧠 Thinking...")
+    headers = { "Authorization": f"Bearer {token}" }
+    
+    # Example: Using a Premium Model (Cost: 10 Credits/req)
+    # Available: gpt-5.2-pro, claude-opus-4.5, gemini-3-pro, etc.
+    resp = requests.post(
+        f"{GATEWAY_URL}/v1/chat/completions",
+        headers=headers,
+        json={
+            "model": "gpt-5.2-pro", 
+            "messages": [{"role": "user", "content": "Explain the concept of 'Holding is Access' in 50 words."}]
+        }
+    )
+
+    print(f"🤖 Output:\n{resp.json()['choices'][0]['message']['content']}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+            </div>
+        </section>
+
+        <!-- API Reference -->
+        <section id="api" class="scroll-mt-24 mb-20">
+             <h2 class="text-2xl font-bold text-white mb-8 border-b border-slate-800 pb-4">API Reference</h2>
+
+             <div class="space-y-8">
+                <!-- Endpoint 1 -->
+                <div>
+                     <div class="flex items-center gap-3 mb-3">
+                        <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-bold border border-green-500/30">POST</span>
+                        <code class="text-white font-mono text-lg">/auth/login</code>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-4">Exchange an Ethereum Signature for a session token.</p>
+                    <div class="bg-black/50 p-4 rounded-lg border border-slate-800 font-mono text-xs text-slate-300">
+                        <span class="text-slate-500"># Payload</span><br>
+                        { "message": "Login...", "signature": "0x..." }
+                    </div>
+                </div>
+
+                <!-- Endpoint 2 -->
+                 <div>
+                    <div class="flex items-center gap-3 mb-3">
+                       <span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs font-bold border border-blue-500/30">POST</span>
+                       <code class="text-white font-mono text-lg">/v1/chat/completions</code>
+                   </div>
+                   <p class="text-slate-400 text-sm mb-4">Standard OpenAI-compatible chat completion. Requires <span class="text-orange-400">Bearer Token</span>.</p>
+                   <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-slate-400">
+                            <thead class="text-xs text-slate-200 uppercase bg-slate-900">
+                                <tr>
+                                    <th class="px-4 py-2">Header</th>
+                                    <th class="px-4 py-2">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-slate-800">
+                                    <td class="px-4 py-2 font-mono text-sky-400">Authorization</td>
+                                    <td class="px-4 py-2 font-mono">Bearer &lt;token&gt;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                   </div>
+               </div>
+
+                <!-- Models -->
+                <div>
+                    <div class="flex items-center gap-3 mb-3">
+                       <span class="bg-purple-500/20 text-purple-400 px-2 py-1 rounded text-xs font-bold border border-purple-500/30">GET</span>
+                       <code class="text-white font-mono text-lg">/v1/models</code>
+                   </div>
+                   <p class="text-slate-400 text-sm">List available models (gpt-4o, o1-preview, deepseek-chat, etc.).</p>
+               </div>
+             </div>
+        </section>
+
+        <!-- FAQ / Errors -->
+        <section class="mb-20">
+            <h2 class="text-2xl font-bold text-white mb-6">Troubleshooting</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-red-500/5 border border-red-500/20 p-5 rounded-lg">
+                    <h4 class="font-bold text-red-400 mb-2 font-mono">402 Payment Required</h4>
+                    <p class="text-sm text-slate-400">Your Agent doesn't hold enough $HODLAI or your purchase was less than 1 minute ago (Anti-Flashloan protection).</p>
+                </div>
+                <div class="bg-yellow-500/5 border border-yellow-500/20 p-5 rounded-lg">
+                    <h4 class="font-bold text-yellow-400 mb-2 font-mono">401 Unauthorized</h4>
+                    <p class="text-sm text-slate-400">Your signature is invalid or your session token expired (Tokens last 24h).</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-slate-600 text-sm py-12 border-t border-slate-900">
+            <p class="mb-2">The HODLAI Protocol is open infrastructure.</p>
+            <p>Built for the Age of Agents.</p>
+        </footer>
+
+    </div>
+</body>
+</html>

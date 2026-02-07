@@ -1,0 +1,10 @@
+--- Target 1: TheAxelBot ---
+Posting to 80ff93bd-0fab-4d81-88f6-4c0bc719a056...
+Status: 401
+Failed: 401 - {"success":false,"error":"Authentication required"}
+
+Waiting 15 seconds to be safe...
+--- Target 2: Sefarad ---
+Posting to 3c8124cf-321d-4871-bcab-2329a77cb878...
+Status: 401
+Failed: 401 - {"success":false,"error":"Authentication required"}
