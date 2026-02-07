@@ -603,12 +603,27 @@ export const Chat: React.FC = () => {
   };
 
   // Auto-trigger auth when wallet connects if not already authenticated
+  // Memoize session check to prevent infinite re-requests
+  const [hasRequestedAuth, setHasRequestedAuth] = useState(false);
+
   useEffect(() => {
-    if (isConnected && address && !customKey && !walletStats) {
-       // Trigger immediately without delay for snappy UX
+    // Reset auth request flag if wallet changes completely or disconnects
+    if (!isConnected) setHasRequestedAuth(false);
+    
+    // Check if we already have a VALID key for this address
+    const storedAddressKey = localStorage.getItem(`bsc_ai_hub_key_${address}`);
+    if (isConnected && address && storedAddressKey && !customKey) {
+         setCustomKey(storedAddressKey);
+         localStorage.setItem('bsc_ai_hub_custom_key', storedAddressKey);
+         // Restore check logic implicitly via effect
+         return; 
+    }
+
+    if (isConnected && address && !customKey && !walletStats && !hasRequestedAuth) {
+       setHasRequestedAuth(true);
        handleWalletAuth();
     }
-  }, [isConnected, address]);
+  }, [isConnected, address, customKey, walletStats]);
 
   const handleWalletAuth = async () => {
     if (!address) return;
@@ -634,16 +649,19 @@ export const Chat: React.FC = () => {
         const verifyData = await verifyRes.json();
         
         if (verifyData.success && verifyData.data.token.key) {
-            setCustomKey(verifyData.data.token.key);
-            localStorage.setItem('bsc_ai_hub_custom_key', verifyData.data.token.key);
+            const newKey = verifyData.data.token.key;
+            setCustomKey(newKey);
+            localStorage.setItem('bsc_ai_hub_custom_key', newKey);
+            // Cache key per address to avoid re-signing on reload
+            localStorage.setItem(`bsc_ai_hub_key_${address}`, newKey);
             
             // Extract precise data from the new response structure
             const tokenData = verifyData.data.token;
             setWalletStats({
-                balance: tokenData.balanceFormatted, // String: "15134521.04..."
-                dailyQuota: tokenData.dailyQuota, // Number: 1227539927
-                remainQuota: tokenData.remainQuota, // Number: 1227525404
-                quotaMessage: tokenData.quotaInfo?.message, // "恢复中 80%"
+                balance: tokenData.balanceFormatted, 
+                dailyQuota: tokenData.dailyQuota, 
+                remainQuota: tokenData.remainQuota, 
+                quotaMessage: tokenData.quotaInfo?.message,
                 pointsPerDollar: tokenData.quotaInfo?.holdingInfo?.pointsPerDollar || 500000
             });
             
@@ -654,20 +672,23 @@ export const Chat: React.FC = () => {
         }
     } catch (e: any) {
         console.error('Auth error', e);
-        // Silent fail or minimal toast better than alert for auto-trigger
-        // alert(e.message || 'Authentication failed');
+        setHasRequestedAuth(false); // Allow retry on error? Or keep blocked to prevent spam loop?
+        // Let's reset so user can click manually if auto failed
     }
   };
   
   const handleDisconnect = () => {
       disconnect();
       setWalletStats(null);
-      // Optional: Clear API key on disconnect? 
-      // User might want to keep using the key even if wallet disconnects temporarily.
-      // But "Disconnect" implies "Logout". Let's clear key for security.
       setCustomKey('');
       localStorage.removeItem('bsc_ai_hub_custom_key');
+      // Do NOT clear the per-address cached key, so re-connect is fast?
+      // Actually, "Disconnect" usually means user wants to sign out. 
+      // But if they just refresh page, wallet auto-connects.
+      // Let's keep the per-address key in storage so if they reconnect same wallet, it auto-restores.
+      // If they explicitly disconnect, we clear current session.
       checkConfiguration();
+      setHasRequestedAuth(false);
   };
 
   return (
@@ -838,7 +859,7 @@ export const Chat: React.FC = () => {
                                             </div>
                                             {/* Tooltip for full precision */}
                                             {walletStats.balance && (
-                                                <div className="absolute bottom-full right-0 mb-2 px-2 py-1 bg-black text-white text-[10px] rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-10 transition-opacity shadow-lg">
+                                                <div className="absolute bottom-full right-0 mb-2 px-2 py-1 bg-black text-white text-[10px] rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-10 transition-opacity shadow-lg backdrop-blur-sm bg-black/90">
                                                     {walletStats.balance} HODL
                                                 </div>
                                             )}
@@ -856,11 +877,6 @@ export const Chat: React.FC = () => {
                                                  <div className="font-mono text-xs font-bold text-gray-900 dark:text-white">
                                                     ${(walletStats.remainQuota / (walletStats.pointsPerDollar || 500000)).toFixed(2)}
                                                  </div>
-                                                 {walletStats.quotaMessage && (
-                                                     <div className="text-[10px] text-amber-500 font-medium">
-                                                         {walletStats.quotaMessage}
-                                                     </div>
-                                                 )}
                                              </div>
                                         </div>
                                     </div>
