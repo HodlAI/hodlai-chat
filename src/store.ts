@@ -126,10 +126,32 @@ export const useStore = create<Store>((set, get) => ({
 
   allModels: predefinedModels, 
   
-  sessions: loadSessions(),
+  sessions: (() => {
+      const saved = loadSessions();
+      // Ensure at least one session exists on load
+      if (saved.length === 0) {
+          const newSession: Session = {
+              id: Date.now().toString(),
+              title: 'New Chat',
+              messages: [],
+              lastUpdated: Date.now(),
+              lastUsedModel: predefinedModels[0].id
+          };
+          saveSessions([newSession]);
+          return [newSession];
+      }
+      return saved;
+  })(),
   currentSessionId: (() => {
       const saved = loadSessions();
+      // If sessions exist, return the most recent one (index 0)
       if (saved.length > 0) return saved[0].id;
+      // If no sessions, we just created one in the sessions initialization above, 
+      // but we need to match the ID. 
+      // Since zustand initializes properties in order, we can't easily access the just-created session ID here synchronously without a duplicate check.
+      // However, we can simply re-read from localStorage because saveSessions() was called above if empty.
+      const fresh = loadSessions();
+      if (fresh.length > 0) return fresh[0].id; // Should be the new one
       return null;
   })(),
 
