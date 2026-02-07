@@ -605,11 +605,8 @@ export const Chat: React.FC = () => {
   // Auto-trigger auth when wallet connects if not already authenticated
   useEffect(() => {
     if (isConnected && address && !customKey && !walletStats) {
-       // Wait a brief moment for connection to stabilize then prompt
-       const timer = setTimeout(() => {
-           handleWalletAuth();
-       }, 500);
-       return () => clearTimeout(timer);
+       // Trigger immediately without delay for snappy UX
+       handleWalletAuth();
     }
   }, [isConnected, address]);
 
