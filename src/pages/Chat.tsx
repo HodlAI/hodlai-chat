@@ -607,23 +607,36 @@ export const Chat: React.FC = () => {
   const [hasRequestedAuth, setHasRequestedAuth] = useState(false);
 
   useEffect(() => {
-    // Reset auth request flag if wallet changes completely or disconnects
-    if (!isConnected) setHasRequestedAuth(false);
+    // If not connected, reset auth requested flag to ensure re-connect triggers auth again
+    if (!isConnected) {
+        setHasRequestedAuth(false);
+        // Do not clear customKey here if you want to support manual key entry fallback,
+        // but for pure wallet flow, we might want to clear it if it was wallet-derived.
+        // However, user requirement says: "Default save user wallet connection status".
+        // ConnectKit handles the connection persistence.
+        // We handle the *session* persistence (auth token).
+        return; 
+    }
     
     // Check if we already have a VALID key for this address
     const storedAddressKey = localStorage.getItem(`bsc_ai_hub_key_${address}`);
-    if (isConnected && address && storedAddressKey && !customKey) {
-         setCustomKey(storedAddressKey);
-         localStorage.setItem('bsc_ai_hub_custom_key', storedAddressKey);
-         // Restore check logic implicitly via effect
+    
+    // Auto-restore session if key exists for this address
+    if (isConnected && address && storedAddressKey) {
+         if (customKey !== storedAddressKey) {
+             setCustomKey(storedAddressKey);
+             localStorage.setItem('bsc_ai_hub_custom_key', storedAddressKey);
+             checkConfiguration();
+         }
          return; 
     }
 
+    // If connected but no key, and haven't requested yet -> Request Auth
     if (isConnected && address && !customKey && !walletStats && !hasRequestedAuth) {
        setHasRequestedAuth(true);
        handleWalletAuth();
     }
-  }, [isConnected, address, customKey, walletStats]);
+  }, [isConnected, address, customKey, walletStats, hasRequestedAuth]); // Added hasRequestedAuth dependency properly
 
   const handleWalletAuth = async () => {
     if (!address) return;
@@ -672,8 +685,10 @@ export const Chat: React.FC = () => {
         }
     } catch (e: any) {
         console.error('Auth error', e);
-        setHasRequestedAuth(false); // Allow retry on error? Or keep blocked to prevent spam loop?
-        // Let's reset so user can click manually if auto failed
+        // Allow user to try again manually by resetting flag after a delay or on error?
+        // If user cancelled signature, we should allow them to click "Login" button again.
+        // We don't reset hasRequestedAuth immediately to avoid spam loop if error is persistent.
+        // The "Sign to Check Access" button in UI calls handleWalletAuth directly, ignoring the flag.
     }
   };
   
@@ -683,10 +698,12 @@ export const Chat: React.FC = () => {
       setCustomKey('');
       localStorage.removeItem('bsc_ai_hub_custom_key');
       // Do NOT clear the per-address cached key, so re-connect is fast?
-      // Actually, "Disconnect" usually means user wants to sign out. 
-      // But if they just refresh page, wallet auto-connects.
-      // Let's keep the per-address key in storage so if they reconnect same wallet, it auto-restores.
-      // If they explicitly disconnect, we clear current session.
+      // User Logic: "Disconnects -> Reconnect -> Auto Require Signature".
+      // This means we MUST clear the cached key on disconnect.
+      if (address) {
+          localStorage.removeItem(`bsc_ai_hub_key_${address}`);
+      }
+      
       checkConfiguration();
       setHasRequestedAuth(false);
   };
