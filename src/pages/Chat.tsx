@@ -1325,7 +1325,7 @@ export const Chat: React.FC = () => {
                                       <div className="whitespace-pre-wrap">{msg.content}</div>
                                    ) : (
                                        <div className="markdown-content">
-                                           <ReactMarkdown 
+                                           <ReactMarkdown className="prose prose-sm dark:prose-invert max-w-none text-gray-800 dark:text-gray-100 leading-normal !text-[0.92rem] p-0" 
                                                 remarkPlugins={[remarkGfm, remarkMath]}
                                                 rehypePlugins={[rehypeKatex, rehypeHighlight]}
                                                 urlTransform={(value) => value} // Allow data: URLs and others
