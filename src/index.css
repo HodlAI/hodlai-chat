@@ -108,6 +108,18 @@
   .markdown-content blockquote {
     @apply border-l-2 border-[#8b5cf6] pl-4 italic text-gray-500 dark:text-gray-400 my-6;
   }
+
+  /* Prevent markdown content from expanding beyond container and pushing buttons out of alignment */
+  .markdown-content pre,
+  .markdown-content table,
+  .markdown-content .katex-display {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  .markdown-content > * {
+    min-width: 0;
+  }
 }
 
 /* Scrollbar - Minimal */

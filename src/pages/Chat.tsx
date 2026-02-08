@@ -1363,11 +1363,11 @@ export const Chat: React.FC = () => {
                                      <img src="/logo.svg" className="w-12 h-12 object-contain drop-shadow-md hover:scale-105 transition-transform" alt="HODLAI" />
                                 </div>
                             )}
-                            <div className={`${msg.role === 'user' ? 'flex flex-col items-end max-w-[85%] lg:max-w-[80%]' : 'flex flex-col min-w-0 flex-1'}`}>
-                                <div className={`inline-block ${
+                            <div className={`${msg.role === 'user' ? 'flex flex-col items-end max-w-[85%] lg:max-w-[80%]' : 'flex flex-col min-w-0 flex-1 w-full max-w-full'}`}>
+                                <div className={`${
                                     msg.role === 'user' 
-                                    ? 'bg-[#f4f4f4] dark:bg-[#202020] px-5 py-3 rounded-2xl text-gray-900 dark:text-gray-100 whitespace-pre-wrap break-words border border-transparent dark:border-white/5 shadow-sm w-full' 
-                                    : 'px-0 py-0 text-gray-900 dark:text-gray-100 leading-7 markdown-content -mt-1 w-full'
+                                    ? 'inline-block bg-[#f4f4f4] dark:bg-[#202020] px-5 py-3 rounded-2xl text-gray-900 dark:text-gray-100 whitespace-pre-wrap break-words border border-transparent dark:border-white/5 shadow-sm w-full' 
+                                    : 'block px-0 py-0 text-gray-900 dark:text-gray-100 leading-7 markdown-content -mt-1 w-full overflow-x-auto overflow-y-visible'
                                 }`}>
                                    {msg.role === 'user' ? (
                                       <div className="whitespace-pre-wrap">{msg.content}</div>
@@ -1442,10 +1442,10 @@ export const Chat: React.FC = () => {
 
                                 {/* Message Actions Toolbar (Always Visible) */}
                                 {!isTyping && (
-                                <div className={`flex items-center gap-2 opacity-100 pointer-events-auto relative z-10 ${
+                                <div className={`flex items-center gap-2 opacity-100 pointer-events-auto relative z-10 shrink-0 ${
                                     msg.role === 'user' 
                                     ? 'flex-row-reverse mt-1' // User: explicit margin to avoid overlapping bubble
-                                    : 'flex-row mt-0'         // Assistant: flush (0px) to text
+                                    : 'flex-row mt-1'         // Assistant: slight margin, no flush to ensure clickable
                                 }`}>
                                     <div className="flex items-center gap-1.5 p-0.5 rounded-lg bg-transparent" onClick={(e) => e.stopPropagation()}>
                                     <button 
