@@ -277,6 +277,21 @@ export const Chat: React.FC = () => {
     }
   }, [chatHistory, isTyping, attachments, currentSessionId]);
 
+  // Handle user scroll to stop auto-scroll if they are looking up
+  const handleScrollEvents = useCallback(() => {
+      if (!scrollRef.current || !isTyping) return;
+      
+      const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+      // If distance from bottom > 50px, user is scrolling up/viewing history
+      const isUp = scrollHeight - scrollTop - clientHeight > 50;
+      
+      if (isUp) {
+          // Pause auto-scroll intent (implicit in the isTyping effect above via isUserScrollingUp check,
+          // but relying on re-render might be slow. The effect above checks layout state directly, which is good.)
+          // We don't need to setState here to avoid re-renders, the effect reads layout directly.
+      }
+  }, [isTyping]);
+
   // Scroll Button Visibility Logic
   useEffect(() => {
     const el = scrollRef.current;
@@ -286,11 +301,14 @@ export const Chat: React.FC = () => {
         const { scrollTop, scrollHeight, clientHeight } = el;
         // Show if strict > 200px from bottom
         setShowScrollButton(scrollHeight - scrollTop - clientHeight > 200);
+        
+        // Also used for auto-scroll pause logic
+        if (isTyping && handleScrollEvents) handleScrollEvents();
     };
     
     el.addEventListener('scroll', handleScroll, { passive: true });
     return () => el.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isTyping, handleScrollEvents]);
 
   // Handle File Upload
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
