@@ -65,7 +65,6 @@ const CodeBlock = ({inline, className, children, ...props}: any) => {
   // React-Markdown + Rehype interaction can sometimes swallow the inline prop.
   const textContent = extractText(children);
   const isMultiLine = textContent.includes('\n');
-  const isStructureBlock = !inline && (match || isMultiLine); 
   
   // Final Decision:
   // 1. If explicit inline=true -> Inline
@@ -147,6 +146,34 @@ const CodeBlock = ({inline, className, children, ...props}: any) => {
   )
 }
 
+// Custom Collapsible Thinking Process Component
+const ThinkingProcess = ({ content }: { content: string }) => {
+  const [isOpen, setIsOpen] = useState(false); // Default collapsed
+  const { language } = useStore();
+  const t = translations[language].chat || {};
+
+  return (
+    <div className="my-2 border border-gray-200 dark:border-[#333] rounded-lg bg-gray-50 dark:bg-white/5 overflow-hidden font-sans">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between p-3 text-xs text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors cursor-pointer text-left"
+      >
+        <div className="flex items-center gap-2">
+           <Component className="w-3.5 h-3.5 opacity-70" />
+           <span className="font-medium opacity-80">{t.thinkingProcess || "Thinking Process"}</span>
+        </div>
+        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+      
+      {isOpen && (
+        <div className="p-3 border-t border-gray-200 dark:border-[#333] bg-white dark:bg-[#0a0a0a] text-sm text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-wrap font-mono relative">
+           {content.trim()}
+        </div>
+      )}
+    </div>
+  );
+};
+
 import { useAccount, useSignMessage, useDisconnect } from 'wagmi';
 import { ConnectKitButton } from 'connectkit';
 
@@ -182,6 +209,21 @@ export const Chat: React.FC = () => {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [selectedModel, setSelectedModel] = useState(activeModelIds[0] || 'gpt-4o');
+
+  // Helper to extract clean content
+  const getThinkingAndContent = (fullText: string) => {
+    // 1. Explicit <think> tag parsing (DeepSeek Style)
+    const thinkMatch = /<think>([\s\S]*?)<\/think>/.exec(fullText);
+    if (thinkMatch) {
+        const thinking = thinkMatch[1];
+        const content = fullText.replace(/<think>[\s\S]*?<\/think>/, '').trim();
+        return { thinking, content };
+    }
+    
+    // 2. Fallback: If "reasoning" field is populated in message object, we use that. 
+    // This helper only parses text body.
+    return { thinking: null, content: fullText };
+  };
 
   // Restore model from session when session changes
   useEffect(() => {
@@ -1373,36 +1415,94 @@ export const Chat: React.FC = () => {
                                       <div className="whitespace-pre-wrap">{msg.content}</div>
                                    ) : (
                                        <div className="markdown-content pt-[6px]">
-                                           <ReactMarkdown className="prose prose-sm dark:prose-invert max-w-none text-gray-800 dark:text-gray-100 leading-normal !text-[0.92rem] p-0 [&>:last-child]:!mb-0 [&>:last-child]:!pb-0" 
-                                                remarkPlugins={[remarkGfm, remarkMath]}
-                                                rehypePlugins={[rehypeKatex, rehypeHighlight]}
-                                                urlTransform={(value) => value} // Allow data: URLs and others
-                                                components={{
-                                                    pre: ({children}) => <>{children}</>,
-                                                    code: CodeBlock,
-                                                    img: ({src, alt}) => (
-                                                        <div className="relative my-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-black/20 border border-gray-200 dark:border-gray-800 group/image">
-                                                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                            <img 
-                                                                src={src} 
-                                                                alt={alt || "Generated Image"} 
-                                                                className="w-full h-auto max-h-[512px] object-contain cursor-zoom-in transition-transform hover:scale-[1.01]"
-                                                                loading="lazy"
-                                                                style={{ maxWidth: '100%' }}
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    setPreviewImage(src || '');
-                                                                }}
-                                                            />
-                                                            <a href={src} target="_blank" rel="noreferrer" className="absolute top-2 right-2 p-1.5 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors opacity-0 group-hover/image:opacity-100">
-                                                                <Download className="w-4 h-4" />
-                                                            </a>
-                                                        </div>
-                                                    )
-                                                }}
-                                           >
-                                               {msg.content}
-                                           </ReactMarkdown>
+                                    {/* Reasoning/Thinking Block */}
+                                    {getThinkingAndContent(message.content).thinking && (
+                                        <ThinkingProcess content={getThinkingAndContent(message.content).thinking || ''} />
+                                    )}
+
+                                    {/* Reasoning/Thinking Block */}
+                                    {((msg.role === 'assistant' && (msg as any).reasoning) || getThinkingAndContent(msg.content).thinking) && (
+                                        <ThinkingProcess content={(msg as any).reasoning || getThinkingAndContent(msg.content).thinking || ''} />
+                                    )}
+
+                                    {/* Main Content */}
+                                    <ReactMarkdown 
+                                        remarkPlugins={[remarkGfm, remarkMath]}
+                                        rehypePlugins={[rehypeKatex, rehypeHighlight]}
+                                        components={{
+                                            code: CodeBlock,
+                                            li: ({node, ...props}) => <li className="mb-0.5" {...props} />,
+                                            a: ({node, ...props}) => <a className="text-violet-600 dark:text-violet-400 hover:underline font-medium" target="_blank" rel="noopener noreferrer" {...props} />,
+                                            img: ({src, alt}) => (
+                                                <div className="relative my-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-black/20 border border-gray-200 dark:border-gray-800 group/image">
+                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                    <img 
+                                                        src={src} 
+                                                        alt={alt || "Generated Image"} 
+                                                        className="w-full h-auto max-h-[512px] object-contain cursor-zoom-in transition-transform hover:scale-[1.01]"
+                                                        loading="lazy"
+                                                        style={{ maxWidth: '100%' }}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            setPreviewImage(src || '');
+                                                        }}
+                                                    />
+                                                    <a href={src} target="_blank" rel="noreferrer" className="absolute top-2 right-2 p-1.5 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors opacity-0 group-hover/image:opacity-100">
+                                                        <Download className="w-4 h-4" />
+                                                    </a>
+                                                </div>
+                                            )
+                                        }}
+                                        className="prose dark:prose-invert max-w-none text-[15px] leading-7"
+                                    >
+                                        {/* If we stripped thinking, use clean content, otherwise full content */}
+                                        {getThinkingAndContent(msg.content).thinking ? getThinkingAndContent(msg.content).content : msg.content}
+                                    </ReactMarkdown>
+                                                   <>
+                                                       {thoughtContent && <ThinkingProcess content={thoughtContent} />}
+                                                       
+                                                       <ReactMarkdown className="prose prose-sm dark:prose-invert max-w-none text-gray-800 dark:text-gray-100 leading-normal !text-[0.92rem] p-0 [&>:last-child]:!mb-0 [&>:last-child]:!pb-0" 
+                                                            remarkPlugins={[remarkGfm, remarkMath]}
+                                                            rehypePlugins={[rehypeKatex, rehypeHighlight]}
+                                                            urlTransform={(value) => value} // Allow data: URLs and others
+                                                            components={{
+                                                                pre: ({children}) => <>{children}</>,
+                                                                code: CodeBlock,
+                                                                // Detect <thought> tag logic if rendered as a special node or parse raw content before sending to ReactMarkdown?
+                                                                // Since ReactMarkdown parses strings, we need a custom plugin or pre-processing to extract <thought>.
+                                                                // A simpler way for "Streaming" updates is to handle it inside the renderer if we can detect the node.
+                                                                // But <thought> isn't standard MD.
+                                                                // Let's implement a custom component for specific text pattern if possible, 
+                                                                // OR pre-process `msg.content` to split <thought>...</thought> out.
+                                                                // 
+                                                                // BETTER APPROACH: Pre-process the message content in the render loop below.
+                                                                // We'll leave this `img` component as is.
+                                                                img: ({src, alt}) => (
+                                                                    <div className="relative my-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-black/20 border border-gray-200 dark:border-gray-800 group/image">
+                                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                                        <img 
+                                                                            src={src} 
+                                                                            alt={alt || "Generated Image"} 
+                                                                            className="w-full h-auto max-h-[512px] object-contain cursor-zoom-in transition-transform hover:scale-[1.01]"
+                                                                            loading="lazy"
+                                                                            style={{ maxWidth: '100%' }}
+                                                                            onClick={(e) => {
+                                                                                e.stopPropagation();
+                                                                                setPreviewImage(src || '');
+                                                                            }}
+                                                                        />
+                                                                        <a href={src} target="_blank" rel="noreferrer" className="absolute top-2 right-2 p-1.5 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors opacity-0 group-hover/image:opacity-100">
+                                                                            <Download className="w-4 h-4" />
+                                                                        </a>
+                                                                    </div>
+                                                                )
+                                                            }}
+                                                       >
+                                                           {mainContent}
+                                                       </ReactMarkdown>
+                                                   </>
+                                               );
+                                           })()}
                                            {/* Inline Typing Indicator for active message */}
                                            {index === chatHistory.length - 1 && msg.role === 'assistant' && isTyping && (
                                                 <span className="inline-flex gap-0.5 ml-1 items-baseline">
