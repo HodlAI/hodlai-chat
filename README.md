@@ -89,8 +89,7 @@ MIT License. Open Source creates resilience.
 
 -   **Website**: [hodlai.fun](https://hodlai.fun)
 -   **Twitter**: [@hodlai_bsc](https://twitter.com/hodlai_bsc)
--   **Docs**: [docs.hodlai.fun](https://docs.hodlai.fun)
--   **Contract**: `0x...` (Check official links)
+-   **Contract**: `0x987e6269c6b7ea6898221882f11ea16f87b97777` (Check official links)
 
 ---
 
