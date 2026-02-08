@@ -1,0 +1,42 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background: Pure Void (Matching the dark mode background #050505) -->
+    <linearGradient id="bgNight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#050505;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Main Gradient: Electric Purple (Primary #8b5cf6) to Cyan (Accent #06b6d4) -->
+    <linearGradient id="themeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" /> <!-- Primary -->
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" /> <!-- Accent -->
+    </linearGradient>
+
+    <!-- Glow for the spark -->
+    <radialGradient id="sparkGlow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c4b5fd;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Clean Background container -->
+  <rect x="0" y="0" width="200" height="200" rx="40" fill="url(#bgNight)" />
+
+  <!-- Abstract H / Network Node Structure -->
+  <!-- Left Vertical Bar (Purple) -->
+  <rect x="45" y="45" width="15" height="110" rx="4" fill="#8b5cf6" opacity="0.9"/>
+  
+  <!-- Right Vertical Bar (Cyan) -->
+  <rect x="140" y="45" width="15" height="110" rx="4" fill="#06b6d4" opacity="0.9"/>
+
+  <!-- Connecting Stream (Gradient) - representing the "Bridge" or "Access" -->
+  <path d="M60 90 L140 90 L140 110 L60 110 Z" fill="url(#themeGrad)" opacity="0.8" />
+  
+  <!-- Central Diamond Spark (The Singularity/Value) -->
+  <path d="M100 70 L115 100 L100 130 L85 100 Z" fill="white" filter="drop-shadow(0 0 8px rgba(139, 92, 246, 0.6))" />
+
+  <!-- Data Dots (subtle) -->
+  <circle cx="45" cy="45" r="4" fill="#ffffff" opacity="0.5"/>
+  <circle cx="155" cy="155" r="4" fill="#ffffff" opacity="0.5"/>
+
+</svg>

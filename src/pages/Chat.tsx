@@ -1288,21 +1288,31 @@ export const Chat: React.FC = () => {
 
          <div ref={scrollRef} className="flex-1 overflow-y-auto w-full custom-scrollbar pb-32 pt-14">
             {chatHistory.length === 0 ? (
-                 <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
-                    <div className="mb-8 p-1 rounded-2xl bg-gradient-to-tr from-violet-500/20 to-cyan-500/20 backdrop-blur-xl">
-                        <div className="bg-white dark:bg-[#0a0a0a] rounded-xl p-4 shadow-sm">
-                            <img 
-                              src="/logo.svg" 
-                              alt="HodlAI" 
-                              className="w-12 h-12 object-contain"
-                              onError={(e) => {
+                 <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 animate-in fade-in zoom-in duration-500">
+                    
+                    <div className="relative group mb-8 cursor-default">
+                        {/* Glow Effect */}
+                        <div className="absolute -inset-4 bg-gradient-to-r from-violet-600/20 to-cyan-500/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                        
+                        {/* Logo Container */}
+                        <div className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center bg-white/50 dark:bg-black/20 backdrop-blur-xl rounded-[2rem] border border-white/20 dark:border-white/5 shadow-2xl transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3">
+                             <img 
+                               src="/logo.svg" 
+                               alt="HodlAI" 
+                               className="w-16 h-16 md:w-20 md:h-20 object-contain drop-shadow-lg"
+                               onError={(e) => {
                                   e.currentTarget.style.display = 'none';
-                                  e.currentTarget.parentElement?.classList.add('hidden'); 
-                              }} 
-                            />
+                               }} 
+                             />
                         </div>
                     </div>
-                    {/* Welcome Text Removed or Simplified if needed */}
+
+                    <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center tracking-tight">
+                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-cyan-500 dark:from-violet-400 dark:to-cyan-400">
+                            {t.welcomeTitle || 'HODLAI Chat'}
+                        </span>
+                    </h1>
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl w-full">
                         {randomSuggestions.map((hint) => (
                             <button 
@@ -1314,9 +1324,14 @@ export const Chat: React.FC = () => {
                                     }
                                     setInput(hint);
                                 }} 
-                                className="p-4 rounded-xl border border-gray-100 dark:border-white/5 bg-white dark:bg-white/5 hover:bg-gray-50 dark:hover:bg-white/10 text-left text-sm text-gray-600 dark:text-gray-300 transition-all hover:scale-[1.02] shadow-sm hover:shadow-md cursor-pointer hover:border-violet-500/20"
+                                className="p-4 rounded-xl border border-gray-100 dark:border-white/5 bg-white dark:bg-white/5 hover:bg-gray-50 dark:hover:bg-white/10 text-left text-sm text-gray-600 dark:text-gray-300 transition-all hover:scale-[1.02] shadow-sm hover:shadow-md cursor-pointer hover:border-violet-500/20 group"
                             >
-                                {hint}
+                                <div className="flex items-center gap-3">
+                                    <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-white/10 flex items-center justify-center text-gray-400 group-hover:text-violet-500 transition-colors">
+                                        <Sparkles className="w-4 h-4" />
+                                    </div>
+                                    <span>{hint}</span>
+                                </div>
                             </button>
                         ))}
                     </div>
@@ -1326,10 +1341,8 @@ export const Chat: React.FC = () => {
                     {chatHistory.map((msg, index) => (
                         <div key={msg.id} className={`group w-full flex px-3 md:px-0 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                             {msg.role === 'assistant' && (
-                                <div className="flex-shrink-0 mr-3 md:mr-4 w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-violet-600 to-indigo-600 mt-0.5 select-none text-white overflow-hidden shadow-lg shadow-violet-500/20">
-                                     <div className="w-full h-full flex items-center justify-center">
-                                       <Component className="w-5 h-5" />
-                                     </div>
+                                <div className="flex-shrink-0 mr-3 md:mr-4 w-12 h-12 flex items-center justify-center mt-0.5 select-none bg-transparent">
+                                     <img src="/logo.svg" className="w-12 h-12 object-contain drop-shadow-md hover:scale-105 transition-transform" alt="HODLAI" />
                                 </div>
                             )}
                             <div className={`${msg.role === 'user' ? 'flex flex-col items-end max-w-[85%] lg:max-w-[80%]' : 'flex flex-col min-w-0 flex-1'}`}>
