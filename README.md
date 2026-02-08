@@ -2,30 +2,38 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Twitter Follow](https://img.shields.io/twitter/follow/hodlai_bsc?style=social)](https://twitter.com/hodlai_bsc)
+[![BNB Chain](https://img.shields.io/badge/Network-BNB%20Smart%20Chain-F0B90B)](https://bscscan.com/token/0x123...)
 
-**The official decentralized chat interface for the HodlAI Protocol.**
+**The Official Web3-Native Interface for Sovereign Intelligence.**
 
-> "Don't rent intelligence. Own the asset that generates it."
+> **"Don't rent intelligence. Own the asset that generates it."**
 
-HodlAI Chat is a Web3-native AI interface that connects directly to the HodlAI Gateway. Instead of monthly subscriptions, it uses on-chain verification to grant compute access based on your $HODLAI holdings.
+HodlAI Chat is the reference implementation of the **HodlAI Protocol** client. It connects directly to the HodlAI Utility Layer (`gw.hodlai.fun`), proving that AI access can be an on-chain asset right rather than a monthly subscription liability.
 
-This repository hosts the **Frontend Client** (React + Vite). It is fully open-source, allowing the community to audit, fork, and build upon the "Service-as-an-Asset" interface.
+## 💎 Core Philosophy: Holding is Access
 
-## 🌟 Features
+HodlAI fundamentally rewrites the economic relationship between humans/agents and AI compute:
 
-- **Web3 Auth**: Connect via WalletConnect/MetaMask (SIWE Standard).
-- **Hold-to-Chat**: Zero passwords. Your $HODLAI balance is your API key.
-- **Privacy First**: Local session storage. No centralized tracking.
-- **Multi-Model**: Access GPT-4, Claude 3.5, Gemini 1.5, DeepSeek R1 via the unified gateway.
-- **DeCensor Ready**: Configurable API endpoints for censorship resistance.
+-   **No Subscriptions**: Forget $20/month per model.
+-   **Service-as-an-Asset**: holding `$HODLAI` tokens grants you a perpetual daily stream of compute credits.
+-   **Dynamic Quota**: Currently, **~$10 USD held ≈ $1 USD/day** API credit (scales dynamically).
+-   **Multi-Model Hub**: One holding grants access to GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, DeepSeek R1, and 200+ other models via a unified OpenAI-compatible interface.
+
+## 🌟 Key Features
+
+-   **SIWE Authentication**: Login with Ethereum/BSC wallet. Your private key is your passport.
+-   **Context-Aware**: Supports long-context reasoning with prompt caching optimization.
+-   **Privacy-First**: Chat history is stored locally in your browser (IndexedDB). We don't train on your data.
+-   **Responsive UI**: Built with React + Tailwind v4, optimized for desktop and mobile focused workflows.
+-   **Customizable**: Supports custom base URLs, system prompts, and model parameters.
 
 ## 🛠 Tech Stack
 
-- **Framework**: [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
-- **UI System**: TailwindCSS v4 + Heroicons
-- **State Management**: Zustand
-- **Web3 Interaction**: Wagmi + Viem + ConnectKit
-- **Internationalization**: Full English/Simplified Chinese support.
+-   **Framework**: [React 18](https://reactjs.org/) + [Vite](https://vitejs.dev/)
+-   **Styling**: TailwindCSS v4
+-   **State**: Zustand + Persist
+-   **Web3**: Wagmi v2 + ConnectKit + Viem
+-   **Parsing**: Markdown/LaTeX support with syntax highlighting
 
 ## 🚀 Quick Start
 
@@ -40,44 +48,50 @@ cd hodlai-chat
 pnpm install
 ```
 
-### 2. Run Locally
+### 2. Environment Setup (Optional)
+Copy `.env.example` to `.env` if you need to override default WalletConnect project IDs or chain configs.
+
+### 3. Run Locally
 ```bash
 pnpm dev
 # App running at http://localhost:4000
 ```
 
-## 🔌 Configuration
+### 4. Build for Production
+```bash
+pnpm build
+pnpm preview
+```
 
-The client connects to `https://api.hodlai.fun/v1` by default.
+## 🔌 Connection to Gateway
 
-**Custom Gateway (Settings):**
-You can point this client to your own gateway or a local proxy via **Settings -> Custom Base URL**.
+The client is pre-configured to connect to the official HodlAI Gateway:
+-   **Endpoint**: `https://api.hodlai.fun/v1`
+-   **Auth**: Bearer Token (Generated via SIWE signature exchange)
 
-**URL Parameters:**
-For quick testing or deep-linking:
-`http://localhost:4000/?base_url=https://my-gateway.com/v1`
+*Note: You can point this client to any OpenAI-compatible backend via Settings.*
 
 ## 🤝 Contributing
 
-We believe in **Sovereign AI**.
-PRs are welcome! Whether it's a UI polish, a new language translation, or a Web3 integration fix.
+HodlAI is building the infrastructure for the **Agent Economy**. We welcome contributions that help silicon lifeforms and humans communicate better.
 
-1. Fork the repo.
-2. Create a feature branch (`git checkout -b feature/amazing-feature`).
-3. Commit changes (`git commit -m 'feat: add amazing feature'`).
-4. Push to branch (`git push origin feature/amazing-feature`).
-5. Open a Pull Request.
+1.  Fork the repo
+2.  Create your feature branch (`git checkout -b feature/neural-link`)
+3.  Commit changes
+4.  Push to branch
+5.  Open a Pull Request
 
 ## 📜 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+MIT License. Open Source creates resilience.
 
-## 🔗 Links
+## 🔗 Ecosystem
 
-- **Website**: [hodlai.fun](https://hodlai.fun)
-- **Docs**: [docs.hodlai.fun](https://docs.hodlai.fun)
-- **Twitter**: [@hodlai_bsc](https://twitter.com/hodlai_bsc)
+-   **Website**: [hodlai.fun](https://hodlai.fun)
+-   **Twitter**: [@hodlai_bsc](https://twitter.com/hodlai_bsc)
+-   **Docs**: [docs.hodlai.fun](https://docs.hodlai.fun)
+-   **Contract**: `0x...` (Check official links)
 
 ---
 
-*Built with 💎 by the HodlAI Community.*
+*"HODLAI is the water and air for on-chain silicon life."*
