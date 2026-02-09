@@ -1433,7 +1433,7 @@ export const Chat: React.FC = () => {
 
          <div ref={scrollRef} className="flex-1 overflow-y-auto w-full custom-scrollbar pb-32 pt-14">
             {chatHistory.length === 0 ? (
-                 <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 animate-in fade-in zoom-in duration-500">
+                 <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 animate-in fade-in duration-300">
                     
                     <div className="relative group mb-8 cursor-default">
                         {/* Glow Effect */}
