@@ -34,9 +34,47 @@ interface Store extends ChatState {
   fetchModels: () => Promise<void>;
 }
 
-// Helper to save sessions to localStorage
+// Helper to save sessions to localStorage (with debounce for streaming)
+let _saveTimer: ReturnType<typeof setTimeout> | null = null;
+let _pendingSessions: Session[] | null = null;
+
+const _flushSave = () => {
+  if (_pendingSessions) {
+    try {
+      // Strip base64 attachment data before persisting to avoid localStorage bloat
+      const cleaned = _pendingSessions.map(s => ({
+        ...s,
+        messages: s.messages.map(m => {
+          if (!m.attachments || m.attachments.length === 0) return m;
+          return {
+            ...m,
+            attachments: m.attachments.map(a => ({
+              ...a,
+              // Only keep metadata; strip inline base64 data URLs to save memory
+              url: a.url && a.url.startsWith('data:') ? '' : a.url,
+            })),
+          };
+        }),
+      }));
+      localStorage.setItem('bsc_ai_hub_sessions', JSON.stringify(cleaned));
+    } catch (e) {
+      console.warn('saveSessions failed (quota?)', e);
+    }
+    _pendingSessions = null;
+  }
+};
+
 const saveSessions = (sessions: Session[]) => {
-  localStorage.setItem('bsc_ai_hub_sessions', JSON.stringify(sessions));
+  _pendingSessions = sessions;
+  if (_saveTimer) clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(_flushSave, 500);
+};
+
+// Force-flush for critical saves (session create/delete/switch)
+const saveSessionsImmediate = (sessions: Session[]) => {
+  if (_saveTimer) { clearTimeout(_saveTimer); _saveTimer = null; }
+  _pendingSessions = sessions;
+  _flushSave();
 };
 
 // Helper to save other state
@@ -151,7 +189,7 @@ export const useStore = create<Store>((set, get) => ({
               lastUpdated: Date.now(),
               lastUsedModel: predefinedModels[0].id
           };
-          saveSessions([newSession]);
+          saveSessionsImmediate([newSession]);
           return [newSession];
       }
       return saved;
@@ -183,11 +221,14 @@ export const useStore = create<Store>((set, get) => ({
       };
       const newSessions = [newSession, ...get().sessions];
       set({ sessions: newSessions, currentSessionId: newSession.id });
-      saveSessions(newSessions);
+      saveSessionsImmediate(newSessions);
       localStorage.setItem('bsc_ai_hub_last_session_id', newSession.id);
   },
 
   switchSession: (id: string) => {
+      // Flush any pending saves before switching
+      if (_saveTimer) { clearTimeout(_saveTimer); _saveTimer = null; }
+      if (_pendingSessions) _flushSave();
       set({ currentSessionId: id });
       localStorage.setItem('bsc_ai_hub_last_session_id', id);
   },
@@ -202,7 +243,7 @@ export const useStore = create<Store>((set, get) => ({
           sessions: newSessions,
           currentSessionId: nextId
       });
-      saveSessions(newSessions);
+      saveSessionsImmediate(newSessions);
       if (nextId) localStorage.setItem('bsc_ai_hub_last_session_id', nextId);
       if (newSessions.length === 0) get().createSession();
   },

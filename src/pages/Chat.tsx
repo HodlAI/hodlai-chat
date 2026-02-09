@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -52,11 +52,11 @@ const extractText = (children: any): string => {
 };
 
 // Component to render code blocks with strictly ChatGPT-like design
-const CodeBlock = ({inline, className, children, ...props}: any) => {
+// NOTE: theme/language passed via closure from parent, NOT via useStore() to avoid re-renders
+const createCodeBlock = (currentLang: 'en' | 'zh') => {
+  const CodeBlockInner = ({inline, className, children, ...props}: any) => {
   const match = /language-(\w+)/.exec(className || '');
   
-  const { theme, setTheme, language } = useStore(); 
-  const currentLang = language;
   const t = translations[currentLang]?.chat || {};
 
   const [isCopied, setIsCopied] = useState(false);
@@ -144,13 +144,14 @@ const CodeBlock = ({inline, className, children, ...props}: any) => {
       {children}
     </code>
   )
-}
+  };
+  return CodeBlockInner;
+};
 
 // Custom Collapsible Thinking Process Component
-const ThinkingProcess = ({ content }: { content: string }) => {
+const ThinkingProcess = ({ content, currentLang }: { content: string; currentLang?: 'en' | 'zh' }) => {
   const [isOpen, setIsOpen] = useState(false); // Default collapsed
-  const { language } = useStore();
-  const t = translations[language].chat || {};
+  const t = translations[currentLang || 'en'].chat || {};
 
   return (
     <div className="my-2 border border-gray-200 dark:border-[#333] rounded-lg bg-gray-50 dark:bg-white/5 overflow-hidden font-sans">
@@ -270,6 +271,53 @@ export const Chat: React.FC = () => {
     setRandomSuggestions(shuffled.slice(0, 4));
   }, [language]);
 
+  // === PERFORMANCE: Memoized CodeBlock component (avoids useStore inside) ===
+  const MemoizedCodeBlock = useMemo(() => createCodeBlock(language), [language]);
+
+  // === PERFORMANCE: Memoized ReactMarkdown components object ===
+  const markdownComponents = useMemo(() => ({
+    code: MemoizedCodeBlock,
+    pre: ({children}: any) => <>{children}</>,
+    li: ({node, ...props}: any) => <li className="mb-0.5" {...props} />,
+    a: ({node, ...props}: any) => <a className="text-violet-600 dark:text-violet-400 hover:underline font-medium" target="_blank" rel="noopener noreferrer" {...props} />,
+    img: ({src, alt}: any) => (
+      <div className="relative my-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-black/20 border border-gray-200 dark:border-gray-800 group/image">
+        <img 
+          src={src} 
+          alt={alt || "Generated Image"} 
+          className="w-full h-auto max-h-[512px] object-contain cursor-zoom-in transition-transform hover:scale-[1.01]"
+          loading="lazy"
+          style={{ maxWidth: '100%' }}
+          onClick={(e: React.MouseEvent) => {
+            e.stopPropagation();
+            setPreviewImage(src || '');
+          }}
+        />
+        <a href={src} target="_blank" rel="noreferrer" className="absolute top-2 right-2 p-1.5 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors opacity-0 group-hover/image:opacity-100">
+          <Download className="w-4 h-4" />
+        </a>
+      </div>
+    )
+  }), [MemoizedCodeBlock]);
+
+  // === PERFORMANCE: Virtual list - only render last N messages + "load more" ===
+  const VISIBLE_MESSAGE_COUNT = 40;
+  const [showAllMessages, setShowAllMessages] = useState(false);
+
+  const visibleMessages = useMemo(() => {
+    if (showAllMessages || chatHistory.length <= VISIBLE_MESSAGE_COUNT) {
+      return chatHistory;
+    }
+    return chatHistory.slice(-VISIBLE_MESSAGE_COUNT);
+  }, [chatHistory, showAllMessages]);
+
+  const hiddenMessageCount = chatHistory.length - visibleMessages.length;
+
+  // Reset showAllMessages when switching sessions
+  useEffect(() => {
+    setShowAllMessages(false);
+  }, [currentSessionId]);
+
   // Auto-resize textarea
   useEffect(() => {
     if (textareaRef.current) {
@@ -291,7 +339,7 @@ export const Chat: React.FC = () => {
     }
   }, [activeModelIds, selectedModel]);
 
-  // Scroll to bottom
+  // Scroll to bottom (with proper cleanup)
   useEffect(() => {
     if (scrollRef.current) {
         const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
@@ -304,17 +352,17 @@ export const Chat: React.FC = () => {
             }
         } else {
             // Force instant scroll to bottom on load/session switch
-            // Use requestAnimationFrame for smoother rendering timing
             requestAnimationFrame(() => {
                 if(scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
             });
             // Backup with timeout for image loads
-            setTimeout(() => {
+            const t1 = setTimeout(() => {
                 if(scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
             }, 100);
-            setTimeout(() => {
+            const t2 = setTimeout(() => {
                 if(scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
             }, 500);
+            return () => { clearTimeout(t1); clearTimeout(t2); };
         }
     }
   }, [chatHistory, isTyping, attachments, currentSessionId]);
@@ -481,6 +529,13 @@ export const Chat: React.FC = () => {
       }));
       
       let fullContent = '';
+      let _streamThrottleTimer: ReturnType<typeof setTimeout> | null = null;
+      let _streamDirty = false;
+
+      const flushStreamUpdate = () => {
+        _streamDirty = false;
+        updateMessage(botMsgId, { content: fullContent });
+      };
 
       // We only want the searchContext injected ONCE per turn. 
       // If we prepend it to history, it might get duplicated or confuse context.
@@ -493,9 +548,21 @@ export const Chat: React.FC = () => {
         apiAttachments,
         (token) => {
             fullContent += token;
-            updateMessage(botMsgId, { content: fullContent });
+            // Throttle state updates to max ~10/sec instead of every token
+            if (!_streamThrottleTimer) {
+              _streamThrottleTimer = setTimeout(() => {
+                _streamThrottleTimer = null;
+                if (_streamDirty) flushStreamUpdate();
+              }, 100);
+              flushStreamUpdate();
+            } else {
+              _streamDirty = true;
+            }
         }
       );
+      // Final flush to ensure last tokens are rendered
+      if (_streamThrottleTimer) { clearTimeout(_streamThrottleTimer); _streamThrottleTimer = null; }
+      updateMessage(botMsgId, { content: fullContent });
       
       checkConfiguration();
     } catch (error: any) {
@@ -549,6 +616,13 @@ export const Chat: React.FC = () => {
       const historyContext = chatHistory.slice(0, userMsgIndex).map(msg => ({ role: msg.role, content: msg.content }));
       
       let fullContent = '';
+      let _retryThrottleTimer: ReturnType<typeof setTimeout> | null = null;
+      let _retryDirty = false;
+
+      const flushRetryUpdate = () => {
+        _retryDirty = false;
+        updateMessage(botMsgId, { content: fullContent });
+      };
       
       await chatApi.sendMessageStream(
         [...historyContext, { role: 'user', content: userMsg.content }],
@@ -557,9 +631,20 @@ export const Chat: React.FC = () => {
         [], 
         (token) => {
             fullContent += token;
-            updateMessage(botMsgId, { content: fullContent });
+            if (!_retryThrottleTimer) {
+              _retryThrottleTimer = setTimeout(() => {
+                _retryThrottleTimer = null;
+                if (_retryDirty) flushRetryUpdate();
+              }, 100);
+              flushRetryUpdate();
+            } else {
+              _retryDirty = true;
+            }
         }
       );
+      // Final flush
+      if (_retryThrottleTimer) { clearTimeout(_retryThrottleTimer); _retryThrottleTimer = null; }
+      updateMessage(botMsgId, { content: fullContent });
     } catch (error: any) {
          // ... same error handling ...
          let errorMessage = error.message || "Retry failed";
@@ -1398,7 +1483,21 @@ export const Chat: React.FC = () => {
                  </div>
             ) : (
                 <div className="flex flex-col w-full max-w-5xl mx-auto py-6 px-0 md:px-4 gap-4 md:gap-6">
-                    {chatHistory.map((msg, index) => (
+                    {/* Virtual list: "Load More" button when messages are truncated */}
+                    {hiddenMessageCount > 0 && (
+                      <div className="flex justify-center py-3">
+                        <button
+                          onClick={() => setShowAllMessages(true)}
+                          className="px-4 py-2 text-sm font-medium text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/20 rounded-xl hover:bg-violet-100 dark:hover:bg-violet-900/30 transition-colors cursor-pointer border border-violet-200 dark:border-violet-500/20"
+                        >
+                          {language === 'zh' ? `加载更早的 ${hiddenMessageCount} 条消息` : `Load ${hiddenMessageCount} earlier messages`}
+                        </button>
+                      </div>
+                    )}
+                    {visibleMessages.map((msg, visibleIndex) => {
+                        // Compute the real index in chatHistory for retry/actions
+                        const index = hiddenMessageCount + visibleIndex;
+                        return (
                         <div key={msg.id} className={`group w-full flex px-3 md:px-0 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                             {msg.role === 'assistant' && (
                                 <div className="flex-shrink-0 mr-3 md:mr-4 w-12 h-12 flex items-center justify-center mt-0.5 select-none bg-transparent">
@@ -1416,93 +1515,20 @@ export const Chat: React.FC = () => {
                                    ) : (
                                        <div className="markdown-content pt-[6px]">
                                     {/* Reasoning/Thinking Block */}
-                                    {getThinkingAndContent(message.content).thinking && (
-                                        <ThinkingProcess content={getThinkingAndContent(message.content).thinking || ''} />
-                                    )}
-
-                                    {/* Reasoning/Thinking Block */}
                                     {((msg.role === 'assistant' && (msg as any).reasoning) || getThinkingAndContent(msg.content).thinking) && (
-                                        <ThinkingProcess content={(msg as any).reasoning || getThinkingAndContent(msg.content).thinking || ''} />
+                                        <ThinkingProcess content={(msg as any).reasoning || getThinkingAndContent(msg.content).thinking || ''} currentLang={language} />
                                     )}
 
-                                    {/* Main Content */}
+                                    {/* Main Content - uses memoized components */}
                                     <ReactMarkdown 
                                         remarkPlugins={[remarkGfm, remarkMath]}
                                         rehypePlugins={[rehypeKatex, rehypeHighlight]}
-                                        components={{
-                                            code: CodeBlock,
-                                            li: ({node, ...props}) => <li className="mb-0.5" {...props} />,
-                                            a: ({node, ...props}) => <a className="text-violet-600 dark:text-violet-400 hover:underline font-medium" target="_blank" rel="noopener noreferrer" {...props} />,
-                                            img: ({src, alt}) => (
-                                                <div className="relative my-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-black/20 border border-gray-200 dark:border-gray-800 group/image">
-                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                    <img 
-                                                        src={src} 
-                                                        alt={alt || "Generated Image"} 
-                                                        className="w-full h-auto max-h-[512px] object-contain cursor-zoom-in transition-transform hover:scale-[1.01]"
-                                                        loading="lazy"
-                                                        style={{ maxWidth: '100%' }}
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            setPreviewImage(src || '');
-                                                        }}
-                                                    />
-                                                    <a href={src} target="_blank" rel="noreferrer" className="absolute top-2 right-2 p-1.5 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors opacity-0 group-hover/image:opacity-100">
-                                                        <Download className="w-4 h-4" />
-                                                    </a>
-                                                </div>
-                                            )
-                                        }}
+                                        urlTransform={(value: string) => value}
+                                        components={markdownComponents}
                                         className="prose dark:prose-invert max-w-none text-[15px] leading-7"
                                     >
-                                        {/* If we stripped thinking, use clean content, otherwise full content */}
                                         {getThinkingAndContent(msg.content).thinking ? getThinkingAndContent(msg.content).content : msg.content}
                                     </ReactMarkdown>
-                                                   <>
-                                                       {thoughtContent && <ThinkingProcess content={thoughtContent} />}
-                                                       
-                                                       <ReactMarkdown className="prose prose-sm dark:prose-invert max-w-none text-gray-800 dark:text-gray-100 leading-normal !text-[0.92rem] p-0 [&>:last-child]:!mb-0 [&>:last-child]:!pb-0" 
-                                                            remarkPlugins={[remarkGfm, remarkMath]}
-                                                            rehypePlugins={[rehypeKatex, rehypeHighlight]}
-                                                            urlTransform={(value) => value} // Allow data: URLs and others
-                                                            components={{
-                                                                pre: ({children}) => <>{children}</>,
-                                                                code: CodeBlock,
-                                                                // Detect <thought> tag logic if rendered as a special node or parse raw content before sending to ReactMarkdown?
-                                                                // Since ReactMarkdown parses strings, we need a custom plugin or pre-processing to extract <thought>.
-                                                                // A simpler way for "Streaming" updates is to handle it inside the renderer if we can detect the node.
-                                                                // But <thought> isn't standard MD.
-                                                                // Let's implement a custom component for specific text pattern if possible, 
-                                                                // OR pre-process `msg.content` to split <thought>...</thought> out.
-                                                                // 
-                                                                // BETTER APPROACH: Pre-process the message content in the render loop below.
-                                                                // We'll leave this `img` component as is.
-                                                                img: ({src, alt}) => (
-                                                                    <div className="relative my-4 rounded-lg overflow-hidden bg-gray-100 dark:bg-black/20 border border-gray-200 dark:border-gray-800 group/image">
-                                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                                        <img 
-                                                                            src={src} 
-                                                                            alt={alt || "Generated Image"} 
-                                                                            className="w-full h-auto max-h-[512px] object-contain cursor-zoom-in transition-transform hover:scale-[1.01]"
-                                                                            loading="lazy"
-                                                                            style={{ maxWidth: '100%' }}
-                                                                            onClick={(e) => {
-                                                                                e.stopPropagation();
-                                                                                setPreviewImage(src || '');
-                                                                            }}
-                                                                        />
-                                                                        <a href={src} target="_blank" rel="noreferrer" className="absolute top-2 right-2 p-1.5 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors opacity-0 group-hover/image:opacity-100">
-                                                                            <Download className="w-4 h-4" />
-                                                                        </a>
-                                                                    </div>
-                                                                )
-                                                            }}
-                                                       >
-                                                           {mainContent}
-                                                       </ReactMarkdown>
-                                                   </>
-                                               );
-                                           })()}
                                            {/* Inline Typing Indicator for active message */}
                                            {index === chatHistory.length - 1 && msg.role === 'assistant' && isTyping && (
                                                 <span className="inline-flex gap-0.5 ml-1 items-baseline">
@@ -1510,13 +1536,6 @@ export const Chat: React.FC = () => {
                                                     <span className="w-1.5 h-1.5 bg-current rounded-full animate-bounce opacity-70" style={{ animationDelay: '150ms' }} />
                                                     <span className="w-1.5 h-1.5 bg-current rounded-full animate-bounce opacity-70" style={{ animationDelay: '300ms' }} />
                                                 </span>
-                                           )}
-                                           {/* Display Generated Image if exists in markdown or as attachment */}
-                                           {msg.role === 'assistant' && msg.content && (msg.content.includes('(http') || msg.content.includes('![image]')) && (
-                                                // ReactMarkdown handles standard images, but sometimes APIs return image URLs differently.
-                                                // This is just a fallback container if needed, but standard MD renderer should work if configured correctly.
-                                                // Ensure custom renderer handles images properly.
-                                                <div className="hidden"></div>
                                            )}
                                        </div>
                                    )}
@@ -1528,7 +1547,11 @@ export const Chat: React.FC = () => {
                                         {msg.attachments.map((att: any, i: number) => (
                                             <div key={i} className="relative group w-32 h-32 rounded-lg border border-gray-200 dark:border-[#424242] overflow-hidden bg-gray-100 dark:bg-[#1a1a1a]">
                                                 {att.type === 'image' ? (
-                                                    <img src={att.url} alt="Attachment" className="w-full h-full object-cover" />
+                                                    att.url ? <img src={att.url} alt="Attachment" className="w-full h-full object-cover" /> :
+                                                    <div className="w-full h-full flex flex-col items-center justify-center p-2 text-center">
+                                                        <ImageIcon className="w-8 h-8 text-gray-400 mb-2" />
+                                                        <span className="text-[10px] truncate w-full text-gray-500">{att.name}</span>
+                                                    </div>
                                                 ) : (
                                                     <div className="w-full h-full flex flex-col items-center justify-center p-2 text-center">
                                                         <FileText className="w-8 h-8 text-gray-400 mb-2" />
@@ -1544,8 +1567,8 @@ export const Chat: React.FC = () => {
                                 {!isTyping && (
                                 <div className={`flex items-center gap-2 opacity-100 pointer-events-auto relative z-10 shrink-0 ${
                                     msg.role === 'user' 
-                                    ? 'flex-row-reverse mt-1' // User: explicit margin to avoid overlapping bubble
-                                    : 'flex-row mt-1'         // Assistant: slight margin, no flush to ensure clickable
+                                    ? 'flex-row-reverse mt-1'
+                                    : 'flex-row mt-1'
                                 }`}>
                                     <div className="flex items-center gap-1.5 p-0.5 rounded-lg bg-transparent" onClick={(e) => e.stopPropagation()}>
                                     <button 
@@ -1590,7 +1613,7 @@ export const Chat: React.FC = () => {
                                 )}
                             </div>
                         </div>
-                    ))}
+                    );})}
                     {error && (
                         <div className="flex gap-4 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/50 text-red-600 dark:text-red-400 text-sm">
                             <AlertTriangle className="w-5 h-5 flex-shrink-0" />
