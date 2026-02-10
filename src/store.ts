@@ -104,7 +104,7 @@ const predefinedModels: Model[] = [
     // Google (Prioritized)
     { id: 'gemini-3-flash-preview', name: 'Gemini 3 Flash', provider: 'Google', contextWindow: 2000000 },
     { id: 'gemini-3-pro-preview', name: 'Gemini 3 Pro', provider: 'Google', contextWindow: 2000000 },
-    { id: 'gemini-3-pro-image-preview', name: 'Gemini 3 Pro Image', provider: 'Google', contextWindow: 2000000 },
+    { id: 'gemini-3-pro-image-preview', name: 'Nano Banana Pro', provider: 'Google', contextWindow: 2000000 },
 
     // OpenAI
     { id: 'gpt-5.2', name: 'GPT-5.2', provider: 'OpenAI', contextWindow: 200000 },
