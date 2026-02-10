@@ -770,56 +770,70 @@ export const Chat: React.FC = () => {
 
   // Auto-trigger auth when wallet connects if not already authenticated
   // Memoize session check to prevent infinite re-requests
-  const [hasRequestedAuth, setHasRequestedAuth] = useState(false);
-
+  const [authRequestedFor, setAuthRequestedFor] = useState<string | null>(null);
   const [isSigning, setIsSigning] = useState(false);
 
   useEffect(() => {
-    // If not connected, reset auth requested flag to ensure re-connect triggers auth again
-    if (!isConnected) {
-        setHasRequestedAuth(false);
+    // 1. If not connected, clear auth state
+    if (!isConnected || !address) {
+        setAuthRequestedFor(null);
         setIsSigning(false);
         return; 
     }
     
-    // Check if we already have a VALID key for this address
+    // 2. Check if we already have a VALID key for this SPECIFIC address
     const storedAddressKey = localStorage.getItem(`bsc_ai_hub_key_${address}`);
     
-    // Auto-restore session if key exists for this address
-    if (isConnected && address && storedAddressKey) {
+    // 3. Auto-restore session if key exists for this address
+    if (storedAddressKey) {
+         // Only update global state if currently different
          if (customKey !== storedAddressKey) {
+             console.log(`[Auth] Restoring key for ${address}`);
              setCustomKey(storedAddressKey);
              localStorage.setItem('bsc_ai_hub_custom_key', storedAddressKey);
+             
+             // Restore stats if available
+             const storedStats = localStorage.getItem(`bsc_ai_hub_stats_${address}`);
+             if (storedStats) {
+                 try { setWalletStats(JSON.parse(storedStats)); } catch(e) {}
+             }
+             
              checkConfiguration();
-         }
-         
-         // Try restore stats
-         const storedStats = localStorage.getItem(`bsc_ai_hub_stats_${address}`);
-         if (storedStats && !walletStats) {
-             try { setWalletStats(JSON.parse(storedStats)); } catch(e) {}
          }
          return; 
     }
 
-    // If connected but no key, and haven't requested yet -> Request Auth automatically
-    if (isConnected && address && !customKey && !walletStats && !hasRequestedAuth && !isSigning) {
-       setHasRequestedAuth(true);
+    // 4. If connected but no key, and haven't requested for THIS address yet -> Request Auth
+    // We check authRequestedFor !== address to ensure we only ask once per address session
+    if (!customKey && authRequestedFor !== address && !isSigning) {
+       console.log(`[Auth] Triggering signature for ${address}`);
+       setAuthRequestedFor(address);
        setIsSigning(true);
+       
        // Small delay to ensure wallet modal is closed and UX is smooth
        setTimeout(() => {
-           handleWalletAuth().catch(console.error).finally(() => setIsSigning(false));
-       }, 800);
+           handleWalletAuth(address)
+            .catch(err => {
+                console.error("[Auth] Auto-sign failed:", err);
+                // On error, we DO NOT reset authRequestedFor immediately to avoid loop.
+                // User can manually click the button to retry.
+            })
+            .finally(() => setIsSigning(false));
+       }, 500);
     }
-  }, [isConnected, address, customKey, walletStats, hasRequestedAuth, isSigning]);
+  }, [isConnected, address, customKey, authRequestedFor, isSigning]);
 
-  const handleWalletAuth = async () => {
-    if (!address) return;
+  const handleWalletAuth = async (targetAddress?: string) => {
+    const addr = targetAddress || address;
+    if (!addr) return;
+    
+    setIsSigning(true);
     try {
         // 1. Get Message
         const msgRes = await fetch('https://hodlai.fun/api/auth/message', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ address })
+            body: JSON.stringify({ address: addr })
         });
         const msgData = await msgRes.json();
         if (!msgData.success) throw new Error(msgData.error);
@@ -831,57 +845,55 @@ export const Chat: React.FC = () => {
         const verifyRes = await fetch('https://hodlai.fun/api/auth/verify', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ address, message: msgData.data.message, signature })
+            body: JSON.stringify({ address: addr, message: msgData.data.message, signature })
         });
         const verifyData = await verifyRes.json();
         
         if (verifyData.success && verifyData.data.token.key) {
             const newKey = verifyData.data.token.key;
+            
+            // Critical: Update state
             setCustomKey(newKey);
+            
+            // Critical: Persist to Storage
             localStorage.setItem('bsc_ai_hub_custom_key', newKey);
-            // Cache key per address to avoid re-signing on reload
-            localStorage.setItem(`bsc_ai_hub_key_${address}`, newKey);
+            localStorage.setItem(`bsc_ai_hub_key_${addr}`, newKey);
             
             // Extract precise data from the new response structure
             const tokenData = verifyData.data.token;
             const stats = {
-                balance: tokenData.balance, // Use raw Wei value for formatter (which divides by 1e18) 
+                balance: tokenData.balance, 
                 dailyQuota: tokenData.dailyQuota, 
                 remainQuota: tokenData.remainQuota, 
                 quotaMessage: tokenData.quotaInfo?.message,
                 pointsPerDollar: tokenData.quotaInfo?.holdingInfo?.pointsPerDollar || 500000
             };
             setWalletStats(stats);
-            localStorage.setItem(`bsc_ai_hub_stats_${address}`, JSON.stringify(stats));
+            localStorage.setItem(`bsc_ai_hub_stats_${addr}`, JSON.stringify(stats));
             
             checkConfiguration();
             fetchModels();
+            
+            console.log("[Auth] Success");
         } else {
             throw new Error(verifyData.error || 'Verification failed');
         }
     } catch (e: any) {
         console.error('Auth error', e);
-        // Allow user to try again manually by resetting flag after a delay or on error?
-        // If user cancelled signature, we should allow them to click "Login" button again.
-        // We don't reset hasRequestedAuth immediately to avoid spam loop if error is persistent.
-        // The "Sign to Check Access" button in UI calls handleWalletAuth directly, ignoring the flag.
+        // If manual trigger failed, we still track it to prevent auto-loop. 
+        // But UI stays "Sign to Verify" so they can click again.
+    } finally {
+        setIsSigning(false);
     }
   };
   
   const handleDisconnect = () => {
       disconnect();
       setWalletStats(null);
-      // Per user request: Do NOT clear API key on wallet disconnect.
-      // setCustomKey('');
-      // localStorage.removeItem('bsc_ai_hub_custom_key');
-      
-      // Clear address-specific key only? No, keep it for better UX if they reconnect.
-      // if (address) {
-      //    localStorage.removeItem(`bsc_ai_hub_key_${address}`);
-      // }
-      
+      setCustomKey(''); // Clear key on disconnect to show proper state
+      localStorage.removeItem('bsc_ai_hub_custom_key');
       checkConfiguration();
-      setHasRequestedAuth(false);
+      setAuthRequestedFor(null);
   };
 
   // Helper for HODL Balance (18 decimals)
@@ -1094,11 +1106,25 @@ export const Chat: React.FC = () => {
                                 </div>
                                 ) : (
                                     <button 
-                                        onClick={handleWalletAuth}
-                                        className="w-full py-2 text-xs font-bold bg-violet-600/10 text-violet-600 dark:text-violet-400 rounded-lg hover:bg-violet-600/20 transition-all cursor-pointer flex items-center justify-center gap-2"
+                                        onClick={() => handleWalletAuth()}
+                                        disabled={isSigning}
+                                        className={`w-full py-2 text-xs font-bold rounded-lg transition-all cursor-pointer flex items-center justify-center gap-2 ${
+                                            isSigning 
+                                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                                            : 'bg-violet-600/10 text-violet-600 dark:text-violet-400 hover:bg-violet-600/20'
+                                        }`}
                                     >
-                                        <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
-                                        {t.signToLogin || "Sign to Verify"}
+                                        {isSigning ? (
+                                            <>
+                                                <div className="w-3 h-3 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                                                Requesting Signature...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
+                                                {t.signToLogin || "Sign to Verify"}
+                                            </>
+                                        )}
                                     </button>
                                 )}
                             </div>
