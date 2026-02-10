@@ -113,7 +113,7 @@ const predefinedModels: Model[] = [
     { id: 'o3-pro', name: 'o3 Pro', provider: 'OpenAI', contextWindow: 200000 },
     
     // Anthropic
-    { id: 'claude-opus-4.6', name: 'Claude Opus 4.6', provider: 'Anthropic', contextWindow: 200000 },
+    { id: 'claude-opus-4.6', name: 'Claude Opus 4.6', provider: 'Anthropic', contextWindow: 1000000 },
     { id: 'claude-opus-4.5', name: 'Claude Opus 4.5', provider: 'Anthropic', contextWindow: 200000 },
     { id: 'claude-sonnet-4.5', name: 'Claude Sonnet 4.5', provider: 'Anthropic', contextWindow: 200000 },
 
