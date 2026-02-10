@@ -772,15 +772,13 @@ export const Chat: React.FC = () => {
   // Memoize session check to prevent infinite re-requests
   const [hasRequestedAuth, setHasRequestedAuth] = useState(false);
 
+  const [isSigning, setIsSigning] = useState(false);
+
   useEffect(() => {
     // If not connected, reset auth requested flag to ensure re-connect triggers auth again
     if (!isConnected) {
         setHasRequestedAuth(false);
-        // Do not clear customKey here if you want to support manual key entry fallback,
-        // but for pure wallet flow, we might want to clear it if it was wallet-derived.
-        // However, user requirement says: "Default save user wallet connection status".
-        // ConnectKit handles the connection persistence.
-        // We handle the *session* persistence (auth token).
+        setIsSigning(false);
         return; 
     }
     
@@ -794,18 +792,25 @@ export const Chat: React.FC = () => {
              localStorage.setItem('bsc_ai_hub_custom_key', storedAddressKey);
              checkConfiguration();
          }
+         
+         // Try restore stats
+         const storedStats = localStorage.getItem(`bsc_ai_hub_stats_${address}`);
+         if (storedStats && !walletStats) {
+             try { setWalletStats(JSON.parse(storedStats)); } catch(e) {}
+         }
          return; 
     }
 
     // If connected but no key, and haven't requested yet -> Request Auth automatically
-    if (isConnected && address && !customKey && !walletStats && !hasRequestedAuth) {
+    if (isConnected && address && !customKey && !walletStats && !hasRequestedAuth && !isSigning) {
        setHasRequestedAuth(true);
+       setIsSigning(true);
        // Small delay to ensure wallet modal is closed and UX is smooth
        setTimeout(() => {
-           handleWalletAuth();
-       }, 500);
+           handleWalletAuth().catch(console.error).finally(() => setIsSigning(false));
+       }, 800);
     }
-  }, [isConnected, address, customKey, walletStats, hasRequestedAuth]); // Added hasRequestedAuth dependency properly
+  }, [isConnected, address, customKey, walletStats, hasRequestedAuth, isSigning]);
 
   const handleWalletAuth = async () => {
     if (!address) return;
@@ -839,13 +844,15 @@ export const Chat: React.FC = () => {
             
             // Extract precise data from the new response structure
             const tokenData = verifyData.data.token;
-            setWalletStats({
+            const stats = {
                 balance: tokenData.balance, // Use raw Wei value for formatter (which divides by 1e18) 
                 dailyQuota: tokenData.dailyQuota, 
                 remainQuota: tokenData.remainQuota, 
                 quotaMessage: tokenData.quotaInfo?.message,
                 pointsPerDollar: tokenData.quotaInfo?.holdingInfo?.pointsPerDollar || 500000
-            });
+            };
+            setWalletStats(stats);
+            localStorage.setItem(`bsc_ai_hub_stats_${address}`, JSON.stringify(stats));
             
             checkConfiguration();
             fetchModels();
