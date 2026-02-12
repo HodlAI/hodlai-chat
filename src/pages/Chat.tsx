@@ -192,6 +192,7 @@ export const Chat: React.FC = () => {
       activeModelIds, 
       allModels, 
       fetchModels,
+      toggleActiveModel,
       
       // Session management
       sessions,
@@ -1215,9 +1216,7 @@ export const Chat: React.FC = () => {
                                             className="hidden" 
                                             checked={activeModelIds.includes(model.id)}
                                             onChange={() => {
-                                                const isActive = activeModelIds.includes(model.id);
-                                                let newList = isActive ? activeModelIds.filter(id => id !== model.id) : [...activeModelIds, model.id];
-                                                useStore.setState({ activeModelIds: newList });
+                                                toggleActiveModel(model.id);
                                             }}
                                         />
                                         <span className={`text-xs font-medium truncate select-none ${
