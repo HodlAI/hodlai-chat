@@ -25,6 +25,11 @@ interface Store extends ChatState {
   renameSession: (id: string, title: string) => void;
   setLastUsedModel: (modelId: string) => void;
 
+  // Model management
+  addActiveModel: (modelId: string) => void;
+  removeActiveModel: (modelId: string) => void;
+  toggleActiveModel: (modelId: string) => void;
+
   addMessage: (message: ChatMessage, targetSessionId?: string) => void;
   removeMessage: (id: string, targetSessionId?: string) => void;
   updateMessage: (id: string, updates: Partial<ChatMessage> | ((prev: ChatMessage) => Partial<ChatMessage>), targetSessionId?: string) => void;
@@ -254,6 +259,34 @@ export const useStore = create<Store>((set, get) => ({
       );
       set({ sessions: newSessions });
       saveSessions(newSessions);
+  },
+
+  addActiveModel: (modelId: string) => {
+      const current = get().activeModelIds;
+      if (!current.includes(modelId)) {
+          const newActiveModels = [...current, modelId];
+          set({ activeModelIds: newActiveModels });
+          localStorage.setItem('bsc_ai_hub_active_models', JSON.stringify(newActiveModels));
+      }
+  },
+
+  removeActiveModel: (modelId: string) => {
+      const current = get().activeModelIds;
+      const newActiveModels = current.filter(id => id !== modelId);
+      set({ activeModelIds: newActiveModels });
+      localStorage.setItem('bsc_ai_hub_active_models', JSON.stringify(newActiveModels));
+  },
+
+  toggleActiveModel: (modelId: string) => {
+      const current = get().activeModelIds;
+      let newActiveModels: string[];
+      if (current.includes(modelId)) {
+          newActiveModels = current.filter(id => id !== modelId);
+      } else {
+          newActiveModels = [...current, modelId];
+      }
+      set({ activeModelIds: newActiveModels });
+      localStorage.setItem('bsc_ai_hub_active_models', JSON.stringify(newActiveModels));
   },
   
   setLastUsedModel: (modelId) => {
