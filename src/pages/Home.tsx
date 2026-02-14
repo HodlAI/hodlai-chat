@@ -50,7 +50,10 @@ export const Home: React.FC = () => {
   };
 
   const saveSettings = () => {
-    localStorage.setItem('bsc_ai_hub_custom_key', apiKey);
+    // 确保 API Key 有 sk- 前缀
+    const normalizedKey = apiKey.startsWith('sk-') ? apiKey : `sk-${apiKey}`;
+    localStorage.setItem('bsc_ai_hub_custom_key', normalizedKey);
+    setApiKey(normalizedKey);
     checkConfiguration();
     setIsSaved(true);
     setTimeout(() => setIsSaved(false), 2000);
